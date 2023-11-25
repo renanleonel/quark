@@ -1,11 +1,17 @@
 'use server';
 
-import { LoginData } from '@/types/schema';
+import { FormType } from '@/types/schema';
 import { redirect } from 'next/navigation';
 
-export const handleLogin = async (data: LoginData) => {
-	await new Promise((resolve) => setTimeout(resolve, 2000));
-
+export const loginAction = async (data: FormType) => {
 	console.log(data);
-	// redirect('/dashboard');
+	redirect('/support');
+	// await new Promise((resolve) => setTimeout(resolve, 2000))
+	// 	.then(() => {
+	// 		console.log('Login realizado!');
+	// 		return redirect('/support');
+	// 	})
+	// 	.catch((err) => {
+	// 		console.log(err);
+	// 	});
 };
