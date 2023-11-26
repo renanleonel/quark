@@ -21,7 +21,10 @@ import {
 } from '@/components/ui/select';
 import { Textarea } from '@/components/ui/textarea';
 
+import { InputFile } from '@/components/input-file';
+import Navbar from '@/components/navbar';
 import { Alert, AlertTitle } from '@/components/ui/alert';
+import User from '@/components/user';
 import { Clock, Link } from 'lucide-react';
 
 export const metadata: Metadata = {
@@ -33,6 +36,16 @@ const Home = () => {
 	return (
 		<main className='h-screen flex items-center justify-center'>
 			<div className='text-white w-[400px] lg:w-[1000px] flex flex-col gap-4'>
+				<div className='flex h-16 items-center px-4'>
+					<Navbar />
+					<div className='ml-auto flex items-center space-x-4'>
+						<User
+							icon='https://github.com/shadcn.png'
+							alt='@shadcn'
+							fallback='CN'
+						/>
+					</div>
+				</div>
 				<Card>
 					<CardHeader>
 						<CardTitle>Suporte</CardTitle>
@@ -105,9 +118,9 @@ const Home = () => {
 									</Label>
 									<Combobox
 										options={[
-											{ value: 'Site', label: 'Site' },
+											{ value: '1', label: 'Site' },
 											{
-												value: 'App',
+												value: '2',
 												label: 'App',
 											},
 										]}
@@ -115,15 +128,14 @@ const Home = () => {
 										searchText='Pesquise'
 									/>
 								</div>
-								<div className='grid gap-2'>
-									<div className='flex gap-2 items-center'>
-										<Label htmlFor='link'>
-											Link (se houver)
-										</Label>
-										<Link className='h-3 w-3' />
-									</div>
-									<Input id='link' placeholder='Link' />
+								<InputFile />
+							</div>
+							<div className='grid gap-2'>
+								<div className='flex gap-2 items-center'>
+									<Label htmlFor='link'>Link</Label>
+									<Link className='h-3 w-3' />
 								</div>
+								<Input id='link' placeholder='Link' />
 							</div>
 						</section>
 
