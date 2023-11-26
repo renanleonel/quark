@@ -29,9 +29,9 @@ export const metadata: Metadata = {
 	description: 'Envie um ticket para o suporte',
 };
 
-const Support = () => {
+const Home = () => {
 	return (
-		<main className='dark bg-background h-screen flex items-center justify-center'>
+		<main className='h-screen flex items-center justify-center'>
 			<div className='text-white w-[400px] lg:w-[1000px] flex flex-col gap-4'>
 				<Card>
 					<CardHeader>
@@ -162,4 +162,4 @@ const Support = () => {
 	);
 };
 
-export default Support;
+export default Home;

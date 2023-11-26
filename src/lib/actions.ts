@@ -5,7 +5,7 @@ import { redirect } from 'next/navigation';
 
 export const loginAction = async (data: FormType) => {
 	console.log(data);
-	redirect('/support');
+	redirect('/home');
 	// await new Promise((resolve) => setTimeout(resolve, 2000))
 	// 	.then(() => {
 	// 		console.log('Login realizado!');
