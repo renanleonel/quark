@@ -24,6 +24,8 @@ import { Textarea } from '@/components/ui/textarea';
 import { InputFile } from '@/components/input-file';
 import { Alert, AlertTitle } from '@/components/ui/alert';
 import { Clock, Link } from 'lucide-react';
+import { signOut } from '@/auth';
+import Test from '@/components/test';
 
 export const metadata: Metadata = {
 	title: 'Suporte',
@@ -40,6 +42,15 @@ const Home = () => {
 						Envie um ticket para a nossa equipe
 					</CardDescription>
 				</CardHeader>
+
+				{/* <form
+					action={async () => {
+						await signOut();
+					}}
+				>
+					<Button type='submit'>Sair</Button>
+				</form> */}
+
 				<CardContent className='flex flex-col lg:flex-row gap-6'>
 					<section className='flex flex-col gap-6 w-full'>
 						<div className='grid gap-2'>
@@ -142,6 +153,17 @@ const Home = () => {
 					possível!
 				</AlertTitle>
 			</Alert>
+
+			<form
+				action={async () => {
+					'use server';
+					await signOut();
+				}}
+			>
+				<button className='flex h-[48px] grow items-center justify-center gap-2 rounded-md bg-gray-50 p-3 text-sm font-medium hover:bg-sky-100 hover:text-blue-600 md:flex-none md:justify-start md:p-2 md:px-3'>
+					<div className='hidden md:block'>Sign Out</div>
+				</button>
+			</form>
 		</>
 	);
 };

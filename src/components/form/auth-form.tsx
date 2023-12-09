@@ -13,7 +13,7 @@ import { Separator } from '@/components/ui/separator';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { FormType, formSchema } from '@/types/schema';
-import { loginAction } from '@/lib/actions';
+import { authenticate, loginAction } from '@/lib/actions';
 import { defaultValues } from '@/content/contants';
 import { redirect } from 'next/navigation';
 
@@ -32,13 +32,14 @@ const AuthForm = ({ className, ...props }: AuthFormProps) => {
 	} = form;
 
 	const login = async (data: FormType) => {
-		await loginAction(data)
-			.then(() => {
-				reset();
-			})
-			.catch((error) => {
-				console.log(error);
-			});
+		await authenticate(data as any);
+		// await loginAction(data)
+		// 	.then(() => {
+		// 		reset();
+		// 	})
+		// 	.catch((error) => {
+		// 		console.log(error);
+		// 	});
 	};
 
 	return (
