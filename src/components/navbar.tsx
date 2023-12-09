@@ -1,14 +1,10 @@
-'use client';
-
 import Link from 'next/link';
 
 import { cn } from '@/lib/utils';
-import { usePathname } from 'next/navigation';
+// import { usePathname } from 'next/navigation';
 import User from './user';
 
 const Navbar = ({ className, ...props }: React.HTMLAttributes<HTMLElement>) => {
-	const pathname = usePathname();
-
 	return (
 		<div className='relative flex h-16 items-center px-4'>
 			<nav
@@ -21,8 +17,8 @@ const Navbar = ({ className, ...props }: React.HTMLAttributes<HTMLElement>) => {
 				<Link
 					href='/support'
 					className={cn(
-						'text-sm font-medium transition-colors hover:text-primary text-muted-foreground',
-						pathname === '/support' && 'text-primary'
+						'text-sm font-medium transition-colors hover:text-primary text-muted-foreground'
+						// pathname === '/support' && 'text-primary'
 					)}
 				>
 					Suporte
@@ -30,8 +26,8 @@ const Navbar = ({ className, ...props }: React.HTMLAttributes<HTMLElement>) => {
 				<Link
 					href='/tickets'
 					className={cn(
-						'text-sm font-medium transition-colors hover:text-primary text-muted-foreground',
-						pathname === '/tickets' && 'text-primary'
+						'text-sm font-medium transition-colors hover:text-primary text-muted-foreground'
+						// pathname === '/tickets' && 'text-primary'
 					)}
 				>
 					Tickets

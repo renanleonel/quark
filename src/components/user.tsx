@@ -10,6 +10,7 @@ import {
 	DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import SignOut from './sign-out';
+import { auth } from '@/auth';
 
 interface UserProps {
 	icon: string;
@@ -17,7 +18,9 @@ interface UserProps {
 	fallback: string;
 }
 
-const User = ({ icon, alt, fallback }: UserProps) => {
+const User = async ({ icon, alt, fallback }: UserProps) => {
+	const session = await auth();
+
 	return (
 		<DropdownMenu>
 			<DropdownMenuTrigger asChild>
@@ -35,10 +38,10 @@ const User = ({ icon, alt, fallback }: UserProps) => {
 				<DropdownMenuLabel className='font-normal'>
 					<div className='flex flex-col space-y-1'>
 						<p className='text-sm font-medium leading-none'>
-							shadcn
+							{session?.user?.name}
 						</p>
 						<p className='text-xs leading-none text-muted-foreground'>
-							m@example.com
+							{session?.user?.email}
 						</p>
 					</div>
 				</DropdownMenuLabel>

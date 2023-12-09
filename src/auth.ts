@@ -5,7 +5,7 @@ import Credentials from 'next-auth/providers/credentials';
 async function getUser(email: string, password: string): Promise<any> {
 	return {
 		id: 1,
-		name: 'John Doe',
+		name: 'username',
 		email: email,
 		password: password,
 	};
@@ -20,8 +20,16 @@ export const {
 	...authConfig,
 	providers: [
 		Credentials({
+			name: 'credentials',
+			credentials: {
+				email: { label: 'email', type: 'text' },
+				password: { label: 'password', type: 'password' },
+			},
 			async authorize(credentials) {
-				const user = await getUser('email', 'password');
+				const user = await getUser(
+					credentials.email as string,
+					credentials.password as string
+				);
 				if (!user) return null;
 				return user;
 			},
