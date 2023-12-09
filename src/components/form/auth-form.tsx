@@ -1,7 +1,6 @@
 'use client';
 
 import { cn } from '@/lib/utils';
-import { useState } from 'react';
 
 import { Form, FormField, FormItem, FormMessage } from '@/components/ui/form';
 import { Label } from '@/components/ui/label';
@@ -13,9 +12,9 @@ import { Separator } from '@/components/ui/separator';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { FormType, formSchema } from '@/types/schema';
-import { authenticate, loginAction } from '@/lib/actions';
+import { authenticate } from '@/lib/actions';
 import { defaultValues } from '@/content/contants';
-import { redirect } from 'next/navigation';
+import { useFormState, useFormStatus } from 'react-dom';
 
 interface AuthFormProps extends React.HTMLAttributes<HTMLDivElement> {}
 
@@ -41,6 +40,9 @@ const AuthForm = ({ className, ...props }: AuthFormProps) => {
 		// 		console.log(error);
 		// 	});
 	};
+
+	const { pending } = useFormStatus();
+	// const [errorMessage, dispatch] = useFormState(authenticate, undefined);
 
 	return (
 		<div className={cn('dark grid gap-6', className)} {...props}>
