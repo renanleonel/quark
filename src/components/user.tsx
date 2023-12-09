@@ -7,9 +7,9 @@ import {
 	DropdownMenuItem,
 	DropdownMenuLabel,
 	DropdownMenuSeparator,
-	DropdownMenuShortcut,
 	DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
+import SignOut from './sign-out';
 
 interface UserProps {
 	icon: string;
@@ -48,7 +48,9 @@ const User = ({ icon, alt, fallback }: UserProps) => {
 					<DropdownMenuItem>Configurações</DropdownMenuItem>
 				</DropdownMenuGroup>
 				<DropdownMenuSeparator />
-				<DropdownMenuItem>Sair</DropdownMenuItem>
+				<DropdownMenuItem>
+					<SignOut />
+				</DropdownMenuItem>
 			</DropdownMenuContent>
 		</DropdownMenu>
 	);

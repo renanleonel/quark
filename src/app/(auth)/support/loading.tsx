@@ -21,6 +21,7 @@ import {
 } from '@/components/ui/select';
 import { Textarea } from '@/components/ui/textarea';
 
+import { signOut } from '@/auth';
 import { InputFile } from '@/components/input-file';
 import { Alert, AlertTitle } from '@/components/ui/alert';
 import { Clock, Link } from 'lucide-react';
@@ -30,9 +31,7 @@ export const metadata: Metadata = {
 	description: 'Envie um ticket para o suporte',
 };
 
-const Home = async () => {
-	await new Promise((resolve) => setTimeout(resolve, 2000));
-
+export default function Loading() {
 	return (
 		<>
 			<Card>
@@ -55,7 +54,7 @@ const Home = async () => {
 					<section className='flex flex-col gap-6 w-full'>
 						<div className='grid gap-2'>
 							<Label htmlFor='nome'>Seu nome</Label>
-							<Input id='nome' placeholder='Nome' />
+							<Input id='nome' />
 						</div>
 
 						<div className='grid grid-cols-2 gap-4'>
@@ -66,7 +65,7 @@ const Home = async () => {
 										id='security-level'
 										className='line-clamp-1 w-[160px] lg:w-full truncate'
 									>
-										<SelectValue placeholder='Tipo' />
+										<SelectValue />
 									</SelectTrigger>
 									<SelectContent>
 										<SelectItem value='1'>Bug</SelectItem>
@@ -85,7 +84,7 @@ const Home = async () => {
 										id='security-level'
 										className='line-clamp-1 w-[160px] lg:w-full truncate'
 									>
-										<SelectValue placeholder='Urgência' />
+										<SelectValue />
 									</SelectTrigger>
 									<SelectContent>
 										<SelectItem value='1'>Alta</SelectItem>
@@ -119,42 +118,27 @@ const Home = async () => {
 								<Label htmlFor='link'>Link</Label>
 								<Link className='h-3 w-3' />
 							</div>
-							<Input id='link' placeholder='Link' />
+							<Input id='link' />
 						</div>
 					</section>
 
 					<section className='flex flex-col gap-6 w-full'>
 						<div className='grid gap-2'>
 							<Label htmlFor='subject'>Título</Label>
-							<Input
-								id='subject'
-								placeholder='Preciso de ajuda com...'
-							/>
+							<Input id='subject' />
 						</div>
 						<div className='flex flex-col gap-2 h-full'>
 							<Label htmlFor='description'>Descrição</Label>
-							<Textarea
-								id='description'
-								className='h-full'
-								placeholder='Insira todas as informações necessárias para que possamos te ajudar.'
-							/>
+							<Textarea id='description' className='h-full' />
 						</div>
 					</section>
 				</CardContent>
 				<CardFooter className='justify-between space-x-2'>
-					<Button variant='ghost'>Cancelar</Button>
-					<Button>Enviar</Button>
+					<Button variant='ghost'></Button>
+					<Button className='w-16' disabled></Button>
 				</CardFooter>
 			</Card>
-			<Alert className='hidden lg:flex'>
-				<Clock className='h-4 w-4' />
-				<AlertTitle className='text-muted-foreground text-xs'>
-					Analisaremos seu ticket e entraremos em contato assim que
-					possível!
-				</AlertTitle>
-			</Alert>
+			<Alert className='h-14 hidden lg:flex items-center'></Alert>
 		</>
 	);
-};
-
-export default Home;
+}

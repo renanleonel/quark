@@ -16,7 +16,7 @@ export const loginAction = async (data: FormType) => {
 	// 	});
 };
 
-import { signIn } from '@/auth';
+import { signIn, signOut } from '@/auth';
 import { AuthError } from 'next-auth';
 
 // ...
@@ -36,3 +36,7 @@ export async function authenticate(formData: FormData) {
 		throw error;
 	}
 }
+
+export const signout = async () => {
+	await signOut();
+};

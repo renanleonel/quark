@@ -41,7 +41,7 @@ const Navbar = ({ className, ...props }: React.HTMLAttributes<HTMLElement>) => {
 				<User
 					icon='https://github.com/shadcn.png'
 					alt='@shadcn'
-					fallback='CN'
+					fallback=' '
 				/>
 			</div>
 		</div>

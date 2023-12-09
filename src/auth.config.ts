@@ -8,25 +8,19 @@ export const authConfig = {
 	},
 	callbacks: {
 		authorized({ auth, request: { nextUrl } }) {
-			const isLoggedIn = !!auth?.user;
-			const isOnDashboard = nextUrl.pathname.startsWith('/support');
-			// console.log(auth);
-			// console.log(auth?.user);
-			// console.log(nextUrl);
-			// console.log(nextUrl.pathname);
+			const isAuthenticated = !!auth?.user;
+			const paths = ['/support', '/tickets'];
 
-			if (isOnDashboard) {
-				if (isLoggedIn) return true;
+			if (paths.includes(nextUrl.pathname)) {
+				if (isAuthenticated) return true;
 				return false; // Redirect unauthenticated users to login page
-			} else if (isLoggedIn) {
+			} else if (isAuthenticated) {
 				return Response.redirect(new URL('/support', nextUrl));
 			}
 			return true;
 		},
 
 		async redirect({ url, baseUrl }: { url: string; baseUrl: string }) {
-			console.log('url => ', url);
-			console.log('baseUrl => ', baseUrl);
 			const isRelativeUrl = url.startsWith('/');
 			if (isRelativeUrl) {
 				return `${baseUrl}${url}`;

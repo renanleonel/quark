@@ -23,7 +23,6 @@ export const {
 			async authorize(credentials) {
 				const user = await getUser('email', 'password');
 				if (!user) return null;
-
 				return user;
 			},
 		}),
