@@ -1,6 +1,6 @@
 'use server';
 
-import { FormType } from '@/types/schema';
+import { FormType, formSchema } from '@/types/schema';
 import { redirect } from 'next/navigation';
 
 export const loginAction = async (data: FormType) => {
@@ -18,19 +18,54 @@ export const loginAction = async (data: FormType) => {
 
 import { signIn, signOut } from '@/auth';
 import { AuthError } from 'next-auth';
+import { defaultValues } from '@/content/constants';
 
 // ...
 
-export async function authenticate(formData: FormData) {
+export async function authenticate(prevState: any, formData: FormData) {
 	try {
-		await signIn('credentials', formData);
+		console.log(formData);
+
+		const email = formData.get('email');
+		const password = formData.get('password');
+
+		const validatedFields = formSchema.safeParse({
+			email: email,
+			password: password,
+		});
+
+		if (!validatedFields.success) {
+			return {
+				message: 'validation error',
+				errors: validatedFields.error.flatten().fieldErrors,
+			};
+		}
+
+		// await signIn('credentials', formData);
+
+		return {
+			message: 'success',
+			errors: {},
+		};
 	} catch (error) {
 		if (error instanceof AuthError) {
 			switch (error.type) {
 				case 'CredentialsSignin':
-					return 'Invalid credentials.';
+					return {
+						message: 'credentials error',
+						errors: {
+							...defaultValues,
+							credentials: 'Email ou senha incorretos.',
+						},
+					};
 				default:
-					return 'Something went wrong.';
+					return {
+						message: 'unknown error',
+						errors: {
+							...defaultValues,
+							unknown: 'Erro desconhecido.',
+						},
+					};
 			}
 		}
 		throw error;

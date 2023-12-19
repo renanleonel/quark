@@ -2,7 +2,12 @@ import { z } from 'zod';
 
 export type FormType = z.infer<typeof formSchema>;
 export const formSchema = z.object({
-	email: z.string().min(1, { message: 'Insira o email!' }),
-	// .email({ message: 'Email inválido!' }),
-	password: z.string().min(1, { message: 'Insira a senha!' }),
+	email: z
+		.string()
+		.min(1, { message: 'Insira o email!' })
+		.email({ message: 'Email inválido!' }),
+	password: z
+		.string()
+		.min(1, { message: 'Insira a senha!' })
+		.min(6, { message: 'Senha deve ter no mínimo 6 caracteres!' }),
 });

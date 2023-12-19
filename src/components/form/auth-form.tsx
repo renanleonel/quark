@@ -13,8 +13,7 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { FormType, formSchema } from '@/types/schema';
 import { authenticate } from '@/lib/actions';
-import { defaultValues } from '@/content/contants';
-import { useFormState, useFormStatus } from 'react-dom';
+import { defaultValues } from '@/content/constants';
 
 interface AuthFormProps extends React.HTMLAttributes<HTMLDivElement> {}
 
@@ -25,24 +24,13 @@ const AuthForm = ({ className, ...props }: AuthFormProps) => {
 	});
 
 	const {
-		reset,
 		handleSubmit,
-		formState: { isSubmitting },
+		formState: { isSubmitting, errors },
 	} = form;
 
 	const login = async (data: FormType) => {
-		await authenticate(data as any);
-		// await loginAction(data)
-		// 	.then(() => {
-		// 		reset();
-		// 	})
-		// 	.catch((error) => {
-		// 		console.log(error);
-		// 	});
+		await authenticate('', data as any);
 	};
-
-	const { pending } = useFormStatus();
-	// const [errorMessage, dispatch] = useFormState(authenticate, undefined);
 
 	return (
 		<div className={cn('dark grid gap-6', className)} {...props}>
