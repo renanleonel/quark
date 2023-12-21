@@ -1,10 +1,9 @@
 import { Metadata } from 'next';
 
-import AuthForm from '@/components/form/auth-form';
-import ActionAuthForm from '@/components/form/action-auth-form';
 import { Separator } from '@/components/ui/separator';
 import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
+import AuthForm from '@/components/form/auth-form';
 
 export const metadata: Metadata = {
 	title: 'Entrar',
@@ -21,8 +20,7 @@ const Auth = () => {
 						Digite seu email de acesso
 					</p>
 				</div>
-				{/* <AuthForm /> */}
-				<ActionAuthForm />
+				<AuthForm />
 
 				<Separator className='bg-white/20' />
 				<Button variant='outline' type='button'>

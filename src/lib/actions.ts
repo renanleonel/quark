@@ -41,7 +41,7 @@ export async function authenticate(prevState: any, formData: FormData) {
 			};
 		}
 
-		// await signIn('credentials', formData);
+		await signIn('credentials', formData);
 
 		return {
 			message: 'success',
