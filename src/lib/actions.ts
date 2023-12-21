@@ -1,26 +1,24 @@
 'use server';
 
-import { FormType, formSchema } from '@/types/schema';
-import { redirect } from 'next/navigation';
+import { AuthError } from 'next-auth';
+import { signIn, signOut } from '@/auth';
+import { formSchema, supportSchema } from '@/types/schema';
 
-export const loginAction = async (data: FormType) => {
-	console.log(data);
-	// redirect('/support');
-	// await new Promise((resolve) => setTimeout(resolve, 2000))
-	// 	.then(() => {
-	// 		console.log('Login realizado!');
-	// 		return redirect('/support');
-	// 	})
-	// 	.catch((err) => {
-	// 		console.log(err);
-	// 	});
+const defaultValues = {
+	email: '',
+	password: '',
 };
 
-import { signIn, signOut } from '@/auth';
-import { AuthError } from 'next-auth';
-import { defaultValues } from '@/content/constants';
-
-// ...
+const defaultSupportValues = {
+	name: '',
+	type: '',
+	urgency: '',
+	application: '',
+	file: '',
+	link: '',
+	title: '',
+	description: '',
+};
 
 export async function authenticate(prevState: any, formData: FormData) {
 	try {
@@ -74,4 +72,49 @@ export async function authenticate(prevState: any, formData: FormData) {
 
 export const signout = async () => {
 	await signOut();
+};
+
+export const support = async (prevState: any, formData: FormData) => {
+	try {
+		const name = formData.get('name');
+		const type = formData.get('type');
+		const urgency = formData.get('urgency');
+		const application = formData.get('application');
+		const file = formData.get('file');
+		const link = formData.get('link');
+		const title = formData.get('title');
+		const description = formData.get('description');
+
+		const validatedFields = supportSchema.safeParse({
+			name: name,
+			type: type,
+			urgency: urgency,
+			application: application,
+			file: file,
+			link: link,
+			title: title,
+			description: description,
+		});
+
+		if (!validatedFields.success) {
+			console.log(validatedFields.error.flatten().fieldErrors);
+			return {
+				message: 'validation error',
+				errors: validatedFields.error.flatten().fieldErrors,
+			};
+		}
+
+		return {
+			message: 'success',
+			errors: {},
+		};
+	} catch (error) {
+		return {
+			message: 'unknown error',
+			errors: {
+				...defaultSupportValues,
+				unknown: 'Erro desconhecido.',
+			},
+		};
+	}
 };

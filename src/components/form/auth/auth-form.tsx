@@ -1,7 +1,6 @@
 'use client';
 
 import { cn } from '@/lib/utils';
-import { initialState } from '@/content/constants';
 
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -9,9 +8,19 @@ import { Label } from '@/components/ui/label';
 import { useFormState } from 'react-dom';
 import { authenticate } from '@/lib/actions';
 
-import SubmitButton from './submit-button';
+import SubmitButton from '../submit-button';
 
 interface AuthFormProps extends React.HTMLAttributes<HTMLDivElement> {}
+
+const initialState = {
+	message: '',
+	errors: {
+		email: '',
+		password: '',
+		credentials: '',
+		unknown: '',
+	},
+};
 
 const AuthForm = ({ className, ...props }: AuthFormProps) => {
 	const [formState, formAction] = useFormState(authenticate, initialState);
@@ -58,7 +67,7 @@ const AuthForm = ({ className, ...props }: AuthFormProps) => {
 						</p>
 					</div>
 
-					<SubmitButton />
+					<SubmitButton text='Entrar' />
 				</section>
 			</form>
 		</main>

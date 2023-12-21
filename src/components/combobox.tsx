@@ -17,12 +17,14 @@ import {
 	PopoverContent,
 	PopoverTrigger,
 } from '@/components/ui/popover';
+import { Input } from './ui/input';
 
 interface ComboboxProps {
 	options: { value: string; label: string }[];
 	placeholderText: string;
 	searchText: string;
 	className?: string;
+	name?: string;
 }
 
 const Combobox = ({
@@ -30,6 +32,7 @@ const Combobox = ({
 	placeholderText,
 	searchText,
 	className,
+	name,
 }: ComboboxProps) => {
 	const [open, setOpen] = React.useState(false);
 	const [value, setValue] = React.useState('');
@@ -43,6 +46,8 @@ const Combobox = ({
 					aria-expanded={open}
 					className={cn('justify-between', className)}
 				>
+					<Input name={name} value={value} className='hidden' />
+
 					{value
 						? options.find((option) => option.value === value)
 								?.label
@@ -68,6 +73,12 @@ const Combobox = ({
 									setOpen(false);
 								}}
 							>
+								<Input
+									name={name}
+									value={option.value}
+									className='hidden'
+								/>
+
 								{option.label}
 								<CheckIcon
 									className={cn(
