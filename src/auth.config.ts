@@ -12,7 +12,12 @@ export const authConfig = {
 	callbacks: {
 		authorized({ auth, request: { nextUrl } }) {
 			const isAuthenticated = !!auth?.user;
-			const paths = ['/support', '/tickets'];
+			const paths = [
+				'/support',
+				'/tickets',
+				'/organization',
+				'/settings',
+			];
 
 			if (paths.includes(nextUrl.pathname)) {
 				if (isAuthenticated) return true;

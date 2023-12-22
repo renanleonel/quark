@@ -14,7 +14,7 @@ export const metadata: Metadata = {
 	description: 'Envie um ticket para o suporte',
 };
 
-const Home = () => {
+const Support = () => {
 	return (
 		<Card>
 			<CardHeader>
@@ -29,4 +29,4 @@ const Home = () => {
 	);
 };
 
-export default Home;
+export default Support;
