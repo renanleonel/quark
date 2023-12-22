@@ -27,6 +27,7 @@ import {
 
 import { DataTablePagination } from '../components/data-table-pagination';
 import { DataTableToolbar } from '../components/data-table-toolbar';
+import { ScrollArea } from '@/components/ui/scroll-area';
 
 interface DataTableProps<TData, TValue> {
 	columns: ColumnDef<TData, TValue>[];
@@ -67,60 +68,64 @@ export function DataTable<TData, TValue>({
 	});
 
 	return (
-		<div className='space-y-4'>
+		<div className='space-y-4 flex flex-col w-full'>
 			<DataTableToolbar table={table} />
-			<div className='rounded-md border'>
-				<Table>
-					<TableHeader>
-						{table.getHeaderGroups().map((headerGroup) => (
-							<TableRow key={headerGroup.id}>
-								{headerGroup.headers.map((header) => {
-									return (
-										<TableHead key={header.id}>
-											{header.isPlaceholder
-												? null
-												: flexRender(
-														header.column.columnDef
-															.header,
-														header.getContext()
-												  )}
-										</TableHead>
-									);
-								})}
-							</TableRow>
-						))}
-					</TableHeader>
-					<TableBody>
-						{table.getRowModel().rows?.length ? (
-							table.getRowModel().rows.map((row) => (
-								<TableRow
-									key={row.id}
-									data-state={
-										row.getIsSelected() && 'selected'
-									}
-								>
-									{row.getVisibleCells().map((cell) => (
-										<TableCell key={cell.id}>
-											{flexRender(
-												cell.column.columnDef.cell,
-												cell.getContext()
-											)}
-										</TableCell>
-									))}
+			<div className='rounded-md border  w-full'>
+				<div className='h-[500px] overflow-auto'>
+					<Table>
+						<TableHeader className='sticky top-0 bg-background z-20'>
+							{table.getHeaderGroups().map((headerGroup) => (
+								<TableRow key={headerGroup.id}>
+									{headerGroup.headers.map((header) => {
+										return (
+											<TableHead key={header.id}>
+												{header.isPlaceholder
+													? null
+													: flexRender(
+															header.column
+																.columnDef
+																.header,
+															header.getContext()
+													  )}
+											</TableHead>
+										);
+									})}
 								</TableRow>
-							))
-						) : (
-							<TableRow>
-								<TableCell
-									colSpan={columns.length}
-									className='h-24 text-center'
-								>
-									No results.
-								</TableCell>
-							</TableRow>
-						)}
-					</TableBody>
-				</Table>
+							))}
+						</TableHeader>
+
+						<TableBody>
+							{table.getRowModel().rows?.length ? (
+								table.getRowModel().rows.map((row) => (
+									<TableRow
+										key={row.id}
+										data-state={
+											row.getIsSelected() && 'selected'
+										}
+									>
+										{row.getVisibleCells().map((cell) => (
+											<TableCell key={cell.id}>
+												{flexRender(
+													cell.column.columnDef.cell,
+													cell.getContext()
+												)}
+											</TableCell>
+										))}
+									</TableRow>
+								))
+							) : (
+								<TableRow>
+									<TableCell
+										colSpan={columns.length}
+										className='h-24 text-center'
+									>
+										No results.
+									</TableCell>
+								</TableRow>
+							)}
+						</TableBody>
+					</Table>
+				</div>
 			</div>
 			<DataTablePagination table={table} />
 		</div>

@@ -6,7 +6,7 @@ import User from './user';
 
 const Navbar = ({ className, ...props }: React.HTMLAttributes<HTMLElement>) => {
 	return (
-		<div className='relative flex h-16 items-center px-4'>
+		<div className='flex h-16 items-center px-4 py-4'>
 			<nav
 				className={cn(
 					'flex items-center space-x-4 lg:space-x-6',
