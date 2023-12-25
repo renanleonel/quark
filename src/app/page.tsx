@@ -24,9 +24,12 @@ const Auth = () => {
 				<AuthForm />
 
 				<Separator className='bg-white/20' />
-				<Button variant='outline' type='button'>
-					Recuperar senha
-				</Button>
+				<Link href='/recover'>
+					<Button variant='outline' type='button' className='w-full'>
+						Recuperar senha
+					</Button>
+				</Link>
+
 				<Label htmlFor='sign-in'>Não tem uma conta?</Label>
 				<Link href='/sign-up'>
 					<Button variant='outline' type='button' className='w-full'>

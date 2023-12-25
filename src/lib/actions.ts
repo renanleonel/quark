@@ -2,8 +2,17 @@
 
 import { AuthError } from 'next-auth';
 import { signIn, signOut } from '@/auth';
-import { authSchema, signUpForm, supportSchema } from '@/types/schema';
+import {
+	authSchema,
+	recoverSchema,
+	signUpForm,
+	supportSchema,
+} from '@/types/schema';
 import { redirect } from 'next/navigation';
+
+const defaultRecoverValues = {
+	email: '',
+};
 
 const defaultAuthValues = {
 	email: '',
@@ -75,12 +84,13 @@ export async function authenticate(prevState: any, formData: FormData) {
 	}
 }
 
-export const signout = async () => {
+export async function signout() {
 	await signOut();
-};
+}
 
-export const signup = async (prevState: any, formData: FormData) => {
+export async function signup(prevState: any, formData: FormData) {
 	let success = false;
+
 	try {
 		const email = formData.get('email');
 		const password = formData.get('password');
@@ -99,15 +109,8 @@ export const signup = async (prevState: any, formData: FormData) => {
 			};
 		}
 
-		//workaround enquanto action ta bugada
 		success = true;
-		redirect('/sign-up/info');
 	} catch (error) {
-		console.log(error);
-
-		//workaround enquanto action ta bugada
-		if (success) redirect('/sign-up/info');
-
 		return {
 			message: 'unknown error',
 			errors: {
@@ -116,9 +119,11 @@ export const signup = async (prevState: any, formData: FormData) => {
 			},
 		};
 	}
-};
 
-export const support = async (prevState: any, formData: FormData) => {
+	if (success) redirect('/sign-up/info');
+}
+
+export async function support(prevState: any, formData: FormData) {
 	try {
 		const name = formData.get('name');
 		const type = formData.get('type');
@@ -161,4 +166,35 @@ export const support = async (prevState: any, formData: FormData) => {
 			},
 		};
 	}
-};
+}
+
+export async function recover(prevState: any, formData: FormData) {
+	let success = false;
+
+	try {
+		const email = formData.get('email');
+
+		const validatedFields = recoverSchema.safeParse({
+			email: email,
+		});
+
+		if (!validatedFields.success) {
+			return {
+				message: 'validation error',
+				errors: validatedFields.error.flatten().fieldErrors,
+			};
+		}
+
+		success = true;
+	} catch (error) {
+		return {
+			message: 'unknown error',
+			errors: {
+				...defaultRecoverValues,
+				unknown: 'Erro desconhecido.',
+			},
+		};
+	}
+
+	if (success) redirect('/');
+}

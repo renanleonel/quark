@@ -1,29 +1,30 @@
 import Link from 'next/link';
 import { Metadata } from 'next';
 
+import { Label } from '@/components/ui/label';
 import { Button } from '@/components/ui/button';
-import { Separator } from '@/components/ui/separator';
-import SignUpForm from '@/components/form/sign-up/sign-up-form';
+import RecoverForm from '@/components/form/recover/recover-form';
 
 export const metadata: Metadata = {
-	title: 'Cadastro',
-	description: 'Cadastre-se',
+	title: 'Recuperar senha',
+	description: 'Digite seu email para recuperar sua senha',
 };
 
-const SignUp = () => {
+const Recover = () => {
 	return (
 		<main className='h-screen flex items-center justify-center'>
 			<div className='text-white w-[350px] flex flex-col gap-4'>
 				<div className='flex flex-col gap-2 text-center'>
-					<h1 className='text-2xl font-semibold'>Cadastro</h1>
+					<h1 className='text-2xl font-semibold'>Recuperar senha</h1>
 					<p className='text-sm text-muted-foreground'>
 						Digite seu email de acesso
 					</p>
 				</div>
-				<SignUpForm />
+				<RecoverForm />
 
-				<Separator className='bg-white/20' />
-
+				<Label className='sr-only' htmlFor='back'>
+					Voltar
+				</Label>
 				<Link href='/'>
 					<Button variant='outline' type='button' className='w-full'>
 						Voltar
@@ -34,4 +35,4 @@ const SignUp = () => {
 	);
 };
 
-export default SignUp;
+export default Recover;
