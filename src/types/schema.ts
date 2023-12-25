@@ -1,7 +1,7 @@
 import { z } from 'zod';
 
-export type FormType = z.infer<typeof formSchema>;
-export const formSchema = z.object({
+export type AuthType = z.infer<typeof authSchema>;
+export const authSchema = z.object({
 	email: z
 		.string()
 		.min(1, { message: 'Insira o email!' })
@@ -11,6 +11,24 @@ export const formSchema = z.object({
 		.min(1, { message: 'Insira a senha!' })
 		.min(6, { message: 'Senha deve ter no mínimo 6 caracteres!' }),
 });
+
+export type SignUpType = z.infer<typeof signUpForm>;
+export const signUpForm = z
+	.object({
+		email: z
+			.string()
+			.min(1, { message: 'Insira o email!' })
+			.email({ message: 'Email inválido!' }),
+		password: z
+			.string()
+			.min(1, { message: 'Insira a senha!' })
+			.min(3, { message: 'Senha deve ter no mínimo 6 caracteres!' }),
+		confirmPassword: z.string().min(1, { message: 'Confirme a senha!' }),
+	})
+	.refine((data) => data.password === data.confirmPassword, {
+		message: 'Senhas não coincidem!',
+		path: ['confirmPassword'],
+	});
 
 export type SupportType = z.infer<typeof supportSchema>;
 export const supportSchema = z.object({

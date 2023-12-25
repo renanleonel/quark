@@ -134,7 +134,7 @@ const SupportForm = () => {
 				<Button type='reset' variant='ghost'>
 					Cancelar
 				</Button>
-				<SubmitButton text='Enviar' />
+				<SubmitButton text='Enviar' className='w-24' />
 			</CardFooter>
 		</form>
 	);

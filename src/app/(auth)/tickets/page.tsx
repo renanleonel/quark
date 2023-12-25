@@ -10,6 +10,7 @@ import {
 	CardHeader,
 	CardTitle,
 } from '@/components/ui/card';
+import { Separator } from '@/components/ui/separator';
 
 export const metadata: Metadata = {
 	title: 'Tasks',
@@ -20,9 +21,7 @@ async function getTasks() {
 	return tasks;
 }
 
-interface TicketsProps {}
-
-const Tickets = async ({}: TicketsProps) => {
+const Tickets = async () => {
 	const tasks = await getTasks();
 
 	return (
@@ -31,7 +30,7 @@ const Tickets = async ({}: TicketsProps) => {
 				<CardTitle>Tickets</CardTitle>
 				<CardDescription>Esses são os tickets abertos.</CardDescription>
 			</CardHeader>
-
+			<Separator />
 			<DataTable data={tasks} columns={columns} />
 		</Card>
 	);

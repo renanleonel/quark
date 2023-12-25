@@ -17,6 +17,7 @@ export const authConfig = {
 				'/tickets',
 				'/organization',
 				'/settings',
+				'/settings/account',
 			];
 
 			if (paths.includes(nextUrl.pathname)) {

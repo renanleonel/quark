@@ -3,34 +3,30 @@ import { Metadata } from 'next';
 import { Separator } from '@/components/ui/separator';
 import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
-import AuthForm from '@/components/form/auth/auth-form';
 import Link from 'next/link';
+import SignUpForm from '@/components/form/sign-up/sign-up-form';
 
 export const metadata: Metadata = {
-	title: 'Entrar',
-	description: 'Faça login na sua conta para acessar a página de suporte',
+	title: 'Cadastrar',
+	description: 'Cadastre-se',
 };
 
-const Auth = () => {
+const SignUp = () => {
 	return (
 		<main className='h-screen flex items-center justify-center'>
 			<div className='text-white w-[350px] flex flex-col gap-4'>
 				<div className='flex flex-col gap-2 text-center'>
-					<h1 className='text-2xl font-semibold'>Entrar</h1>
+					<h1 className='text-2xl font-semibold'>Cadastro</h1>
 					<p className='text-sm text-muted-foreground'>
 						Digite seu email de acesso
 					</p>
 				</div>
-				<AuthForm />
+				<SignUpForm />
 
 				<Separator className='bg-white/20' />
-				<Button variant='outline' type='button'>
-					Recuperar senha
-				</Button>
-				<Label htmlFor='sign-in'>Não tem uma conta?</Label>
-				<Link href='/sign-up'>
+				<Link href='/'>
 					<Button variant='outline' type='button' className='w-full'>
-						Cadastrar
+						Voltar
 					</Button>
 				</Link>
 			</div>
@@ -38,4 +34,4 @@ const Auth = () => {
 	);
 };
 
-export default Auth;
+export default SignUp;

@@ -8,6 +8,7 @@ import {
 } from '@/components/ui/card';
 
 import SupportForm from '@/components/form/support/support-form';
+import { Separator } from '@/components/ui/separator';
 
 export const metadata: Metadata = {
 	title: 'Suporte',
@@ -23,6 +24,7 @@ const Support = () => {
 					Envie um ticket para a nossa equipe
 				</CardDescription>
 			</CardHeader>
+			<Separator className='mb-6' />
 
 			<SupportForm />
 		</Card>

@@ -2,11 +2,18 @@
 
 import { AuthError } from 'next-auth';
 import { signIn, signOut } from '@/auth';
-import { formSchema, supportSchema } from '@/types/schema';
+import { authSchema, signUpForm, supportSchema } from '@/types/schema';
+import { redirect } from 'next/navigation';
 
-const defaultValues = {
+const defaultAuthValues = {
 	email: '',
 	password: '',
+};
+
+const defaultSignUpValues = {
+	email: '',
+	password: '',
+	confirmPassword: '',
 };
 
 const defaultSupportValues = {
@@ -22,12 +29,10 @@ const defaultSupportValues = {
 
 export async function authenticate(prevState: any, formData: FormData) {
 	try {
-		console.log(formData);
-
 		const email = formData.get('email');
 		const password = formData.get('password');
 
-		const validatedFields = formSchema.safeParse({
+		const validatedFields = authSchema.safeParse({
 			email: email,
 			password: password,
 		});
@@ -52,7 +57,7 @@ export async function authenticate(prevState: any, formData: FormData) {
 					return {
 						message: 'credentials error',
 						errors: {
-							...defaultValues,
+							...defaultAuthValues,
 							credentials: 'Email ou senha incorretos.',
 						},
 					};
@@ -60,7 +65,7 @@ export async function authenticate(prevState: any, formData: FormData) {
 					return {
 						message: 'unknown error',
 						errors: {
-							...defaultValues,
+							...defaultAuthValues,
 							unknown: 'Erro desconhecido.',
 						},
 					};
@@ -72,6 +77,45 @@ export async function authenticate(prevState: any, formData: FormData) {
 
 export const signout = async () => {
 	await signOut();
+};
+
+export const signup = async (prevState: any, formData: FormData) => {
+	let success = false;
+	try {
+		const email = formData.get('email');
+		const password = formData.get('password');
+		const confirmPassword = formData.get('confirmPassword');
+
+		const validatedFields = signUpForm.safeParse({
+			email: email,
+			password: password,
+			confirmPassword: confirmPassword,
+		});
+
+		if (!validatedFields.success) {
+			return {
+				message: 'validation error',
+				errors: validatedFields.error.flatten().fieldErrors,
+			};
+		}
+
+		//workaround enquanto action ta bugada
+		success = true;
+		redirect('/sign-up/info');
+	} catch (error) {
+		console.log(error);
+
+		//workaround enquanto action ta bugada
+		if (success) redirect('/sign-up/info');
+
+		return {
+			message: 'unknown error',
+			errors: {
+				...defaultSignUpValues,
+				unknown: 'Erro desconhecido.',
+			},
+		};
+	}
 };
 
 export const support = async (prevState: any, formData: FormData) => {
