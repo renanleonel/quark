@@ -26,14 +26,10 @@ export const {
 				password: { label: 'password', type: 'password' },
 			},
 			async authorize(credentials) {
-				console.log('credentials: ', credentials);
-
 				const user = await getUser(
 					credentials.email as string,
 					credentials.password as string
 				);
-
-				console.log('user: ', user);
 
 				if (!user) return null;
 				return user;

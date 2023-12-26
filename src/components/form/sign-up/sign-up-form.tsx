@@ -27,8 +27,6 @@ const initialState = {
 const SignUpForm = ({ className, ...props }: SignUpFormProps) => {
 	const [formState, formAction] = useFormState(signup, initialState);
 
-	console.log(formState);
-
 	return (
 		<main className={cn('dark grid gap-6', className)} {...props}>
 			<form action={formAction}>

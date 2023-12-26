@@ -10,31 +10,16 @@ import {
 } from '@/types/schema';
 import { redirect } from 'next/navigation';
 
-const defaultRecoverValues = {
-	email: '',
-};
+import {
+	defaultAuthValues,
+	defaultRecoverValues,
+	defaultSignUpValues,
+	defaultSupportValues,
+} from '@/content/constants';
 
-const defaultAuthValues = {
-	email: '',
-	password: '',
-};
-
-const defaultSignUpValues = {
-	email: '',
-	password: '',
-	confirmPassword: '',
-};
-
-const defaultSupportValues = {
-	name: '',
-	type: '',
-	urgency: '',
-	application: '',
-	file: '',
-	link: '',
-	title: '',
-	description: '',
-};
+export async function signout() {
+	await signOut();
+}
 
 export async function authenticate(prevState: any, formData: FormData) {
 	try {
@@ -82,10 +67,6 @@ export async function authenticate(prevState: any, formData: FormData) {
 		}
 		throw error;
 	}
-}
-
-export async function signout() {
-	await signOut();
 }
 
 export async function signup(prevState: any, formData: FormData) {
@@ -146,7 +127,6 @@ export async function support(prevState: any, formData: FormData) {
 		});
 
 		if (!validatedFields.success) {
-			console.log(validatedFields.error.flatten().fieldErrors);
 			return {
 				message: 'validation error',
 				errors: validatedFields.error.flatten().fieldErrors,
