@@ -4,6 +4,7 @@ import { ProfileForm } from '../../../components/form/profile/profile-form';
 import { ThemeCustomizer } from '@/components/theme';
 
 import '@/styles/themes.css';
+import { AccountForm } from '@/components/form/account/account-form';
 
 export const metadata: Metadata = {
 	title: 'Configurações',
@@ -21,7 +22,7 @@ const Settings = () => {
 			</div>
 			<ThemeCustomizer />
 			<Separator />
-			<ProfileForm />
+			<AccountForm />
 		</div>
 	);
 };

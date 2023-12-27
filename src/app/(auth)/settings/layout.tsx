@@ -14,10 +14,6 @@ const sidebarNavItems = [
 		title: 'Perfil',
 		href: '/settings',
 	},
-	{
-		title: 'Conta',
-		href: '/settings/account',
-	},
 ];
 
 export default function Layout({ children }: { children: React.ReactNode }) {

@@ -99,7 +99,7 @@ const SupportForm = () => {
 								name='application'
 							/>
 						</div>
-						<InputFile name='file' />
+						<InputFile name='file' label='Screenshot' />
 					</div>
 					<div className='grid gap-2'>
 						<div className='flex gap-2 items-center'>

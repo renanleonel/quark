@@ -32,6 +32,15 @@ const Navbar = ({ className, ...props }: React.HTMLAttributes<HTMLElement>) => {
 				>
 					Tickets
 				</Link>
+				<Link
+					href='/organization'
+					className={cn(
+						'text-sm font-medium transition-colors hover:text-primary text-muted-foreground'
+						// pathname === '/tickets' && 'text-primary'
+					)}
+				>
+					Organização
+				</Link>
 			</nav>
 			<div className='ml-auto flex items-center space-x-4'>
 				<User

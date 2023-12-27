@@ -38,8 +38,9 @@ const User = async ({ icon, alt, fallback }: UserProps) => {
 			<DropdownMenuContent className='w-56' align='end' forceMount>
 				<DropdownMenuLabel className='font-normal'>
 					<div className='flex flex-col space-y-1'>
-						<p className='text-sm font-medium leading-none'>
-							{session?.user?.name}
+						<p className='text-sm font-medium leading-none'>Nome</p>
+						<p className='text-xs leading-none text-muted-foreground'>
+							@{session?.user?.name}
 						</p>
 						<p className='text-xs leading-none text-muted-foreground'>
 							{session?.user?.email}
@@ -48,9 +49,6 @@ const User = async ({ icon, alt, fallback }: UserProps) => {
 				</DropdownMenuLabel>
 				<DropdownMenuSeparator />
 				<DropdownMenuGroup>
-					<DropdownMenuItem>
-						<Link href='/organization'>Organização</Link>
-					</DropdownMenuItem>
 					<DropdownMenuItem>
 						<Link href='/settings'>Configurações</Link>
 					</DropdownMenuItem>
