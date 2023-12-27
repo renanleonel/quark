@@ -1,6 +1,9 @@
 import { Metadata } from 'next';
 import { Separator } from '@/components/ui/separator';
 import { ProfileForm } from '../../../components/form/profile/profile-form';
+import { ThemeCustomizer } from '@/components/theme';
+
+import '@/styles/themes.css';
 
 export const metadata: Metadata = {
 	title: 'Configurações',
@@ -16,6 +19,7 @@ const Settings = () => {
 					This is how others will see you on the site.
 				</p>
 			</div>
+			<ThemeCustomizer />
 			<Separator />
 			<ProfileForm />
 		</div>

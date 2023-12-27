@@ -7,6 +7,7 @@ import {
 	CardHeader,
 	CardTitle,
 } from '@/components/ui/card';
+import { TooltipProvider } from '@/components/ui/tooltip';
 
 const sidebarNavItems = [
 	{
@@ -31,7 +32,9 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 				<aside className='-mx-4 lg:w-1/5'>
 					<SidebarNav items={sidebarNavItems} />
 				</aside>
-				<div className='flex-1 lg:max-w-2xl pb-6'>{children}</div>
+				<div className='flex-1 lg:max-w-2xl pb-6'>
+					<TooltipProvider>{children}</TooltipProvider>
+				</div>
 			</div>
 		</Card>
 	);

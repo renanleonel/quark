@@ -13,7 +13,7 @@ export const metadata: Metadata = {
 
 const Auth = () => {
 	return (
-		<main className='h-screen flex items-center justify-center'>
+		<main className='min-h-screen flex items-center justify-center'>
 			<div className='text-white w-[350px] flex flex-col gap-4'>
 				<div className='flex flex-col gap-2 text-center'>
 					<h1 className='text-2xl font-semibold'>Entrar</h1>
