@@ -33,9 +33,9 @@ export function TeamMembers() {
 					Gerencie os membros da sua organização
 				</CardDescription>
 			</CardHeader>
-			<CardContent className='grid gap-6'>
-				<div className='flex items-center justify-between space-x-4'>
-					<div className='flex items-center space-x-4'>
+			<CardContent className='flex flex-col gap-6'>
+				<div className='flex flex-col md:flex-row gap-4 items-center justify-between'>
+					<div className='flex items-center space-x-4 w-full'>
 						<Avatar>
 							<AvatarImage src='/avatars/01.png' />
 							<AvatarFallback>OM</AvatarFallback>
@@ -49,10 +49,13 @@ export function TeamMembers() {
 							</p>
 						</div>
 					</div>
-					<div className='flex gap-2 items-center'>
+					<div className='flex gap-2 items-center w-full'>
 						<Popover>
 							<PopoverTrigger asChild>
-								<Button variant='outline' className='ml-auto'>
+								<Button
+									variant='outline'
+									className='w-full md:w-fit md:ml-auto'
+								>
 									Owner{' '}
 									<ChevronDownIcon className='ml-2 h-4 w-4 text-muted-foreground' />
 								</Button>
@@ -99,26 +102,29 @@ export function TeamMembers() {
 						<TrashIcon className='ml-2 h-4 w-4 text-muted-foreground' />
 					</div>
 				</div>
-				<div className='flex items-center justify-between space-x-4'>
-					<div className='flex items-center space-x-4'>
+				<div className='flex flex-col md:flex-row gap-4 items-center justify-between'>
+					<div className='flex items-center space-x-4 w-full'>
 						<Avatar>
-							<AvatarImage src='/avatars/02.png' />
-							<AvatarFallback>JL</AvatarFallback>
+							<AvatarImage src='/avatars/01.png' />
+							<AvatarFallback>OM</AvatarFallback>
 						</Avatar>
 						<div>
 							<p className='text-sm font-medium leading-none'>
-								Jackson Lee
+								Sofia Davis
 							</p>
 							<p className='text-sm text-muted-foreground'>
-								p@example.com
+								m@example.com
 							</p>
 						</div>
 					</div>
-					<div className='flex gap-2 items-center'>
+					<div className='flex gap-2 items-center w-full'>
 						<Popover>
 							<PopoverTrigger asChild>
-								<Button variant='outline' className='ml-auto'>
-									Member{' '}
+								<Button
+									variant='outline'
+									className='w-full md:w-fit md:ml-auto'
+								>
+									Owner{' '}
 									<ChevronDownIcon className='ml-2 h-4 w-4 text-muted-foreground' />
 								</Button>
 							</PopoverTrigger>
@@ -129,7 +135,7 @@ export function TeamMembers() {
 										<CommandEmpty>
 											No roles found.
 										</CommandEmpty>
-										<CommandGroup className='p-1.5'>
+										<CommandGroup>
 											<CommandItem className='teamaspace-y-1 flex flex-col items-start px-4 py-2'>
 												<p>Viewer</p>
 												<p className='text-sm text-muted-foreground'>
@@ -164,7 +170,9 @@ export function TeamMembers() {
 						<TrashIcon className='ml-2 h-4 w-4 text-muted-foreground' />
 					</div>
 				</div>
-				<PaginationDemo />
+				<div>
+					<PaginationDemo />
+				</div>
 			</CardContent>
 		</Card>
 	);

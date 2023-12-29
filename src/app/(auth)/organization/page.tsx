@@ -36,7 +36,7 @@ export default function DashboardPage() {
 			</CardHeader>
 			<Separator className='mb-6' />
 
-			<div className='hidden flex-col md:flex'>
+			<div className='flex-col flex'>
 				<div className='flex-1 space-y-4 px-8 pb-8'>
 					<Tabs defaultValue='overview' className='space-y-4'>
 						<TabsList>
@@ -78,6 +78,67 @@ export default function DashboardPage() {
 								<Card>
 									<CardHeader className='flex flex-row items-center justify-between space-y-0 pb-2'>
 										<CardTitle className='text-sm font-medium'>
+											TEST
+										</CardTitle>
+										<svg
+											xmlns='http://www.w3.org/2000/svg'
+											viewBox='0 0 24 24'
+											fill='none'
+											stroke='currentColor'
+											strokeLinecap='round'
+											strokeLinejoin='round'
+											strokeWidth='2'
+											className='h-4 w-4 text-muted-foreground'
+										>
+											<rect
+												width='20'
+												height='14'
+												x='2'
+												y='5'
+												rx='2'
+											/>
+											<path d='M2 10h20' />
+										</svg>
+									</CardHeader>
+									<CardContent>
+										<div className='text-2xl font-bold'>
+											TEST
+										</div>
+										<p className='text-xs text-muted-foreground'>
+											TEST
+										</p>
+									</CardContent>
+								</Card>
+								<Card>
+									<CardHeader className='flex flex-row items-center justify-between space-y-0 pb-2'>
+										<CardTitle className='text-sm font-medium'>
+											TEST
+										</CardTitle>
+										<svg
+											xmlns='http://www.w3.org/2000/svg'
+											viewBox='0 0 24 24'
+											fill='none'
+											stroke='currentColor'
+											strokeLinecap='round'
+											strokeLinejoin='round'
+											strokeWidth='2'
+											className='h-4 w-4 text-muted-foreground'
+										>
+											<path d='M22 12h-4l-3 9L9 3l-3 9H2' />
+										</svg>
+									</CardHeader>
+									<CardContent>
+										<div className='text-2xl font-bold'>
+											TEST
+										</div>
+										<p className='text-xs text-muted-foreground'>
+											TEST
+										</p>
+									</CardContent>
+								</Card>
+								<Card>
+									<CardHeader className='flex flex-row items-center justify-between space-y-0 pb-2'>
+										<CardTitle className='text-sm font-medium'>
 											Membros
 										</CardTitle>
 										<svg
@@ -104,74 +165,14 @@ export default function DashboardPage() {
 										</p>
 									</CardContent>
 								</Card>
-								<Card>
-									<CardHeader className='flex flex-row items-center justify-between space-y-0 pb-2'>
-										<CardTitle className='text-sm font-medium'>
-											Sales
-										</CardTitle>
-										<svg
-											xmlns='http://www.w3.org/2000/svg'
-											viewBox='0 0 24 24'
-											fill='none'
-											stroke='currentColor'
-											strokeLinecap='round'
-											strokeLinejoin='round'
-											strokeWidth='2'
-											className='h-4 w-4 text-muted-foreground'
-										>
-											<rect
-												width='20'
-												height='14'
-												x='2'
-												y='5'
-												rx='2'
-											/>
-											<path d='M2 10h20' />
-										</svg>
-									</CardHeader>
-									<CardContent>
-										<div className='text-2xl font-bold'>
-											+12,234
-										</div>
-										<p className='text-xs text-muted-foreground'>
-											+19% from last month
-										</p>
-									</CardContent>
-								</Card>
-								<Card>
-									<CardHeader className='flex flex-row items-center justify-between space-y-0 pb-2'>
-										<CardTitle className='text-sm font-medium'>
-											Active Now
-										</CardTitle>
-										<svg
-											xmlns='http://www.w3.org/2000/svg'
-											viewBox='0 0 24 24'
-											fill='none'
-											stroke='currentColor'
-											strokeLinecap='round'
-											strokeLinejoin='round'
-											strokeWidth='2'
-											className='h-4 w-4 text-muted-foreground'
-										>
-											<path d='M22 12h-4l-3 9L9 3l-3 9H2' />
-										</svg>
-									</CardHeader>
-									<CardContent>
-										<div className='text-2xl font-bold'>
-											+573
-										</div>
-										<p className='text-xs text-muted-foreground'>
-											+201 since last hour
-										</p>
-									</CardContent>
-								</Card>
 							</div>
 							<div className='grid gap-4 md:grid-cols-2 lg:grid-cols-8'>
 								<Card className='col-span-4'>
 									<CardHeader>
-										<CardTitle>Recent Sales</CardTitle>
+										<CardTitle>Projetos</CardTitle>
 										<CardDescription>
-											You made 265 sales this month.
+											Estes projetos receberam mais
+											tickets nos últimos 30 dias.
 										</CardDescription>
 									</CardHeader>
 									<CardContent>
@@ -180,10 +181,8 @@ export default function DashboardPage() {
 								</Card>
 								<Card className='col-span-4'>
 									<CardHeader>
-										<CardTitle>Recent Sales</CardTitle>
-										<CardDescription>
-											You made 265 sales this month.
-										</CardDescription>
+										<CardTitle>TEST</CardTitle>
+										<CardDescription>TEST</CardDescription>
 									</CardHeader>
 									<CardContent>
 										<RecentSales />
