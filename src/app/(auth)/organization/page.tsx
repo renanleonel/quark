@@ -1,7 +1,5 @@
 import { Metadata } from 'next';
-import Image from 'next/image';
 
-import { Button } from '@/components/ui/button';
 import {
 	Card,
 	CardContent,
@@ -9,18 +7,10 @@ import {
 	CardHeader,
 	CardTitle,
 } from '@/components/ui/card';
+import { Separator } from '@/components/ui/separator';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { cn } from '@/lib/utils';
-import Link from 'next/link';
-import TeamSwitcher from './team-switcher';
-import { Search } from './search';
-import { UserNav } from './user-nav';
 import { Overview } from './overview';
 import { RecentSales } from './recent-sales';
-import { Separator } from '@/components/ui/separator';
-import { TeamMembers } from './team-members';
-import { Label } from '@/components/ui/label';
-import { Input } from '@/components/ui/input';
 
 export const metadata: Metadata = {
 	title: 'Organização',
@@ -44,7 +34,6 @@ export default function DashboardPage() {
 							<TabsTrigger value='analytics'>
 								Analytics
 							</TabsTrigger>
-							<TabsTrigger value='admin'>Admin</TabsTrigger>
 						</TabsList>
 						<TabsContent value='overview' className='space-y-4'>
 							<div className='grid gap-4 md:grid-cols-2 lg:grid-cols-4'>
@@ -201,60 +190,6 @@ export default function DashboardPage() {
 									</CardContent>
 								</Card>
 							</div>
-						</TabsContent>
-						<TabsContent value='admin' className='space-y-4'>
-							<Card>
-								<CardHeader>
-									<CardTitle>Convites</CardTitle>
-								</CardHeader>
-								<CardContent className='grid gap-6'>
-									<div className='grid gap-2'>
-										<Label className='text-muted-foreground'>
-											Anyone with the link can view this
-											document.
-										</Label>
-										<div className='flex gap-2'>
-											<Input
-												id='email'
-												value='supportplatform.com'
-												name='name'
-											/>
-											<Button
-												className='w-40'
-												variant='secondary'
-											>
-												Copiar link
-											</Button>
-										</div>
-									</div>
-									<div className='relative'>
-										<div className='absolute inset-0 flex items-center'>
-											<span className='w-full border-t' />
-										</div>
-										<div className='relative flex justify-center text-xs uppercase'>
-											<span className='bg-background px-2 text-muted-foreground'>
-												Ou
-											</span>
-										</div>
-									</div>
-									<div className='grid gap-2'>
-										<Label className='text-muted-foreground'>
-											Convide seus colaboradores
-										</Label>
-										<div className='flex gap-2'>
-											<Input
-												id='email'
-												placeholder='user@gmail.com'
-												name='name'
-											/>
-											<Button className='w-40'>
-												Enviar
-											</Button>
-										</div>
-									</div>
-								</CardContent>
-							</Card>
-							<TeamMembers />
 						</TabsContent>
 					</Tabs>
 				</div>

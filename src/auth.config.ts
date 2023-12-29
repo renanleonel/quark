@@ -17,7 +17,7 @@ export const authConfig = {
 				'/tickets',
 				'/organization',
 				'/settings',
-				'/settings/account',
+				'/settings/organization',
 				'/edit/',
 			];
 

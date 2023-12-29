@@ -14,6 +14,10 @@ const sidebarNavItems = [
 		title: 'Perfil',
 		href: '/settings',
 	},
+	{
+		title: 'Organização',
+		href: '/settings/organization',
+	},
 ];
 
 export default function Layout({ children }: { children: React.ReactNode }) {

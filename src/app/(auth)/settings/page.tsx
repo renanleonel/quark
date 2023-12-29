@@ -1,6 +1,5 @@
 import { Metadata } from 'next';
 import { Separator } from '@/components/ui/separator';
-import { ProfileForm } from '../../../components/form/profile/profile-form';
 import { ThemeCustomizer } from '@/components/theme';
 
 import '@/styles/themes.css';
