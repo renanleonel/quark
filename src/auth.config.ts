@@ -18,9 +18,13 @@ export const authConfig = {
 				'/organization',
 				'/settings',
 				'/settings/account',
+				'/edit/',
 			];
 
-			if (paths.includes(nextUrl.pathname)) {
+			if (
+				paths.includes(nextUrl.pathname) ||
+				nextUrl.pathname.startsWith('/edit/')
+			) {
 				if (isAuthenticated) return true;
 				return false; // Redirect unauthenticated users to login page
 			} else if (isAuthenticated) {

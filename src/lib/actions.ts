@@ -178,3 +178,18 @@ export async function recover(prevState: any, formData: FormData) {
 
 	if (success) redirect('/');
 }
+
+export async function getTicket(id: string) {
+	return {
+		id: id,
+		username: 'Usuário',
+		title: 'Título do ticket',
+		description: 'Descrição do ticket.',
+		urgency: 'Alta',
+		status: 'Aberto',
+		application: 'Aplicação',
+		type: 'Tipo',
+		createdAt: '2021-09-22',
+		updatedAt: '2021-09-22',
+	};
+}

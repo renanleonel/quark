@@ -2,6 +2,7 @@ import '@/styles/globals.css';
 import { GeistSans } from 'geist/font';
 import type { Metadata } from 'next';
 
+import { Toaster } from '@/components/ui/sonner';
 import { ThemeProvider } from '@/components/theme-provider';
 import { ThemeSwitcher } from '@/components/theme-switcher';
 import { ThemeWrapper } from '@/components/theme-wrapper';
@@ -30,6 +31,7 @@ export default function RootLayout({
 					</ThemeWrapper>
 					<ThemeSwitcher />
 				</ThemeProvider>
+				<Toaster />
 			</body>
 		</html>
 	);
