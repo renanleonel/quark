@@ -12,9 +12,9 @@ import {
 	DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 
-import { taskSchema } from '../data/schema';
+import { taskSchema } from '@/types/schema';
 import { useRouter } from 'next/navigation';
-import { DeleteTicket } from '@/components/delete-ticket';
+import { DeleteTicket } from '@/app/(auth)/tickets/components/delete-ticket';
 
 interface DataTableRowActionsProps<TData> {
 	row: Row<TData>;

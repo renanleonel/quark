@@ -1,6 +1,7 @@
 import SignUpForm from '@/components/form/sign-up/sign-up-form';
 
 const Info = () => {
+	// link opened via email after confirming sign up
 	return (
 		<main className='min-h-screen flex items-center justify-center'>
 			<div className='text-white w-[350px] flex flex-col gap-4'>

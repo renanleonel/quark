@@ -1,6 +1,6 @@
 'use client';
 
-import Combobox from '@/components/combobox';
+import Combobox from '@/components/ui/combobox';
 import { Button } from '@/components/ui/button';
 import { CardContent, CardFooter } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
@@ -18,30 +18,16 @@ import { InputFile } from '@/components/input-file';
 import { Link } from 'lucide-react';
 import SubmitButton from '../submit-button';
 
-import { support } from '@/lib/actions';
+import { newTicket } from '@/lib/actions';
 import { useFormState } from 'react-dom';
-
-const initialState = {
-	message: '',
-	errors: {
-		name: '',
-		type: '',
-		urgency: '',
-		application: '',
-		title: '',
-		description: '',
-		file: '',
-		link: '',
-		unknown: '',
-	},
-};
+import { editInitialState } from '@/content/initial-states';
 
 interface EditFormProps {
 	ticket: any;
 }
 
 const EditForm = ({ ticket }: EditFormProps) => {
-	const [formState, formAction] = useFormState(support, initialState);
+	const [formState, formAction] = useFormState(newTicket, editInitialState);
 
 	console.log(ticket);
 

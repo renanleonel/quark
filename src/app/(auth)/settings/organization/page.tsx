@@ -1,14 +1,10 @@
 import { Metadata } from 'next';
-import { Separator } from '@/components/ui/separator';
-import { ThemeCustomizer } from '@/components/theme';
 
-import '@/styles/themes.css';
-import { AccountForm } from '@/components/form/account/account-form';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Label } from '@/components/ui/label';
-import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
-import { TeamMembers } from '../../organization/team-members';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import '@/styles/themes.css';
+import { TeamMembers } from './components/team-members';
 
 export const metadata: Metadata = {
 	title: 'Configurações',
@@ -41,14 +37,10 @@ const Settings = () => {
 						Anyone with the link can view this document.
 					</p>
 				</div>
-				<section className='space-y-4'>
+				<div className='space-y-4'>
 					<div className='grid gap-2'>
 						<div className='flex gap-2'>
-							<Input
-								id='email'
-								value='gon.com'
-								name='name'
-							/>
+							<Input id='email' value='gon.com' name='name' />
 							<Button className='w-40' variant='secondary'>
 								Copiar link
 							</Button>
@@ -77,7 +69,7 @@ const Settings = () => {
 							<Button className='w-40'>Enviar</Button>
 						</div>
 					</div>
-				</section>
+				</div>
 			</section>
 			<TeamMembers />
 		</main>

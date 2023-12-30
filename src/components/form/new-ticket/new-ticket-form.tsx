@@ -1,6 +1,6 @@
 'use client';
 
-import Combobox from '@/components/combobox';
+import Combobox from '@/components/ui/combobox';
 import { Button } from '@/components/ui/button';
 import { CardContent, CardFooter } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
@@ -18,26 +18,15 @@ import { InputFile } from '@/components/input-file';
 import { Link } from 'lucide-react';
 import SubmitButton from '../submit-button';
 
-import { support } from '@/lib/actions';
+import { newTicket } from '@/lib/actions';
 import { useFormState } from 'react-dom';
+import { newTicketInitialState } from '@/content/initial-states';
 
-const initialState = {
-	message: '',
-	errors: {
-		name: '',
-		type: '',
-		urgency: '',
-		application: '',
-		title: '',
-		description: '',
-		file: '',
-		link: '',
-		unknown: '',
-	},
-};
-
-const SupportForm = () => {
-	const [formState, formAction] = useFormState(support, initialState);
+const NewTicketForm = () => {
+	const [formState, formAction] = useFormState(
+		newTicket,
+		newTicketInitialState
+	);
 
 	return (
 		<form action={formAction}>
@@ -140,4 +129,4 @@ const SupportForm = () => {
 	);
 };
 
-export default SupportForm;
+export default NewTicketForm;

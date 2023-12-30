@@ -23,7 +23,7 @@ import {
 	PopoverTrigger,
 } from '@/components/ui/popover';
 import { PaginationDemo } from '@/components/pagination';
-import { DeleteMember } from '@/components/delete-member';
+import { DeleteMember } from '@/app/(auth)/settings/organization/components/delete-member';
 
 export function TeamMembers() {
 	return (

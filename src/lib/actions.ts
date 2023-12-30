@@ -15,7 +15,7 @@ import {
 	defaultRecoverValues,
 	defaultSignUpValues,
 	defaultSupportValues,
-} from '@/content/constants';
+} from '@/content/default-values';
 
 export async function signout() {
 	await signOut();
@@ -104,7 +104,7 @@ export async function signup(prevState: any, formData: FormData) {
 	if (success) redirect('/sign-up/info');
 }
 
-export async function support(prevState: any, formData: FormData) {
+export async function newTicket(prevState: any, formData: FormData) {
 	try {
 		const name = formData.get('name');
 		const type = formData.get('type');

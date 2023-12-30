@@ -7,14 +7,15 @@ import {
 	CardTitle,
 } from '@/components/ui/card';
 
-import SupportForm from '@/components/form/support/support-form';
+import SupportForm from '@/components/form/new-ticket/new-ticket-form';
+import { Separator } from '@/components/ui/separator';
 
 export const metadata: Metadata = {
 	title: 'Suporte',
 	description: 'Envie um ticket para o suporte',
 };
 
-export default function Loading() {
+const Support = () => {
 	return (
 		<Card>
 			<CardHeader>
@@ -23,8 +24,11 @@ export default function Loading() {
 					Envie um ticket para a nossa equipe
 				</CardDescription>
 			</CardHeader>
+			<Separator className='mb-6' />
 
 			<SupportForm />
 		</Card>
 	);
-}
+};
+
+export default Support;

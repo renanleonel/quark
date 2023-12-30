@@ -1,6 +1,4 @@
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-
-export function RecentSales() {
+const ProjectRanking = () => {
 	return (
 		<div className='space-y-8'>
 			<div className='flex items-center'>
@@ -60,4 +58,6 @@ export function RecentSales() {
 			</div>
 		</div>
 	);
-}
+};
+
+export default ProjectRanking;

@@ -1,8 +1,8 @@
 import { Metadata } from 'next';
+import { tasks } from '@/content/tasks';
 
 import { columns } from './components/columns';
 import { DataTable } from './components/data-table';
-import { tasks } from './data/tasks';
 
 import {
 	Card,

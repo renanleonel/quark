@@ -3,6 +3,7 @@ import { Metadata } from 'next';
 
 import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
+
 import SignUpForm from '@/components/form/sign-up/sign-up-form';
 
 export const metadata: Metadata = {

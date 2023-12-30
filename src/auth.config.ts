@@ -13,7 +13,7 @@ export const authConfig = {
 		authorized({ auth, request: { nextUrl } }) {
 			const isAuthenticated = !!auth?.user;
 			const paths = [
-				'/support',
+				'/new-ticket',
 				'/tickets',
 				'/organization',
 				'/settings',
@@ -28,7 +28,7 @@ export const authConfig = {
 				if (isAuthenticated) return true;
 				return false; // Redirect unauthenticated users to login page
 			} else if (isAuthenticated) {
-				return Response.redirect(new URL('/support', nextUrl));
+				return Response.redirect(new URL('/tickets', nextUrl));
 			}
 			return true;
 		},

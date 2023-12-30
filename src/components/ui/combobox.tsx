@@ -17,7 +17,7 @@ import {
 	PopoverContent,
 	PopoverTrigger,
 } from '@/components/ui/popover';
-import { Input } from './ui/input';
+import { Input } from './input';
 
 interface ComboboxProps {
 	options: { value: string; label: string }[];

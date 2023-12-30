@@ -11,21 +11,12 @@ import { useFormState } from 'react-dom';
 import SubmitButton from '../submit-button';
 import { Separator } from '@/components/ui/separator';
 import { DrawerOrganization } from '@/components/drawer-organization';
+import { signUpInitialState } from '@/content/initial-states';
 
 interface SignUpFormProps extends React.HTMLAttributes<HTMLDivElement> {}
 
-const initialState = {
-	message: '',
-	errors: {
-		email: '',
-		password: '',
-		confirmPassword: '',
-		unknown: '',
-	},
-};
-
 const SignUpForm = ({ className, ...props }: SignUpFormProps) => {
-	const [formState, formAction] = useFormState(signup, initialState);
+	const [formState, formAction] = useFormState(signup, signUpInitialState);
 
 	return (
 		<main className={cn('dark grid gap-6', className)} {...props}>

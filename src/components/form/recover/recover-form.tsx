@@ -9,19 +9,12 @@ import { useFormState } from 'react-dom';
 import { recover } from '@/lib/actions';
 
 import SubmitButton from '../submit-button';
+import { recoverInitialState } from '@/content/initial-states';
 
 interface RecoverFormProps extends React.HTMLAttributes<HTMLDivElement> {}
 
-const initialState = {
-	message: '',
-	errors: {
-		email: '',
-		unknown: '',
-	},
-};
-
 const RecoverForm = ({ className, ...props }: RecoverFormProps) => {
-	const [formState, formAction] = useFormState(recover, initialState);
+	const [formState, formAction] = useFormState(recover, recoverInitialState);
 
 	return (
 		<main className={cn('dark grid gap-6', className)} {...props}>

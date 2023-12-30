@@ -15,27 +15,27 @@ const Navbar = ({ className, ...props }: React.HTMLAttributes<HTMLElement>) => {
 				{...props}
 			>
 				<Link
-					href='/support'
-					className={cn(
-						'text-sm font-medium transition-colors hover:text-primary text-muted-foreground'
-						// pathname === '/support' && 'text-primary'
-					)}
-				>
-					Suporte
-				</Link>
-				<Link
 					href='/tickets'
 					className={cn(
-						'text-sm font-medium transition-colors hover:text-primary text-muted-foreground'
+						'text-sm font-medium transition-colors hover:text-primary text-muted-foreground hover:underline'
 						// pathname === '/tickets' && 'text-primary'
 					)}
 				>
 					Tickets
 				</Link>
 				<Link
+					href='/new-ticket'
+					className={cn(
+						'text-sm font-medium transition-colors hover:text-primary text-muted-foreground hover:underline'
+						// pathname === '/support' && 'text-primary'
+					)}
+				>
+					New ticket
+				</Link>
+				<Link
 					href='/organization'
 					className={cn(
-						'text-sm font-medium transition-colors hover:text-primary text-muted-foreground'
+						'text-sm font-medium transition-colors hover:text-primary text-muted-foreground hover:underline'
 						// pathname === '/tickets' && 'text-primary'
 					)}
 				>

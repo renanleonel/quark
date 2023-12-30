@@ -9,21 +9,15 @@ import { useFormState } from 'react-dom';
 import { authenticate } from '@/lib/actions';
 
 import SubmitButton from '../submit-button';
+import { authInitialState } from '@/content/initial-states';
 
 interface AuthFormProps extends React.HTMLAttributes<HTMLDivElement> {}
 
-const initialState = {
-	message: '',
-	errors: {
-		email: '',
-		password: '',
-		credentials: '',
-		unknown: '',
-	},
-};
-
 const AuthForm = ({ className, ...props }: AuthFormProps) => {
-	const [formState, formAction] = useFormState(authenticate, initialState);
+	const [formState, formAction] = useFormState(
+		authenticate,
+		authInitialState
+	);
 
 	return (
 		<main className={cn('dark grid gap-6', className)} {...props}>
