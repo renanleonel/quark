@@ -1,6 +1,6 @@
 {
-	"name": "support-platform",
-	"short_name": "support-platform",
+	"name": "gon",
+	"short_name": "gon",
 	"theme_color": "#fff",
 	"background_color": "#fff",
 	"display": "standalone",

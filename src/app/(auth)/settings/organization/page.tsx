@@ -46,7 +46,7 @@ const Settings = () => {
 						<div className='flex gap-2'>
 							<Input
 								id='email'
-								value='supportplatform.com'
+								value='gon.com'
 								name='name'
 							/>
 							<Button className='w-40' variant='secondary'>
