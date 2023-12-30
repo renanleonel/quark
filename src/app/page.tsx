@@ -9,7 +9,7 @@ import AuthForm from '@/components/form/auth/auth-form';
 
 export const metadata: Metadata = {
 	title: 'Entrar',
-	description: 'Faça login na sua conta para acessar a página de suporte',
+	description: 'Faça login na sua conta para acessar a dashboard',
 };
 
 const Auth = () => {

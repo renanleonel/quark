@@ -11,17 +11,17 @@ import SupportForm from '@/components/form/new-ticket/new-ticket-form';
 import { Separator } from '@/components/ui/separator';
 
 export const metadata: Metadata = {
-	title: 'Suporte',
-	description: 'Envie um ticket para o suporte',
+	title: 'Novo ticket',
+	description: 'Crie um novo ticket para a nossa equipe',
 };
 
 const Support = () => {
 	return (
 		<Card>
 			<CardHeader>
-				<CardTitle>Suporte</CardTitle>
+				<CardTitle>Novo ticket</CardTitle>
 				<CardDescription>
-					Envie um ticket para a nossa equipe
+					Crie um ticket para a nossa equipe
 				</CardDescription>
 			</CardHeader>
 			<Separator className='mb-6' />
