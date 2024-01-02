@@ -12,6 +12,8 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Chart } from './components/chart';
 import ProjectRanking from './components/project-ranking';
 import CardData from './components/card-data';
+import { Button } from '@/components/ui/button';
+import { DrawerNewProjects } from '@/components/drawer-new-projects';
 
 export const metadata: Metadata = {
 	title: 'Organização',
@@ -30,12 +32,20 @@ export default function DashboardPage() {
 			<main className='flex flex-col'>
 				<div className='flex-1 space-y-4 px-8 pb-8'>
 					<Tabs defaultValue='overview' className='space-y-4'>
-						<TabsList>
-							<TabsTrigger value='overview'>Overview</TabsTrigger>
-							<TabsTrigger value='analytics'>
-								Analytics
-							</TabsTrigger>
-						</TabsList>
+						<div className='flex justify-between'>
+							<TabsList>
+								<TabsTrigger value='overview'>
+									Overview
+								</TabsTrigger>
+								<TabsTrigger value='analytics'>
+									Analytics
+								</TabsTrigger>
+							</TabsList>
+							{/* if role === admin */}
+							<DrawerNewProjects>
+								<Button>Novo projeto</Button>
+							</DrawerNewProjects>
+						</div>
 						<TabsContent value='overview' className='space-y-4'>
 							<div className='grid gap-4 md:grid-cols-2 lg:grid-cols-4'>
 								<CardData
