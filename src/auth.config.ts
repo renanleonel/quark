@@ -19,6 +19,7 @@ export const authConfig = {
 				'/settings',
 				'/settings/organization',
 				'/edit/',
+				'/policy',
 			];
 
 			if (
