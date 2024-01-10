@@ -1,31 +1,31 @@
 import NextAuth from 'next-auth';
 import { authConfig } from '@/auth.config';
 
-import { publicRoutes } from '@/routes';
+import { DEFAULT_REDIRECT, publicRoutes } from '@/routes';
 
 const { auth } = NextAuth(authConfig);
 
 export default auth((req) => {
-	const { nextUrl } = req;
+    const { nextUrl } = req;
 
-	const isAuthenticated = !!req.auth;
+    const isAuthenticated = !!req.auth;
 
-	const isPublicRoute = publicRoutes.includes(nextUrl.pathname);
+    const isPublicRoute = publicRoutes.includes(nextUrl.pathname);
 
-	if (isPublicRoute) {
-		if (isAuthenticated) {
-			return Response.redirect(new URL('/tickets', nextUrl));
-		}
-		return null;
-	}
+    if (isPublicRoute) {
+        if (isAuthenticated) {
+            return Response.redirect(new URL(DEFAULT_REDIRECT, nextUrl));
+        }
+        return null;
+    }
 
-	if (!isAuthenticated && !isPublicRoute) {
-		return Response.redirect(new URL('/', nextUrl));
-	}
+    if (!isAuthenticated && !isPublicRoute) {
+        return Response.redirect(new URL('/', nextUrl));
+    }
 
-	return null;
+    return null;
 });
 
 export const config = {
-	matcher: ['/((?!api|_next/static|_next/image|favicon.ico).*)'],
+    matcher: ['/((?!api|_next/static|_next/image|favicon.ico).*)'],
 };
