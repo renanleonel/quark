@@ -7,33 +7,33 @@ import { Button } from '@/components/ui/button';
 import RecoverForm from '@/components/form/recover/recover-form';
 
 export const metadata: Metadata = {
-	title: 'Recuperar senha',
-	description: 'Digite seu email para recuperar sua senha',
+    title: 'Recuperar senha',
+    description: 'Digite seu email para recuperar sua senha',
 };
 
 const Recover = () => {
-	return (
-		<main className='min-h-screen flex items-center justify-center'>
-			<div className='text-white w-[350px] flex flex-col gap-4'>
-				<div className='flex flex-col gap-2 text-center'>
-					<h1 className='text-2xl font-semibold'>Recuperar senha</h1>
-					<p className='text-sm text-muted-foreground'>
-						Digite seu email de acesso
-					</p>
-				</div>
-				<RecoverForm />
+    return (
+        <main className='min-h-screen flex items-center justify-center'>
+            <div className='text-white w-[350px] flex flex-col gap-4'>
+                <div className='flex flex-col gap-2 text-center'>
+                    <h1 className='text-2xl font-semibold'>Recuperar senha</h1>
+                    <p className='text-sm text-muted-foreground'>
+                        Digite seu email de acesso
+                    </p>
+                </div>
+                <RecoverForm />
 
-				<Label className='sr-only' htmlFor='back'>
-					Voltar
-				</Label>
-				<Link href='/'>
-					<Button variant='outline' type='button' className='w-full'>
-						Voltar
-					</Button>
-				</Link>
-			</div>
-		</main>
-	);
+                <Label className='sr-only' htmlFor='back'>
+                    Voltar
+                </Label>
+                <Link href='/'>
+                    <Button variant='outline' type='button' className='w-full'>
+                        Voltar
+                    </Button>
+                </Link>
+            </div>
+        </main>
+    );
 };
 
 export default Recover;

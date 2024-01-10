@@ -9,31 +9,31 @@ import { ThemeProvider } from '@/components/theme-provider';
 import { ThemeSwitcher } from '@/components/theme-switcher';
 
 export const metadata: Metadata = {
-	title: 'gon',
-	description: 'gon',
+    title: 'gon',
+    description: 'gon',
 };
 
 export default function RootLayout({
-	children,
+    children,
 }: {
-	children: React.ReactNode;
+    children: React.ReactNode;
 }) {
-	return (
-		<html lang='pt-BR' className={GeistSans.className}>
-			<body className='min-min-h-screen bg-background'>
-				<ThemeProvider
-					attribute='class'
-					defaultTheme='system'
-					enableSystem
-					disableTransitionOnChange
-				>
-					<ThemeWrapper>
-						<main className='bg-background flex-1'>{children}</main>
-					</ThemeWrapper>
-					<ThemeSwitcher />
-				</ThemeProvider>
-				<Toaster />
-			</body>
-		</html>
-	);
+    return (
+        <html lang='pt-BR' className={GeistSans.className}>
+            <body className='min-min-h-screen bg-background'>
+                <ThemeProvider
+                    attribute='class'
+                    defaultTheme='system'
+                    enableSystem
+                    disableTransitionOnChange
+                >
+                    <ThemeWrapper>
+                        <main className='bg-background flex-1'>{children}</main>
+                    </ThemeWrapper>
+                    <ThemeSwitcher />
+                </ThemeProvider>
+                <Toaster />
+            </body>
+        </html>
+    );
 }

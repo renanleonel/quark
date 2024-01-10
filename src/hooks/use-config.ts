@@ -5,17 +5,17 @@ import { Style } from '@/content/styles';
 import { Theme } from '@/content/themes';
 
 type Config = {
-	style: Style['name'];
-	theme: Theme['name'];
-	radius: number;
+    style: Style['name'];
+    theme: Theme['name'];
+    radius: number;
 };
 
 const configAtom = atomWithStorage<Config>('config', {
-	style: 'new-york',
-	theme: 'zinc',
-	radius: 0.5,
+    style: 'new-york',
+    theme: 'zinc',
+    radius: 0.5,
 });
 
 export function useConfig() {
-	return useAtom(configAtom);
+    return useAtom(configAtom);
 }
