@@ -5,34 +5,16 @@ export const authConfig = {
 		strategy: 'jwt',
 	},
 	pages: {
-		signIn: '/',
 		error: '/',
+		signIn: '/',
 		signOut: '/',
 	},
 	callbacks: {
-		authorized({ auth, request: { nextUrl } }) {
+		authorized({ auth }) {
 			const isAuthenticated = !!auth?.user;
-			const paths = [
-				'/new-ticket',
-				'/tickets',
-				'/organization',
-				'/settings',
-				'/settings/organization',
-				'/edit/',
-				'/policy',
-			];
 
-			if (
-				paths.includes(nextUrl.pathname) ||
-				nextUrl.pathname.startsWith('/edit/')
-			) {
-				if (isAuthenticated) return true;
-				return false; // Redirect unauthenticated users to login page
-			} else if (isAuthenticated) {
-				return Response.redirect(new URL('/tickets', nextUrl));
-			}
-			return true;
+			return isAuthenticated;
 		},
 	},
-	providers: [], // Add providers with an empty array for now
+	providers: [],
 } satisfies NextAuthConfig;
