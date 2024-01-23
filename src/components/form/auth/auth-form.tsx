@@ -8,7 +8,7 @@ import { Label } from '@/components/ui/label';
 import { useFormState } from 'react-dom';
 import { authenticate } from '@/lib/actions';
 
-import SubmitButton from '../submit-button';
+import SubmitButton from '@/components/form/submit-button';
 import { authInitialState } from '@/content/initial-states';
 
 interface AuthFormProps extends React.HTMLAttributes<HTMLDivElement> {}

@@ -8,7 +8,7 @@ import { Label } from '@/components/ui/label';
 import { useFormState } from 'react-dom';
 import { recover } from '@/lib/actions';
 
-import SubmitButton from '../submit-button';
+import SubmitButton from '@/components/form/submit-button';
 import { recoverInitialState } from '@/content/initial-states';
 
 interface RecoverFormProps extends React.HTMLAttributes<HTMLDivElement> {}

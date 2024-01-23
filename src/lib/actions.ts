@@ -133,6 +133,8 @@ export async function newTicket(prevState: any, formData: FormData) {
             };
         }
 
+        console.log(formData);
+
         return {
             message: 'success',
             errors: {},

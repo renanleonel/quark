@@ -8,7 +8,7 @@ import { Label } from '@/components/ui/label';
 import { signup } from '@/lib/actions';
 import { useFormState } from 'react-dom';
 
-import SubmitButton from '../submit-button';
+import SubmitButton from '@/components/form/submit-button';
 import { Separator } from '@/components/ui/separator';
 import { DrawerOrganization } from '@/components/drawer-organization';
 import { signUpInitialState } from '@/content/initial-states';

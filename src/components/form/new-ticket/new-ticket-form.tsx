@@ -1,10 +1,18 @@
 'use client';
 
-import Combobox from '@/components/ui/combobox';
-import { Button } from '@/components/ui/button';
-import { CardContent, CardFooter } from '@/components/ui/card';
+import { cn } from '@/lib/utils';
+import { Link } from 'lucide-react';
+import { useFormState } from 'react-dom';
+import { newTicket } from '@/lib/actions';
+import { newTicketInitialState } from '@/content/initial-states';
+
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import Combobox from '@/components/ui/combobox';
+import { Button } from '@/components/ui/button';
+import { Textarea } from '@/components/ui/textarea';
+import { CardContent, CardFooter } from '@/components/ui/card';
+
 import {
     Select,
     SelectContent,
@@ -12,15 +20,9 @@ import {
     SelectTrigger,
     SelectValue,
 } from '@/components/ui/select';
-import { Textarea } from '@/components/ui/textarea';
 
 import { InputFile } from '@/components/input-file';
-import { Link } from 'lucide-react';
-import SubmitButton from '../submit-button';
-
-import { newTicket } from '@/lib/actions';
-import { useFormState } from 'react-dom';
-import { newTicketInitialState } from '@/content/initial-states';
+import SubmitButton from '@/components/form/submit-button';
 
 const NewTicketForm = () => {
     const [formState, formAction] = useFormState(
@@ -34,7 +36,14 @@ const NewTicketForm = () => {
                 <section className='flex flex-col gap-6 w-full'>
                     <div className='grid gap-2'>
                         <Label htmlFor='nome'>Seu nome</Label>
-                        <Input id='nome' placeholder='Nome' name='name' />
+                        <Input
+                            id='nome'
+                            placeholder='Nome'
+                            name='name'
+                            className={cn(
+                                formState.errors.name && 'border-red-400'
+                            )}
+                        />
                     </div>
 
                     <div className='grid grid-cols-2 gap-4'>
@@ -43,7 +52,11 @@ const NewTicketForm = () => {
                             <Select defaultValue='1' name='type'>
                                 <SelectTrigger
                                     id='security-level'
-                                    className='line-clamp-1 w-[160px] lg:w-full truncate'
+                                    className={cn(
+                                        'line-clamp-1 w-[160px] lg:w-full truncate',
+                                        formState.errors.type &&
+                                            'border-red-400'
+                                    )}
                                 >
                                     <SelectValue placeholder='Tipo' />
                                 </SelectTrigger>
@@ -60,7 +73,11 @@ const NewTicketForm = () => {
                             <Select name='urgency' defaultValue='3'>
                                 <SelectTrigger
                                     id='security-level'
-                                    className='line-clamp-1 w-[160px] lg:w-full truncate'
+                                    className={cn(
+                                        'line-clamp-1 w-[160px] lg:w-full truncate',
+                                        formState.errors.urgency &&
+                                            'border-red-400'
+                                    )}
                                 >
                                     <SelectValue placeholder='Urgência' />
                                 </SelectTrigger>
@@ -83,6 +100,10 @@ const NewTicketForm = () => {
                                         label: 'App',
                                     },
                                 ]}
+                                className={cn(
+                                    formState.errors.application &&
+                                        'border-red-400'
+                                )}
                                 placeholderText='Selecione'
                                 searchText='Pesquise'
                                 name='application'
@@ -106,6 +127,9 @@ const NewTicketForm = () => {
                             name='title'
                             id='subject'
                             placeholder='Preciso de ajuda com...'
+                            className={cn(
+                                formState.errors.title && 'border-red-400'
+                            )}
                         />
                     </div>
                     <div className='flex flex-col gap-2 h-full'>
@@ -113,7 +137,10 @@ const NewTicketForm = () => {
                         <Textarea
                             name='description'
                             id='description'
-                            className='h-full'
+                            className={cn(
+                                'h-full',
+                                formState.errors.description && 'border-red-400'
+                            )}
                             placeholder='Insira todas as informações necessárias para que possamos te ajudar.'
                         />
                     </div>

@@ -16,7 +16,7 @@ import { Textarea } from '@/components/ui/textarea';
 
 import { InputFile } from '@/components/input-file';
 import { Link } from 'lucide-react';
-import SubmitButton from '../submit-button';
+import SubmitButton from '@/components/form/submit-button';
 
 import { newTicket } from '@/lib/actions';
 import { useFormState } from 'react-dom';
