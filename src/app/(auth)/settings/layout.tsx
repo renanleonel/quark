@@ -18,6 +18,10 @@ const sidebarNavItems = [
         title: 'Organização',
         href: '/settings/organization',
     },
+    {
+        title: 'Ajuda',
+        href: '/settings/help',
+    },
 ];
 
 export default function Layout({ children }: { children: React.ReactNode }) {
