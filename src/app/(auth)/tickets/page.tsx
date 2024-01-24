@@ -1,5 +1,5 @@
 import { Metadata } from 'next';
-import { tasks } from '@/content/tasks';
+import { tickets } from '@/content/tickets-mock';
 
 import { columns } from './components/columns';
 import { DataTable } from './components/data-table';
@@ -17,12 +17,12 @@ export const metadata: Metadata = {
     description: 'A task and issue tracker build using Tanstack Table.',
 };
 
-async function getTasks() {
-    return tasks;
+async function getTickets() {
+    return tickets;
 }
 
 const Tickets = async () => {
-    const tasks = await getTasks();
+    const tickets = await getTickets();
 
     return (
         <Card className='hidden lg:block'>
@@ -31,7 +31,7 @@ const Tickets = async () => {
                 <CardDescription>Esses são os tickets abertos.</CardDescription>
             </CardHeader>
             <Separator />
-            <DataTable data={tasks} columns={columns} />
+            <DataTable data={tickets} columns={columns} />
         </Card>
     );
 };

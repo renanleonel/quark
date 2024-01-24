@@ -68,33 +68,27 @@ export const columns: ColumnDef<Task>[] = [
             );
         },
     },
+
     {
-        accessorKey: 'status',
+        accessorKey: 'type',
+        enableSorting: false,
+        enableHiding: false,
         header: ({ column }) => (
-            <DataTableColumnHeader column={column} title='Status' />
+            <DataTableColumnHeader column={column} title='Tipo' />
         ),
         cell: ({ row }) => {
-            const status = statuses.find(
-                (status) => status.value === row.getValue('status')
+            const label = labels.find(
+                (label) => label.value === row.original.label
             );
 
-            if (!status) {
-                return null;
-            }
-
             return (
-                <div className='flex w-[100px] items-center'>
-                    {status.icon && (
-                        <status.icon className='mr-2 h-4 w-4 text-muted-foreground' />
-                    )}
-                    <span>{status.label}</span>
+                <div className='flex justify-center space-x-2'>
+                    {label && <Badge variant='outline'>{label.label}</Badge>}
                 </div>
             );
         },
-        filterFn: (row, id, value) => {
-            return value.includes(row.getValue(id));
-        },
     },
+
     {
         accessorKey: 'priority',
         header: ({ column }) => (
@@ -115,6 +109,33 @@ export const columns: ColumnDef<Task>[] = [
                         <priority.icon className='mr-2 h-4 w-4 text-muted-foreground' />
                     )}
                     <span>{priority.label}</span>
+                </div>
+            );
+        },
+        filterFn: (row, id, value) => {
+            return value.includes(row.getValue(id));
+        },
+    },
+    {
+        accessorKey: 'status',
+        header: ({ column }) => (
+            <DataTableColumnHeader column={column} title='Status' />
+        ),
+        cell: ({ row }) => {
+            const status = statuses.find(
+                (status) => status.value === row.getValue('status')
+            );
+
+            if (!status) {
+                return null;
+            }
+
+            return (
+                <div className='flex w-[100px] items-center'>
+                    {status.icon && (
+                        <status.icon className='mr-2 h-4 w-4 text-muted-foreground' />
+                    )}
+                    <span>{status.label}</span>
                 </div>
             );
         },

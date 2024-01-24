@@ -50,8 +50,6 @@ export function ThemeCustomizer() {
 
     const theme = themes.find((theme) => theme.name === config.theme);
 
-    console.log('config', config);
-
     React.useEffect(() => {
         setMounted(true);
     }, []);
