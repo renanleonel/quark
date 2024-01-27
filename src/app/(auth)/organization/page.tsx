@@ -25,7 +25,7 @@ export default function DashboardPage() {
         <Card>
             <CardHeader>
                 <CardTitle>Organização</CardTitle>
-                <CardDescription>org org org org org</CardDescription>
+                <CardDescription>Organização</CardDescription>
             </CardHeader>
             <Separator className='mb-6' />
 
@@ -84,8 +84,10 @@ export default function DashboardPage() {
                                 </Card>
                                 <Card className='col-span-4'>
                                     <CardHeader>
-                                        <CardTitle>TEST</CardTitle>
-                                        <CardDescription>TEST</CardDescription>
+                                        <CardTitle>Projects</CardTitle>
+                                        <CardDescription>
+                                            Projects
+                                        </CardDescription>
                                     </CardHeader>
                                     <CardContent>
                                         <ProjectRanking />

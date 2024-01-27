@@ -52,6 +52,21 @@ export const statuses = [
     },
 ];
 
+export const projects = [
+    {
+        value: 'Projeto 1',
+        label: 'Projeto 1',
+    },
+    {
+        value: 'Projeto 2',
+        label: 'Projeto 2',
+    },
+    {
+        value: 'Projeto 3',
+        label: 'Projeto 3',
+    },
+];
+
 export const priorities = [
     {
         value: 'baixa',

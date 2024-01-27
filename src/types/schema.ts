@@ -53,9 +53,10 @@ export const supportSchema = z.object({
     description: z.string().min(1, { message: 'Insira a descrição!' }),
 });
 
-export const taskSchema = z.object({
+export const ticketSchema = z.object({
     id: z.string(),
     title: z.string(),
+    project: z.string(),
     status: z.string(),
     label: z.string(),
     priority: z.string(),

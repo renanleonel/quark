@@ -44,7 +44,7 @@ const Navbar = ({ className, ...props }: React.HTMLAttributes<HTMLElement>) => {
             </nav>
             <div className='ml-auto flex items-center space-x-4'>
                 <User
-                    icon='https://github.com/shadcn.png'
+                    icon='https://github.com/aeduojioiujaejiolaejiolea.png'
                     alt='@shadcn'
                     fallback=' '
                 />

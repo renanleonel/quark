@@ -28,7 +28,7 @@ const Tickets = async () => {
         <Card className='hidden lg:block'>
             <CardHeader>
                 <CardTitle>Tickets</CardTitle>
-                <CardDescription>Esses são os tickets abertos.</CardDescription>
+                <CardDescription>Tickets abertos no momento</CardDescription>
             </CardHeader>
             <Separator />
             <DataTable data={tickets} columns={columns} />
