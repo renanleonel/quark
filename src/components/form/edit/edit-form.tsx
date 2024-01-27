@@ -29,8 +29,6 @@ interface EditFormProps {
 const EditForm = ({ ticket }: EditFormProps) => {
     const [formState, formAction] = useFormState(newTicket, editInitialState);
 
-    console.log(ticket);
-
     return (
         <form action={formAction}>
             <CardContent className='flex flex-col lg:flex-row gap-6'>

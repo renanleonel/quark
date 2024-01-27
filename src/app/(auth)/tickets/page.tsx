@@ -11,6 +11,7 @@ import {
     CardTitle,
 } from '@/components/ui/card';
 import { Separator } from '@/components/ui/separator';
+import { auth } from '@/auth';
 
 export const metadata: Metadata = {
     title: 'Tasks',
@@ -23,6 +24,12 @@ async function getTickets() {
 
 const Tickets = async () => {
     const tickets = await getTickets();
+
+    const session = await auth();
+
+    console.log('===========');
+    console.log(session);
+    console.log('===========');
 
     return (
         <Card className='hidden lg:block'>

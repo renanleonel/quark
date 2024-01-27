@@ -29,6 +29,14 @@ export const signUpForm = z
             .min(1, { message: 'Insira a senha!' })
             .min(3, { message: 'Senha deve ter no mínimo 6 caracteres!' }),
         confirmPassword: z.string().min(1, { message: 'Confirme a senha!' }),
+        name: z.string().min(3, { message: 'Insira o nome!' }),
+        code: z
+            .string()
+            .length(6, {
+                message: 'Insira o código de convite!',
+            })
+            .optional()
+            .or(z.literal('')),
     })
     .refine((data) => data.password === data.confirmPassword, {
         message: 'Senhas não coincidem!',

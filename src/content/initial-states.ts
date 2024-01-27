@@ -52,6 +52,8 @@ export const signUpInitialState = {
         email: '',
         password: '',
         confirmPassword: '',
+        name: '',
+        code: '',
         unknown: '',
     },
 };

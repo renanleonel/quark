@@ -76,11 +76,15 @@ export async function signup(prevState: any, formData: FormData) {
         const email = formData.get('email');
         const password = formData.get('password');
         const confirmPassword = formData.get('confirmPassword');
+        const name = formData.get('name');
+        const code = formData.get('code') as string;
 
         const validatedFields = signUpForm.safeParse({
             email: email,
             password: password,
             confirmPassword: confirmPassword,
+            name: name,
+            code: code,
         });
 
         if (!validatedFields.success) {
@@ -90,7 +94,32 @@ export async function signup(prevState: any, formData: FormData) {
             };
         }
 
-        success = true;
+        const organization = await verifyOrganization(code);
+
+        const body = {
+            email,
+            password,
+            name,
+            organization,
+            code,
+        };
+
+        console.log(body);
+
+        await createUser(body).then((res) => {
+            if (res.status === 200) {
+                success = true;
+            } else {
+                // tratar erros, como unique contraint de email, etc
+                return {
+                    message: 'unknown error',
+                    errors: {
+                        ...defaultSignUpValues,
+                        unknown: 'Erro desconhecido.',
+                    },
+                };
+            }
+        });
     } catch (error) {
         return {
             message: 'unknown error',
@@ -101,7 +130,28 @@ export async function signup(prevState: any, formData: FormData) {
         };
     }
 
-    if (success) redirect('/sign-up/info');
+    // if (success) redirect('/sign-up/info');
+}
+
+async function verifyOrganization(
+    code: string | null
+): Promise<string | false> {
+    const notVerifiedOrganization = false;
+
+    if (!code || notVerifiedOrganization) {
+        // toast.error('Código de organização inválido.');
+        return false;
+    }
+
+    const organizationCode = '@12345';
+
+    return organizationCode;
+}
+
+async function createUser(body: any) {
+    return {
+        status: 200,
+    };
 }
 
 export async function newTicket(prevState: any, formData: FormData) {
@@ -133,8 +183,6 @@ export async function newTicket(prevState: any, formData: FormData) {
             };
         }
 
-        console.log(formData);
-
         return {
             message: 'success',
             errors: {},
@@ -154,7 +202,7 @@ export async function recover(prevState: any, formData: FormData) {
     let success = false;
 
     try {
-        const email = formData.get('email');
+        const email = formData.get('email') as string;
 
         const validatedFields = recoverSchema.safeParse({
             email: email,
@@ -167,7 +215,20 @@ export async function recover(prevState: any, formData: FormData) {
             };
         }
 
-        success = true;
+        await sendRecoverEmail(email).then((res) => {
+            if (res.status === 200) {
+                //toast de sucesso
+                success = true;
+            } else {
+                return {
+                    message: 'unknown error',
+                    errors: {
+                        ...defaultRecoverValues,
+                        unknown: 'Erro desconhecido.',
+                    },
+                };
+            }
+        });
     } catch (error) {
         return {
             message: 'unknown error',
@@ -179,6 +240,12 @@ export async function recover(prevState: any, formData: FormData) {
     }
 
     if (success) redirect('/');
+}
+
+async function sendRecoverEmail(email: string) {
+    return {
+        status: 200,
+    };
 }
 
 export async function getTicket(id: string) {

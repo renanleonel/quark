@@ -18,6 +18,8 @@ interface SignUpFormProps extends React.HTMLAttributes<HTMLDivElement> {}
 const SignUpForm = ({ className, ...props }: SignUpFormProps) => {
     const [formState, formAction] = useFormState(signup, signUpInitialState);
 
+    console.log(formState);
+
     return (
         <main className={cn('dark grid gap-6', className)} {...props}>
             <form action={formAction}>
@@ -33,11 +35,11 @@ const SignUpForm = ({ className, ...props }: SignUpFormProps) => {
                             name='email'
                             placeholder='email@gmail.com'
                             className={cn(
-                                formState?.errors.email && 'border-red-500'
+                                formState?.errors?.email && 'border-red-500'
                             )}
                         />
                         <p className='text-xs text-red-500'>
-                            {formState?.errors.email}
+                            {formState?.errors?.email}
                         </p>
                     </div>
 
@@ -52,11 +54,11 @@ const SignUpForm = ({ className, ...props }: SignUpFormProps) => {
                             name='password'
                             placeholder='********'
                             className={cn(
-                                formState?.errors.password && 'border-red-500'
+                                formState?.errors?.password && 'border-red-500'
                             )}
                         />
                         <p className='text-xs text-red-500'>
-                            {formState?.errors.password}
+                            {formState?.errors?.password}
                         </p>
                     </div>
 
@@ -71,12 +73,12 @@ const SignUpForm = ({ className, ...props }: SignUpFormProps) => {
                             name='confirmPassword'
                             placeholder='********'
                             className={cn(
-                                formState?.errors.confirmPassword &&
+                                formState?.errors?.confirmPassword &&
                                     'border-red-500'
                             )}
                         />
                         <p className='text-xs text-red-500'>
-                            {formState?.errors.confirmPassword}
+                            {formState?.errors?.confirmPassword}
                         </p>
                     </div>
 
@@ -93,12 +95,11 @@ const SignUpForm = ({ className, ...props }: SignUpFormProps) => {
                             name='name'
                             placeholder='John Doe'
                             className={cn(
-                                formState?.errors.confirmPassword &&
-                                    'border-red-500'
+                                formState?.errors?.name && 'border-red-500'
                             )}
                         />
                         <p className='text-xs text-red-500'>
-                            {formState?.errors.confirmPassword}
+                            {formState?.errors?.name}
                         </p>
                     </div>
 
@@ -110,23 +111,22 @@ const SignUpForm = ({ className, ...props }: SignUpFormProps) => {
                                 Código
                             </Label>
                             <Input
-                                required
                                 id='code'
                                 type='text'
                                 name='code'
                                 placeholder='#000000'
                                 className={cn(
-                                    formState?.errors.confirmPassword &&
+                                    formState?.errors?.confirmPassword &&
                                         'border-red-500'
                                 )}
                             />
                             <p className='text-xs text-red-500'>
-                                {formState?.errors.confirmPassword}
+                                {formState?.errors?.confirmPassword}
                             </p>
                         </div>
 
                         <p className='text-xs text-red-500'>
-                            {formState?.errors.confirmPassword}
+                            {formState?.errors?.confirmPassword}
                         </p>
 
                         <Label className='mb-2'>

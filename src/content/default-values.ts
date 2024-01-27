@@ -11,6 +11,8 @@ export const defaultSignUpValues = {
     email: '',
     password: '',
     confirmPassword: '',
+    name: '',
+    code: '',
 };
 
 export const defaultSupportValues = {
