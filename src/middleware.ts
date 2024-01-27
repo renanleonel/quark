@@ -10,8 +10,12 @@ export default auth((req) => {
     const userHasOrganization = req.auth?.user?.organization;
     const isPublicRoute = publicRoutes.includes(nextUrl.pathname);
 
-    if (isPublicRoute && isAuthenticated)
-        return Response.redirect(new URL(DEFAULT_REDIRECT, nextUrl));
+    if (isPublicRoute) {
+        if (isAuthenticated)
+            return Response.redirect(new URL(DEFAULT_REDIRECT, nextUrl));
+
+        return null;
+    }
 
     if (!isAuthenticated && !isPublicRoute)
         return Response.redirect(new URL('/', nextUrl));
