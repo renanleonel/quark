@@ -4,12 +4,12 @@ import Credentials from 'next-auth/providers/credentials';
 
 async function getUser(email: string, password: string): Promise<any> {
     return {
-        id: 1,
+        id: '1',
         name: 'username',
         email: email,
         password: password,
         role: 'admin',
-        organization: '@12345',
+        organization: '#12345',
     };
 }
 

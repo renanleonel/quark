@@ -18,8 +18,6 @@ interface SignUpFormProps extends React.HTMLAttributes<HTMLDivElement> {}
 const SignUpForm = ({ className, ...props }: SignUpFormProps) => {
     const [formState, formAction] = useFormState(signup, signUpInitialState);
 
-    console.log(formState);
-
     return (
         <main className={cn('dark grid gap-6', className)} {...props}>
             <form action={formAction}>

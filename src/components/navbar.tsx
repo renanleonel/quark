@@ -1,3 +1,5 @@
+// 'use client';
+
 import Link from 'next/link';
 
 import { cn } from '@/lib/utils';
@@ -5,8 +7,15 @@ import { cn } from '@/lib/utils';
 import User from './user';
 
 const Navbar = ({ className, ...props }: React.HTMLAttributes<HTMLElement>) => {
+    // const pathname = usePathname();
+
     return (
-        <div className='flex h-16 items-center py-4'>
+        <div
+            className={cn(
+                'flex h-16 items-center py-4'
+                // pathname === '/create-organization' && 'hidden'
+            )}
+        >
             <nav
                 className={cn(
                     'flex items-center space-x-4 lg:space-x-6',
@@ -36,7 +45,7 @@ const Navbar = ({ className, ...props }: React.HTMLAttributes<HTMLElement>) => {
                     href='/organization'
                     className={cn(
                         'text-sm font-medium transition-colors hover:text-primary text-muted-foreground hover:underline'
-                        // pathname === '/tickets' && 'text-primary'
+                        // pathname === '/organization' && 'text-primary'
                     )}
                 >
                     Organização

@@ -104,8 +104,6 @@ export async function signup(prevState: any, formData: FormData) {
             code,
         };
 
-        console.log(body);
-
         await createUser(body).then((res) => {
             if (res.status === 200) {
                 success = true;
