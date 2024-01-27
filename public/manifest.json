@@ -1,10 +1,10 @@
 {
-	"name": "gon",
-	"short_name": "gon",
-	"theme_color": "#fff",
-	"background_color": "#fff",
-	"display": "standalone",
-	"scope": "/",
-	"start_url": "/",
-	"icons": []
+    "name": "Quark",
+    "short_name": "Quark",
+    "theme_color": "#fff",
+    "background_color": "#fff",
+    "display": "standalone",
+    "scope": "/",
+    "start_url": "/",
+    "icons": []
 }

@@ -12,6 +12,9 @@ import SubmitButton from '@/components/form/submit-button';
 import { Separator } from '@/components/ui/separator';
 import { DrawerOrganization } from '@/components/drawer-organization';
 import { signUpInitialState } from '@/content/initial-states';
+import { format } from 'path';
+import { useEffect } from 'react';
+import { toast } from 'sonner';
 
 interface SignUpFormProps extends React.HTMLAttributes<HTMLDivElement> {}
 
@@ -114,18 +117,13 @@ const SignUpForm = ({ className, ...props }: SignUpFormProps) => {
                                 name='code'
                                 placeholder='#000000'
                                 className={cn(
-                                    formState?.errors?.confirmPassword &&
-                                        'border-red-500'
+                                    formState?.errors?.code && 'border-red-500'
                                 )}
                             />
                             <p className='text-xs text-red-500'>
-                                {formState?.errors?.confirmPassword}
+                                {formState?.errors?.code}
                             </p>
                         </div>
-
-                        <p className='text-xs text-red-500'>
-                            {formState?.errors?.confirmPassword}
-                        </p>
 
                         <Label className='mb-2'>
                             Não possui um código?{' '}

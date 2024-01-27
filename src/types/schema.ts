@@ -33,7 +33,7 @@ export const signUpForm = z
         code: z
             .string()
             .length(6, {
-                message: 'Insira o código de convite!',
+                message: 'Código inválido!',
             })
             .optional()
             .or(z.literal('')),

@@ -128,7 +128,7 @@ export async function signup(prevState: any, formData: FormData) {
         };
     }
 
-    // if (success) redirect('/sign-up/info');
+    if (success) redirect('/sign-up/info');
 }
 
 async function verifyOrganization(
