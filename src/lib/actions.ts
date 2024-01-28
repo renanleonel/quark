@@ -17,6 +17,7 @@ import {
     defaultSupportValues,
 } from '@/content/default-values';
 import { revalidatePath } from 'next/cache';
+import { Resend } from 'resend';
 
 export async function signout() {
     await signOut();
@@ -213,20 +214,7 @@ export async function recover(prevState: any, formData: FormData) {
             };
         }
 
-        await sendRecoverEmail(email).then((res) => {
-            if (res.status === 200) {
-                //toast de sucesso
-                success = true;
-            } else {
-                return {
-                    message: 'unknown error',
-                    errors: {
-                        ...defaultRecoverValues,
-                        unknown: 'Erro desconhecido.',
-                    },
-                };
-            }
-        });
+        sendRecoverEmail(email);
     } catch (error) {
         return {
             message: 'unknown error',
@@ -241,9 +229,26 @@ export async function recover(prevState: any, formData: FormData) {
 }
 
 async function sendRecoverEmail(email: string) {
-    return {
-        status: 200,
-    };
+    const resend = new Resend(process.env.RESEND_API_KEY);
+
+    await resend.emails
+        .send({
+            from: 'onboarding@resend.dev',
+            to: email,
+            subject: 'test',
+            html: '<h1>test</h1>',
+        })
+        .then((res) => {
+            if (res.error) {
+                return {
+                    message: 'unknown error',
+                    errors: {
+                        ...defaultRecoverValues,
+                        unknown: 'Erro desconhecido.',
+                    },
+                };
+            }
+        });
 }
 
 export async function getTicket(id: string) {

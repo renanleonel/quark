@@ -31,11 +31,11 @@ const RecoverForm = ({ className, ...props }: RecoverFormProps) => {
                             name='email'
                             placeholder='email@gmail.com'
                             className={cn(
-                                formState?.errors.email && 'border-red-500'
+                                formState?.errors?.email && 'border-red-500'
                             )}
                         />
                         <p className='text-xs text-red-500'>
-                            {formState?.errors.email}
+                            {formState?.errors?.email}
                         </p>
                     </div>
 
