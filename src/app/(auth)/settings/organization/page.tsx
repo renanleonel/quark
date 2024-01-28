@@ -21,9 +21,9 @@ const Settings = () => {
                         <div className='flex gap-2'>
                             <Input
                                 id='name'
-                                value='ORGANIZATION NAME'
+                                value='Organization'
                                 name='name'
-                                placeholder='ORGANIZATION NAME'
+                                placeholder='Organization'
                             />
                             <Button className='w-40'>Alterar</Button>
                         </div>
@@ -40,7 +40,7 @@ const Settings = () => {
                 <div className='space-y-4'>
                     <div className='grid gap-2'>
                         <div className='flex gap-2'>
-                            <Input id='email' value='gon.com' name='name' />
+                            <Input id='email' value='quark.com' name='name' />
                             <Button className='w-40' variant='secondary'>
                                 Copiar link
                             </Button>

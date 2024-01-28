@@ -4,10 +4,12 @@ import Credentials from 'next-auth/providers/credentials';
 
 async function getUser(email: string, password: string): Promise<any> {
     return {
-        id: 1,
+        id: '1',
         name: 'username',
         email: email,
         password: password,
+        role: 'admin',
+        organization: '#12345',
     };
 }
 
@@ -24,6 +26,8 @@ export const {
             credentials: {
                 email: { label: 'email', type: 'text' },
                 password: { label: 'password', type: 'password' },
+                role: { label: 'role', type: 'text' },
+                organization: { label: 'organization', type: 'text' },
             },
             async authorize(credentials) {
                 const user = await getUser(
@@ -31,8 +35,7 @@ export const {
                     credentials.password as string
                 );
 
-                if (!user) return null;
-                return user;
+                return user ?? null;
             },
         }),
     ],

@@ -51,9 +51,7 @@ export function ProjectsForm() {
         control: form.control,
     });
 
-    function onSubmit(data: ProfileFormValues) {
-        console.log(data);
-    }
+    function onSubmit(data: ProfileFormValues) {}
 
     return (
         <Form {...form}>

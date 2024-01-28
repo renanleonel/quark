@@ -6,7 +6,6 @@ import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
 
 import AuthForm from '@/components/form/auth/auth-form';
-import { Github } from 'lucide-react';
 
 export const metadata: Metadata = {
     title: 'Entrar',
@@ -23,6 +22,7 @@ const Auth = () => {
                         Digite seu email de acesso
                     </p>
                 </div>
+
                 <AuthForm />
 
                 <Separator className='bg-white/20' />
@@ -38,10 +38,6 @@ const Auth = () => {
                         Cadastrar
                     </Button>
                 </Link>
-
-                <Separator className='bg-white/20' />
-
-                <Button type='submit'>Entrar com Google</Button>
             </div>
         </main>
     );

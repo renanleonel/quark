@@ -9,8 +9,8 @@ import { ThemeProvider } from '@/components/theme-provider';
 import { ThemeSwitcher } from '@/components/theme-switcher';
 
 export const metadata: Metadata = {
-    title: 'gon',
-    description: 'gon',
+    title: 'Quark',
+    description: 'Quark',
 };
 
 export default function RootLayout({

@@ -5,14 +5,16 @@ import { ColumnDef } from '@tanstack/react-table';
 import { Badge } from '@/components/ui/badge';
 import { Checkbox } from '@/components/ui/checkbox';
 
-import { Task } from '@/types';
+import { Ticket } from '@/types';
 import { labels, priorities, statuses } from '@/content/table-data';
 import { DataTableColumnHeader } from './data-table-column-header';
 import { DataTableRowActions } from './data-table-row-actions';
 
-export const columns: ColumnDef<Task>[] = [
+export const columns: ColumnDef<Ticket>[] = [
     {
         id: 'select',
+        enableSorting: false,
+        enableHiding: false,
         header: ({ table }) => (
             <Checkbox
                 checked={table.getIsAllPageRowsSelected()}
@@ -31,11 +33,11 @@ export const columns: ColumnDef<Task>[] = [
                 className='translate-y-[2px]'
             />
         ),
-        enableSorting: false,
-        enableHiding: false,
     },
     {
         accessorKey: 'title',
+        enableSorting: false,
+        enableHiding: false,
         header: ({ column }) => (
             <DataTableColumnHeader column={column} title='Título' />
         ),
@@ -50,25 +52,22 @@ export const columns: ColumnDef<Task>[] = [
         },
     },
     {
-        accessorKey: 'id',
+        accessorKey: 'project',
         enableSorting: false,
         enableHiding: false,
         header: ({ column }) => (
-            <DataTableColumnHeader column={column} title='Tipo' />
+            <DataTableColumnHeader column={column} title='Projeto' />
         ),
         cell: ({ row }) => {
-            const label = labels.find(
-                (label) => label.value === row.original.label
-            );
-
             return (
-                <div className='flex justify-center space-x-2'>
-                    {label && <Badge variant='outline'>{label.label}</Badge>}
+                <div className='flex space-x-2'>
+                    <span className='max-w-[400px] truncate font-medium'>
+                        {row.getValue('project')}
+                    </span>
                 </div>
             );
         },
     },
-
     {
         accessorKey: 'type',
         enableSorting: false,

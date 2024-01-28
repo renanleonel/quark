@@ -1,9 +1,9 @@
-export const publicRoutes = [
+export const PUBLIC_ROUTES = [
     '/',
     '/policy',
     '/recover',
     '/sign-up',
-    '/sign-up/info',
+    '/sign-up/create-organization',
 ];
 
 export const DEFAULT_REDIRECT = '/tickets';

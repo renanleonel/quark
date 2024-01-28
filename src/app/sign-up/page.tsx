@@ -2,8 +2,6 @@ import Link from 'next/link';
 import { Metadata } from 'next';
 
 import { Button } from '@/components/ui/button';
-import { Separator } from '@/components/ui/separator';
-
 import SignUpForm from '@/components/form/sign-up/sign-up-form';
 
 export const metadata: Metadata = {
@@ -18,12 +16,11 @@ const SignUp = () => {
                 <div className='flex flex-col gap-2 text-center'>
                     <h1 className='text-2xl font-semibold'>Cadastro</h1>
                     <p className='text-sm text-muted-foreground'>
-                        Digite seu email de acesso
+                        Insira seus dados
                     </p>
                 </div>
-                <SignUpForm />
 
-                <Separator className='bg-white/20' />
+                <SignUpForm />
 
                 <Link href='/'>
                     <Button variant='outline' type='button' className='w-full'>

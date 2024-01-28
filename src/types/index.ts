@@ -1,4 +1,4 @@
 import { z } from 'zod';
-import { taskSchema } from './schema';
+import { ticketSchema } from './schema';
 
-export type Task = z.infer<typeof taskSchema>;
+export type Ticket = z.infer<typeof ticketSchema>;

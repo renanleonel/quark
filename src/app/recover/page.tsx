@@ -3,7 +3,6 @@ import { Metadata } from 'next';
 
 import { Label } from '@/components/ui/label';
 import { Button } from '@/components/ui/button';
-
 import RecoverForm from '@/components/form/recover/recover-form';
 
 export const metadata: Metadata = {
@@ -21,6 +20,7 @@ const Recover = () => {
                         Digite seu email de acesso
                     </p>
                 </div>
+
                 <RecoverForm />
 
                 <Label className='sr-only' htmlFor='back'>

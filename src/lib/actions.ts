@@ -1,20 +1,25 @@
 'use server';
 
+import { Resend } from 'resend';
 import { AuthError } from 'next-auth';
 import { signIn, signOut } from '@/auth';
+
 import {
     authSchema,
+    createOrganizationSchema,
     recoverSchema,
     signUpForm,
     supportSchema,
+    validateOrganizationSchema,
 } from '@/types/schema';
-import { redirect } from 'next/navigation';
 
 import {
     defaultAuthValues,
     defaultRecoverValues,
     defaultSignUpValues,
     defaultSupportValues,
+    defaultCreateOrganizationValues,
+    defaultValidateOrganizationValues,
 } from '@/content/default-values';
 
 export async function signout() {
@@ -70,14 +75,14 @@ export async function authenticate(prevState: any, formData: FormData) {
 }
 
 export async function signup(prevState: any, formData: FormData) {
-    let success = false;
-
     try {
-        const email = formData.get('email');
-        const password = formData.get('password');
-        const confirmPassword = formData.get('confirmPassword');
+        const name = formData.get('name') as string;
+        const email = formData.get('email') as string;
+        const password = formData.get('password') as string;
+        const confirmPassword = formData.get('confirmPassword') as string;
 
         const validatedFields = signUpForm.safeParse({
+            name: name,
             email: email,
             password: password,
             confirmPassword: confirmPassword,
@@ -90,7 +95,17 @@ export async function signup(prevState: any, formData: FormData) {
             };
         }
 
-        success = true;
+        const body = {
+            name,
+            email,
+            password,
+        };
+        await sendConfirmationEmail(email);
+
+        return {
+            message: 'success',
+            errors: {},
+        };
     } catch (error) {
         return {
             message: 'unknown error',
@@ -100,8 +115,140 @@ export async function signup(prevState: any, formData: FormData) {
             },
         };
     }
+}
 
-    if (success) redirect('/sign-up/info');
+export async function recover(prevState: any, formData: FormData) {
+    let success = false;
+
+    try {
+        const email = formData.get('email') as string;
+
+        const validatedFields = recoverSchema.safeParse({
+            email: email,
+        });
+
+        if (!validatedFields.success) {
+            return {
+                message: 'validation error',
+                errors: validatedFields.error.flatten().fieldErrors,
+            };
+        }
+
+        await sendRecoverEmail(email);
+    } catch (error) {
+        return {
+            message: 'unknown error',
+            errors: {
+                ...defaultRecoverValues,
+                unknown: 'Erro desconhecido.',
+            },
+        };
+    }
+}
+
+export async function sendConfirmationEmail(email: string) {
+    const resend = new Resend(process.env.RESEND_API_KEY);
+
+    await resend.emails.send({
+        from: 'onboarding@resend.dev',
+        to: email,
+        subject: 'oi',
+        html: '<h1>http://localhost:3000/sign-up/create-organization?id=12345</h1>',
+    });
+}
+
+export async function sendRecoverEmail(email: string) {
+    const resend = new Resend(process.env.RESEND_API_KEY);
+
+    await resend.emails
+        .send({
+            from: 'onboarding@resend.dev',
+            to: email,
+            subject: 'test',
+            html: '<h1>test</h1>',
+        })
+        .then((res) => {
+            if (res.error) {
+                return {
+                    message: 'unknown error',
+                    errors: {
+                        ...defaultRecoverValues,
+                        unknown: 'Erro desconhecido.',
+                    },
+                };
+            }
+
+            return {
+                message: 'success',
+                errors: {},
+            };
+        });
+}
+
+export async function getInvitationOrigin(id: string) {
+    return {
+        email: 'test@quark.com',
+    };
+}
+
+export async function createOrganization(prevState: any, formData: FormData) {
+    try {
+        const name = formData.get('name') as string;
+
+        const validatedFields = createOrganizationSchema.safeParse({
+            name: name,
+        });
+
+        if (!validatedFields.success) {
+            return {
+                message: 'validation error',
+                errors: validatedFields.error.flatten().fieldErrors,
+            };
+        }
+
+        return {
+            message: 'success',
+            errors: {},
+        };
+    } catch (error) {
+        return {
+            message: 'unknown error',
+            errors: {
+                ...defaultCreateOrganizationValues,
+                unknown: 'Erro desconhecido.',
+            },
+        };
+    }
+}
+
+export async function validateOrganization(prevState: any, formData: FormData) {
+    try {
+        const code = formData.get('code') as string;
+
+        const validatedFields = validateOrganizationSchema.safeParse({
+            code: code,
+        });
+
+        if (!validatedFields.success) {
+            return {
+                message: 'validation error',
+                errors: validatedFields.error.flatten().fieldErrors,
+            };
+        }
+
+        return {
+            message: 'success',
+            errors: {},
+        };
+    } catch (error) {
+        return {
+            message: 'unknown error',
+            errors: {
+                ...defaultValidateOrganizationValues,
+                unknown: 'Erro desconhecido.',
+            },
+        };
+    }
 }
 
 export async function newTicket(prevState: any, formData: FormData) {
@@ -133,8 +280,6 @@ export async function newTicket(prevState: any, formData: FormData) {
             };
         }
 
-        console.log(formData);
-
         return {
             message: 'success',
             errors: {},
@@ -148,37 +293,6 @@ export async function newTicket(prevState: any, formData: FormData) {
             },
         };
     }
-}
-
-export async function recover(prevState: any, formData: FormData) {
-    let success = false;
-
-    try {
-        const email = formData.get('email');
-
-        const validatedFields = recoverSchema.safeParse({
-            email: email,
-        });
-
-        if (!validatedFields.success) {
-            return {
-                message: 'validation error',
-                errors: validatedFields.error.flatten().fieldErrors,
-            };
-        }
-
-        success = true;
-    } catch (error) {
-        return {
-            message: 'unknown error',
-            errors: {
-                ...defaultRecoverValues,
-                unknown: 'Erro desconhecido.',
-            },
-        };
-    }
-
-    if (success) redirect('/');
 }
 
 export async function getTicket(id: string) {

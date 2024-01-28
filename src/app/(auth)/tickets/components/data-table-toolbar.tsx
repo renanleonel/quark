@@ -6,7 +6,7 @@ import { Table } from '@tanstack/react-table';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 
-import { priorities, statuses } from '@/content/table-data';
+import { priorities, projects, statuses } from '@/content/table-data';
 import { DataTableFacetedFilter } from './data-table-faceted-filter';
 import { DataTableViewOptions } from './data-table-view-options';
 
@@ -23,7 +23,7 @@ export function DataTableToolbar<TData>({
         <div className='flex items-center justify-between'>
             <div className='flex flex-1 items-center space-x-2'>
                 <Input
-                    placeholder='Filter tasks...'
+                    placeholder='Filtrar ticket'
                     value={
                         (table
                             .getColumn('title')
@@ -36,6 +36,13 @@ export function DataTableToolbar<TData>({
                     }
                     className='h-8 w-[150px] lg:w-[250px]'
                 />
+                {table.getColumn('project') && (
+                    <DataTableFacetedFilter
+                        column={table.getColumn('project')}
+                        title='Project'
+                        options={projects}
+                    />
+                )}
                 {table.getColumn('status') && (
                     <DataTableFacetedFilter
                         column={table.getColumn('status')}

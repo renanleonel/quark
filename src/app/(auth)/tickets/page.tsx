@@ -11,6 +11,8 @@ import {
     CardTitle,
 } from '@/components/ui/card';
 import { Separator } from '@/components/ui/separator';
+import { auth } from '@/auth';
+import { redirect } from 'next/navigation';
 
 export const metadata: Metadata = {
     title: 'Tasks',
@@ -28,7 +30,7 @@ const Tickets = async () => {
         <Card className='hidden lg:block'>
             <CardHeader>
                 <CardTitle>Tickets</CardTitle>
-                <CardDescription>Esses são os tickets abertos.</CardDescription>
+                <CardDescription>Tickets abertos no momento</CardDescription>
             </CardHeader>
             <Separator />
             <DataTable data={tickets} columns={columns} />

@@ -12,7 +12,7 @@ import {
     DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 
-import { taskSchema } from '@/types/schema';
+import { ticketSchema } from '@/types/schema';
 import { useRouter } from 'next/navigation';
 import { DeleteTicket } from '@/app/(auth)/tickets/components/delete-ticket';
 
@@ -24,7 +24,7 @@ export function DataTableRowActions<TData>({
     row,
 }: DataTableRowActionsProps<TData>) {
     const router = useRouter();
-    const task = taskSchema.parse(row.original);
+    const task = ticketSchema.parse(row.original);
 
     const handleEdit = () => {
         router.push(`/edit/${task.id}`);
@@ -42,10 +42,10 @@ export function DataTableRowActions<TData>({
                 </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align='end' className='w-[160px]'>
+                <DropdownMenuItem>Ver</DropdownMenuItem>
                 <DropdownMenuItem onClick={handleEdit}>Edit</DropdownMenuItem>
-                <DeleteTicket />
                 <DropdownMenuSeparator />
-                <DropdownMenuItem>Alterar status</DropdownMenuItem>
+                <DeleteTicket />
             </DropdownMenuContent>
         </DropdownMenu>
     );

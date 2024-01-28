@@ -11,8 +11,6 @@ import {
     DrawerTitle,
     DrawerTrigger,
 } from '@/components/ui/drawer';
-import { Input } from './ui/input';
-import { Separator } from './ui/separator';
 import { ProjectsForm } from './form/projects/projects-form';
 
 interface DrawerNewProjectsProps {

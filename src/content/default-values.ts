@@ -11,6 +11,8 @@ export const defaultSignUpValues = {
     email: '',
     password: '',
     confirmPassword: '',
+    name: '',
+    // code: '',
 };
 
 export const defaultSupportValues = {
@@ -22,4 +24,13 @@ export const defaultSupportValues = {
     link: '',
     title: '',
     description: '',
+};
+
+export const defaultCreateOrganizationValues = {
+    id: '',
+    name: '',
+};
+export const defaultValidateOrganizationValues = {
+    id: '',
+    code: '',
 };
