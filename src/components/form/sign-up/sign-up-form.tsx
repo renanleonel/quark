@@ -10,8 +10,6 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 
 import SubmitButton from '@/components/form/submit-button';
-import { Separator } from '@/components/ui/separator';
-import { DrawerOrganization } from '@/components/drawer-organization';
 import { signUpInitialState } from '@/content/initial-states';
 
 interface SignUpFormProps extends React.HTMLAttributes<HTMLDivElement> {}
@@ -31,10 +29,24 @@ const SignUpForm = ({ className, ...props }: SignUpFormProps) => {
         <main className={cn('dark grid gap-6', className)} {...props}>
             <form ref={formRef} action={formAction}>
                 <section className='grid gap-4'>
-                    <div className='grid gap-1'>
-                        <Label className='sr-only' htmlFor='email'>
-                            Email
-                        </Label>
+                    <div className='grid gap-1 space-y-1'>
+                        <Label htmlFor='name'>Nome</Label>
+                        <Input
+                            required
+                            id='name'
+                            type='text'
+                            name='name'
+                            placeholder='John Doe'
+                            className={cn(
+                                formState?.errors?.name && 'border-red-500'
+                            )}
+                        />
+                        <p className='text-xs text-red-500'>
+                            {formState?.errors?.name}
+                        </p>
+                    </div>
+                    <div className='grid gap-1 space-y-1'>
+                        <Label htmlFor='email'>Email</Label>
                         <Input
                             required
                             id='email'
@@ -50,10 +62,8 @@ const SignUpForm = ({ className, ...props }: SignUpFormProps) => {
                         </p>
                     </div>
 
-                    <div className='grid gap-1'>
-                        <Label className='sr-only' htmlFor='password'>
-                            Senha
-                        </Label>
+                    <div className='grid gap-1 space-y-1'>
+                        <Label htmlFor='password'>Senha</Label>
                         <Input
                             required
                             id='password'
@@ -69,10 +79,8 @@ const SignUpForm = ({ className, ...props }: SignUpFormProps) => {
                         </p>
                     </div>
 
-                    <div className='grid gap-1'>
-                        <Label className='sr-only' htmlFor='confirmPassword'>
-                            Confirmar senha
-                        </Label>
+                    <div className='grid gap-1 space-y-1'>
+                        <Label htmlFor='confirmPassword'>Confirmar senha</Label>
                         <Input
                             required
                             id='confirmPassword'
@@ -89,32 +97,11 @@ const SignUpForm = ({ className, ...props }: SignUpFormProps) => {
                         </p>
                     </div>
 
-                    <Separator className='bg-white/20' />
-
-                    <div className='grid gap-1'>
-                        <Label className='sr-only' htmlFor='name'>
-                            Nome
-                        </Label>
-                        <Input
-                            required
-                            id='name'
-                            type='text'
-                            name='name'
-                            placeholder='John Doe'
-                            className={cn(
-                                formState?.errors?.name && 'border-red-500'
-                            )}
-                        />
-                        <p className='text-xs text-red-500'>
-                            {formState?.errors?.name}
-                        </p>
-                    </div>
-
-                    <div className='grid gap-2'>
+                    {/* <div className='grid gap-2'>
                         <Label htmlFor='name'>Organização</Label>
 
-                        <div className='grid gap-1'>
-                            <Label className='sr-only' htmlFor='code'>
+                        <div className='grid gap-1 space-y-1'>
+                            <Label htmlFor='code'>
                                 Código
                             </Label>
                             <Input
@@ -139,7 +126,7 @@ const SignUpForm = ({ className, ...props }: SignUpFormProps) => {
                                 </Label>
                             </DrawerOrganization>
                         </Label>
-                    </div>
+                    </div> */}
 
                     <SubmitButton text='Cadastrar' />
                 </section>

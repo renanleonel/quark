@@ -53,6 +53,24 @@ export const signUpInitialState = {
         password: '',
         confirmPassword: '',
         name: '',
+        // code: '',
+        unknown: '',
+    },
+};
+
+export const createOrganizationInitialState = {
+    message: '',
+    errors: {
+        id: '',
+        name: '',
+        unknown: '',
+    },
+};
+
+export const validateOrganizationInitialState = {
+    message: '',
+    errors: {
+        id: '',
         code: '',
         unknown: '',
     },

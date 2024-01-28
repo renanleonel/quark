@@ -6,7 +6,6 @@ import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
 
 import AuthForm from '@/components/form/auth/auth-form';
-import { Github } from 'lucide-react';
 
 export const metadata: Metadata = {
     title: 'Entrar',
@@ -39,9 +38,9 @@ const Auth = () => {
                     </Button>
                 </Link>
 
-                <Separator className='bg-white/20' />
+                {/* <Separator className='bg-white/20' /> */}
 
-                <Button type='submit'>Entrar com Google</Button>
+                {/* <Button type='submit'>Entrar com Google</Button> */}
             </div>
         </main>
     );
