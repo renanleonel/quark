@@ -7,7 +7,6 @@ const { auth } = NextAuth(authConfig);
 export default auth((req) => {
     const { nextUrl } = req;
     const isAuthenticated = !!req.auth;
-    const userHasOrganization = req.auth?.user?.organization;
     const isPublicRoute = publicRoutes.includes(nextUrl.pathname);
 
     if (isPublicRoute) {
@@ -19,12 +18,6 @@ export default auth((req) => {
 
     if (!isAuthenticated && !isPublicRoute)
         return Response.redirect(new URL('/', nextUrl));
-
-    if (!userHasOrganization && nextUrl.pathname !== '/create-organization')
-        return Response.redirect(new URL('/create-organization', nextUrl));
-
-    if (userHasOrganization && nextUrl.pathname === '/create-organization')
-        return Response.redirect(new URL('/tickets', nextUrl));
 
     return null;
 });

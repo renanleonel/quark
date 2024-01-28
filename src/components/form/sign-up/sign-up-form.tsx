@@ -1,29 +1,35 @@
 'use client';
 
+import { toast } from 'sonner';
 import { cn } from '@/lib/utils';
+import { signup } from '@/lib/actions';
+import { useEffect, useRef } from 'react';
+import { useFormState } from 'react-dom';
 
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-
-import { signup } from '@/lib/actions';
-import { useFormState } from 'react-dom';
 
 import SubmitButton from '@/components/form/submit-button';
 import { Separator } from '@/components/ui/separator';
 import { DrawerOrganization } from '@/components/drawer-organization';
 import { signUpInitialState } from '@/content/initial-states';
-import { format } from 'path';
-import { useEffect } from 'react';
-import { toast } from 'sonner';
 
 interface SignUpFormProps extends React.HTMLAttributes<HTMLDivElement> {}
 
 const SignUpForm = ({ className, ...props }: SignUpFormProps) => {
+    const formRef = useRef<HTMLFormElement>(null);
     const [formState, formAction] = useFormState(signup, signUpInitialState);
+
+    useEffect(() => {
+        if (formState.message === 'success') {
+            toast.success('E-mail de confirmação enviado');
+            formRef.current?.reset();
+        }
+    }, [formState]);
 
     return (
         <main className={cn('dark grid gap-6', className)} {...props}>
-            <form action={formAction}>
+            <form ref={formRef} action={formAction}>
                 <section className='grid gap-4'>
                     <div className='grid gap-1'>
                         <Label className='sr-only' htmlFor='email'>

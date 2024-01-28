@@ -16,6 +16,7 @@ import {
     defaultSignUpValues,
     defaultSupportValues,
 } from '@/content/default-values';
+import { revalidatePath } from 'next/cache';
 
 export async function signout() {
     await signOut();
@@ -70,8 +71,6 @@ export async function authenticate(prevState: any, formData: FormData) {
 }
 
 export async function signup(prevState: any, formData: FormData) {
-    let success = false;
-
     try {
         const email = formData.get('email');
         const password = formData.get('password');
@@ -105,10 +104,7 @@ export async function signup(prevState: any, formData: FormData) {
         };
 
         await createUser(body).then((res) => {
-            if (res.status === 200) {
-                success = true;
-            } else {
-                // tratar erros, como unique contraint de email, etc
+            if (res.status !== 200) {
                 return {
                     message: 'unknown error',
                     errors: {
@@ -118,6 +114,11 @@ export async function signup(prevState: any, formData: FormData) {
                 };
             }
         });
+
+        return {
+            message: 'success',
+            errors: {},
+        };
     } catch (error) {
         return {
             message: 'unknown error',
@@ -127,8 +128,6 @@ export async function signup(prevState: any, formData: FormData) {
             },
         };
     }
-
-    if (success) redirect('/sign-up/info');
 }
 
 async function verifyOrganization(
@@ -147,6 +146,7 @@ async function verifyOrganization(
 }
 
 async function createUser(body: any) {
+    //send confirmation email
     return {
         status: 200,
     };
