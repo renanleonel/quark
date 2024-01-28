@@ -213,7 +213,6 @@ export async function recover(prevState: any, formData: FormData) {
                 errors: validatedFields.error.flatten().fieldErrors,
             };
         }
-
         sendRecoverEmail(email);
     } catch (error) {
         return {
@@ -224,8 +223,6 @@ export async function recover(prevState: any, formData: FormData) {
             },
         };
     }
-
-    if (success) redirect('/');
 }
 
 async function sendRecoverEmail(email: string) {
@@ -235,8 +232,8 @@ async function sendRecoverEmail(email: string) {
         .send({
             from: 'onboarding@resend.dev',
             to: email,
-            subject: 'test',
-            html: '<h1>test</h1>',
+            subject: 'oi',
+            html: '<h1>oi</h1>',
         })
         .then((res) => {
             if (res.error) {
@@ -248,6 +245,11 @@ async function sendRecoverEmail(email: string) {
                     },
                 };
             }
+
+            return {
+                message: 'success',
+                errors: {},
+            };
         });
 }
 
