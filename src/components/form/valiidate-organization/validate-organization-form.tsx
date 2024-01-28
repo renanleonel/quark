@@ -1,10 +1,12 @@
 'use client';
 
-import { validateOrganizationInitialState } from '@/content/initial-states';
-import { validateOrganization } from '@/lib/actions';
+import { cn } from '@/lib/utils';
 import { useFormState } from 'react-dom';
-import { Button } from '@/components/ui/button';
+import { validateOrganization } from '@/lib/actions';
+import { validateOrganizationInitialState } from '@/content/initial-states';
+
 import { Input } from '@/components/ui/input';
+import SubmitButton from '@/components/form/submit-button';
 
 const ValidateOrganizationForm = () => {
     const [formState, formAction] = useFormState(
@@ -14,14 +16,17 @@ const ValidateOrganizationForm = () => {
 
     return (
         <form action={formAction} className='flex gap-2'>
-            <Input
-                id='code'
-                placeholder='Insira o nome da organização'
-                name='code'
-            />
-            <Button type='submit' variant='secondary'>
-                Validar
-            </Button>
+            <div className='space-y-2 w-full'>
+                <Input
+                    id='code'
+                    name='code'
+                    placeholder='Insira o nome da organização'
+                    className={cn(formState.errors.code && 'border-red-500')}
+                />
+                <p className='text-xs text-red-500'>{formState.errors.code}</p>
+            </div>
+
+            <SubmitButton text='Validar' variant='secondary' />
         </form>
     );
 };

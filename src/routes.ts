@@ -1,10 +1,8 @@
-export const publicRoutes = [
+export const PUBLIC_ROUTES = [
     '/',
     '/policy',
     '/recover',
-    '/recover',
     '/sign-up',
-    '/sign-up/info',
     '/sign-up/create-organization',
 ];
 

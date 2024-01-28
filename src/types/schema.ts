@@ -12,10 +12,7 @@ export const authSchema = z.object({
         .string()
         .min(1, { message: 'Insira o email!' })
         .email({ message: 'Email inválido!' }),
-    password: z
-        .string()
-        .min(1, { message: 'Insira a senha!' })
-        .min(6, { message: 'Senha deve ter no mínimo 6 caracteres!' }),
+    password: z.string().min(1, { message: 'Insira a senha!' }),
 });
 
 export const signUpForm = z

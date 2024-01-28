@@ -1,13 +1,13 @@
 import NextAuth from 'next-auth';
 import { authConfig } from '@/auth.config';
-import { DEFAULT_REDIRECT, publicRoutes } from '@/routes';
+import { DEFAULT_REDIRECT, PUBLIC_ROUTES } from '@/routes';
 
 const { auth } = NextAuth(authConfig);
 
 export default auth((req) => {
     const { nextUrl } = req;
     const isAuthenticated = !!req.auth;
-    const isPublicRoute = publicRoutes.includes(nextUrl.pathname);
+    const isPublicRoute = PUBLIC_ROUTES.includes(nextUrl.pathname);
 
     if (isPublicRoute) {
         if (isAuthenticated)

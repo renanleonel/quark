@@ -1,7 +1,9 @@
 'use server';
 
+import { Resend } from 'resend';
 import { AuthError } from 'next-auth';
 import { signIn, signOut } from '@/auth';
+
 import {
     authSchema,
     createOrganizationSchema,
@@ -10,7 +12,6 @@ import {
     supportSchema,
     validateOrganizationSchema,
 } from '@/types/schema';
-import { redirect } from 'next/navigation';
 
 import {
     defaultAuthValues,
@@ -20,7 +21,6 @@ import {
     defaultCreateOrganizationValues,
     defaultValidateOrganizationValues,
 } from '@/content/default-values';
-import { Resend } from 'resend';
 
 export async function signout() {
     await signOut();
@@ -117,57 +117,6 @@ export async function signup(prevState: any, formData: FormData) {
     }
 }
 
-async function createUser(body: any) {
-    //send confirmation email
-    return {
-        status: 200,
-    };
-}
-
-export async function newTicket(prevState: any, formData: FormData) {
-    try {
-        const name = formData.get('name');
-        const type = formData.get('type');
-        const urgency = formData.get('urgency');
-        const application = formData.get('application');
-        const file = formData.get('file');
-        const link = formData.get('link');
-        const title = formData.get('title');
-        const description = formData.get('description');
-
-        const validatedFields = supportSchema.safeParse({
-            name: name,
-            type: type,
-            urgency: urgency,
-            application: application,
-            file: file,
-            link: link,
-            title: title,
-            description: description,
-        });
-
-        if (!validatedFields.success) {
-            return {
-                message: 'validation error',
-                errors: validatedFields.error.flatten().fieldErrors,
-            };
-        }
-
-        return {
-            message: 'success',
-            errors: {},
-        };
-    } catch (error) {
-        return {
-            message: 'unknown error',
-            errors: {
-                ...defaultSupportValues,
-                unknown: 'Erro desconhecido.',
-            },
-        };
-    }
-}
-
 export async function recover(prevState: any, formData: FormData) {
     let success = false;
 
@@ -197,7 +146,7 @@ export async function recover(prevState: any, formData: FormData) {
     }
 }
 
-async function sendConfirmationEmail(email: string) {
+export async function sendConfirmationEmail(email: string) {
     const resend = new Resend(process.env.RESEND_API_KEY);
 
     await resend.emails.send({
@@ -208,15 +157,15 @@ async function sendConfirmationEmail(email: string) {
     });
 }
 
-async function sendRecoverEmail(email: string) {
+export async function sendRecoverEmail(email: string) {
     const resend = new Resend(process.env.RESEND_API_KEY);
 
     await resend.emails
         .send({
             from: 'onboarding@resend.dev',
             to: email,
-            subject: 'oi',
-            html: '<h1>oi</h1>',
+            subject: 'test',
+            html: '<h1>test</h1>',
         })
         .then((res) => {
             if (res.error) {
@@ -234,21 +183,6 @@ async function sendRecoverEmail(email: string) {
                 errors: {},
             };
         });
-}
-
-export async function getTicket(id: string) {
-    return {
-        id: id,
-        username: 'Usuário',
-        title: 'Título do ticket',
-        description: 'Descrição do ticket.',
-        urgency: 'Alta',
-        status: 'Aberto',
-        application: 'Aplicação',
-        type: 'Tipo',
-        createdAt: '2021-09-22',
-        updatedAt: '2021-09-22',
-    };
 }
 
 export async function getInvitationOrigin(id: string) {
@@ -315,4 +249,63 @@ export async function validateOrganization(prevState: any, formData: FormData) {
             },
         };
     }
+}
+
+export async function newTicket(prevState: any, formData: FormData) {
+    try {
+        const name = formData.get('name');
+        const type = formData.get('type');
+        const urgency = formData.get('urgency');
+        const application = formData.get('application');
+        const file = formData.get('file');
+        const link = formData.get('link');
+        const title = formData.get('title');
+        const description = formData.get('description');
+
+        const validatedFields = supportSchema.safeParse({
+            name: name,
+            type: type,
+            urgency: urgency,
+            application: application,
+            file: file,
+            link: link,
+            title: title,
+            description: description,
+        });
+
+        if (!validatedFields.success) {
+            return {
+                message: 'validation error',
+                errors: validatedFields.error.flatten().fieldErrors,
+            };
+        }
+
+        return {
+            message: 'success',
+            errors: {},
+        };
+    } catch (error) {
+        return {
+            message: 'unknown error',
+            errors: {
+                ...defaultSupportValues,
+                unknown: 'Erro desconhecido.',
+            },
+        };
+    }
+}
+
+export async function getTicket(id: string) {
+    return {
+        id: id,
+        username: 'Usuário',
+        title: 'Título do ticket',
+        description: 'Descrição do ticket.',
+        urgency: 'Alta',
+        status: 'Aberto',
+        application: 'Aplicação',
+        type: 'Tipo',
+        createdAt: '2021-09-22',
+        updatedAt: '2021-09-22',
+    };
 }
