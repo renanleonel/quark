@@ -12,7 +12,7 @@ import Combobox from '@/components/ui/combobox';
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
 import { CardContent, CardFooter } from '@/components/ui/card';
-
+import { useSession } from 'next-auth/react';
 import {
     Select,
     SelectContent,
@@ -30,16 +30,20 @@ const NewTicketForm = () => {
         newTicketInitialState
     );
 
+    const session = useSession();
+    const name = session.data?.user?.name;
+
     return (
         <form action={formAction}>
             <CardContent className='flex flex-col lg:flex-row gap-6'>
                 <section className='flex flex-col gap-6 w-full'>
-                    <div className='grid gap-2'>
+                    <div className='grid gap-2 opacity-50 pointer-events-none'>
                         <Label htmlFor='nome'>Seu nome</Label>
                         <Input
                             id='nome'
-                            placeholder='Nome'
                             name='name'
+                            placeholder='Nome'
+                            defaultValue={name}
                             className={cn(
                                 formState.errors.name && 'border-red-400'
                             )}
@@ -49,7 +53,7 @@ const NewTicketForm = () => {
                     <div className='grid grid-cols-2 gap-4'>
                         <div className='grid gap-2'>
                             <Label htmlFor='security-level'>Tipo</Label>
-                            <Select defaultValue='1' name='type'>
+                            <Select defaultValue='3' name='type'>
                                 <SelectTrigger
                                     id='security-level'
                                     className={cn(

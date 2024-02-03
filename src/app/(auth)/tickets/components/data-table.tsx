@@ -28,7 +28,6 @@ import {
 import { DataTableToolbar } from '../components/data-table-toolbar';
 import { DataTablePagination } from '../components/data-table-pagination';
 import { useSearchParams } from 'next/navigation';
-import Link from 'next/link';
 
 interface DataTableProps<TData, TValue> {
     columns: ColumnDef<TData, TValue>[];
@@ -76,7 +75,7 @@ export function DataTable<TData, TValue>({
             const parsedFilters = JSON.parse(filters);
             table.setColumnFilters(parsedFilters);
         }
-    }, [params]);
+    }, [params, table]);
 
     return (
         <div className='space-y-4 flex flex-col w-full p-4'>

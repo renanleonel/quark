@@ -15,7 +15,8 @@ import {
 import { Textarea } from '@/components/ui/textarea';
 
 import { InputFile } from '@/components/input-file';
-import { Link } from 'lucide-react';
+import { Link as LinkIcon } from 'lucide-react';
+import Link from 'next/link';
 import SubmitButton from '@/components/form/submit-button';
 
 import { newTicket } from '@/lib/actions';
@@ -94,7 +95,7 @@ const EditForm = ({ ticket }: EditFormProps) => {
                     <div className='grid gap-2'>
                         <div className='flex gap-2 items-center'>
                             <Label htmlFor='link'>Link</Label>
-                            <Link className='h-3 w-3' />
+                            <LinkIcon className='h-3 w-3' />
                         </div>
                         <Input id='link' name='link' placeholder='Link' />
                     </div>
@@ -121,9 +122,9 @@ const EditForm = ({ ticket }: EditFormProps) => {
                 </section>
             </CardContent>
             <CardFooter className='justify-between space-x-2'>
-                <Button type='reset' variant='ghost'>
-                    Cancelar
-                </Button>
+                <Link href='/tickets'>
+                    <Button variant='ghost'>Cancelar</Button>
+                </Link>
                 <SubmitButton text='Enviar' className='w-24' />
             </CardFooter>
         </form>

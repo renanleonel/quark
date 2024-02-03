@@ -6,7 +6,7 @@ import { Badge } from '@/components/ui/badge';
 import { Checkbox } from '@/components/ui/checkbox';
 
 import { Ticket } from '@/types';
-import { labels, priorities, statuses } from '@/content/table-data';
+import { labels, priorities, projects, statuses } from '@/content/table-data';
 import { DataTableColumnHeader } from './data-table-column-header';
 import { DataTableRowActions } from './data-table-row-actions';
 
@@ -59,13 +59,24 @@ export const columns: ColumnDef<Ticket>[] = [
             <DataTableColumnHeader column={column} title='Projeto' />
         ),
         cell: ({ row }) => {
+            const project = projects.find(
+                (project) => project.value === row.original.project
+            );
+
+            if (!project) {
+                return null;
+            }
+
             return (
                 <div className='flex space-x-2'>
                     <span className='max-w-[400px] truncate font-medium'>
-                        {row.getValue('project')}
+                        {project.label}
                     </span>
                 </div>
             );
+        },
+        filterFn: (row, id, value) => {
+            return value.includes(row.getValue(id));
         },
     },
     {

@@ -54,15 +54,15 @@ export const statuses = [
 
 export const projects = [
     {
-        value: 'Projeto 1',
+        value: 'projeto 1',
         label: 'Projeto 1',
     },
     {
-        value: 'Projeto 2',
+        value: 'projeto 2',
         label: 'Projeto 2',
     },
     {
-        value: 'Projeto 3',
+        value: 'projeto 3',
         label: 'Projeto 3',
     },
 ];
