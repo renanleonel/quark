@@ -13,7 +13,7 @@ import { Chart } from './components/chart';
 import ProjectRanking from './components/project-ranking';
 import CardData from './components/card-data';
 import { Button } from '@/components/ui/button';
-import { DrawerNewProjects } from '@/components/drawer-new-projects';
+import { DrawerNewProjects } from '@/components/drawer/drawer-new-projects';
 
 export const metadata: Metadata = {
     title: 'Organização',
@@ -42,9 +42,7 @@ export default function DashboardPage() {
                                 </TabsTrigger>
                             </TabsList>
                             {/* if role === admin */}
-                            <DrawerNewProjects>
-                                <Button>Novo projeto</Button>
-                            </DrawerNewProjects>
+                            <DrawerNewProjects />
                         </div>
                         <TabsContent value='overview' className='space-y-4'>
                             <div className='grid gap-4 md:grid-cols-2 lg:grid-cols-4'>
@@ -72,7 +70,12 @@ export default function DashboardPage() {
                             <div className='grid gap-4 md:grid-cols-2 lg:grid-cols-8'>
                                 <Card className='col-span-4'>
                                     <CardHeader>
-                                        <CardTitle>Projetos</CardTitle>
+                                        <CardTitle className='flex justify-between items-center mb-2'>
+                                            Projetos
+                                            <Button className='h-8'>
+                                                Ver projetos
+                                            </Button>
+                                        </CardTitle>
                                         <CardDescription>
                                             Estes projetos receberam mais
                                             tickets nos últimos 30 dias.

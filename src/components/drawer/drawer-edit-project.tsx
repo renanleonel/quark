@@ -11,27 +11,32 @@ import {
     DrawerTitle,
     DrawerTrigger,
 } from '@/components/ui/drawer';
-import { ProjectsForm } from './form/projects/projects-form';
+import { Pencil } from 'lucide-react';
+import EditProjectForm from '../form/projects/edit-project-form';
 
-interface DrawerNewProjectsProps {
-    children: React.ReactNode;
+interface DrawerEditProjectProps {
+    project: {
+        label: string;
+        value: string;
+    };
 }
 
-export function DrawerNewProjects({ children }: DrawerNewProjectsProps) {
+export function DrawerEditProject({ project }: DrawerEditProjectProps) {
     return (
         <Drawer>
-            <DrawerTrigger asChild>{children}</DrawerTrigger>
+            <DrawerTrigger asChild>
+                <button className='hover:bg-muted cursor-pointer p-2 rounded-md'>
+                    <Pencil size={16} />
+                </button>
+            </DrawerTrigger>
             <DrawerContent>
                 <div className='mx-auto w-full max-w-sm'>
                     <DrawerHeader>
-                        <DrawerTitle>Criar projetos</DrawerTitle>
-                        <DrawerDescription>
-                            Insira o nome do projeto que cuidamos do resto.
-                        </DrawerDescription>
+                        <DrawerTitle>Editar {project.label}</DrawerTitle>
                     </DrawerHeader>
 
                     <section className='p-4 max-w-sm flex flex-col gap-4'>
-                        <ProjectsForm />
+                        <EditProjectForm id={'clt8928932klç'} />
                     </section>
 
                     <DrawerFooter>
