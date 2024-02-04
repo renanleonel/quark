@@ -14,6 +14,7 @@ import ProjectRanking from './components/project-ranking';
 import CardData from './components/card-data';
 import { Button } from '@/components/ui/button';
 import { DrawerNewProjects } from '@/components/drawer/drawer-new-projects';
+import Link from 'next/link';
 
 export const metadata: Metadata = {
     title: 'Organização',
@@ -41,30 +42,38 @@ export default function DashboardPage() {
                                     Analytics
                                 </TabsTrigger>
                             </TabsList>
-                            {/* if role === admin */}
-                            <DrawerNewProjects />
+                            <div className='space-x-4'>
+                                <Link href='/organization/projects'>
+                                    <Button variant='secondary'>
+                                        Projetos
+                                    </Button>
+                                </Link>
+                                <Link href='/organization/members'>
+                                    <Button variant='secondary'>Membros</Button>
+                                </Link>
+                            </div>
                         </div>
                         <TabsContent value='overview' className='space-y-4'>
                             <div className='grid gap-4 md:grid-cols-2 lg:grid-cols-4'>
                                 <CardData
                                     title='Tickets'
-                                    value='0'
-                                    description='Total de tickets'
+                                    value='18'
+                                    description='tickets abertos no momento'
                                 />
                                 <CardData
-                                    title='Tickets'
-                                    value='0'
-                                    description='Total de tickets'
+                                    title='Features'
+                                    value='4'
+                                    description='sugestões de features'
                                 />
                                 <CardData
-                                    title='Tickets'
-                                    value='0'
-                                    description='Total de tickets'
+                                    title='Membros'
+                                    value='53'
+                                    description='membros cadastrados na organização'
                                 />
                                 <CardData
-                                    title='Tickets'
-                                    value='0'
-                                    description='Total de tickets'
+                                    title='Projetos'
+                                    value='7'
+                                    description='projetos cadastrados na organização'
                                 />
                             </div>
                             <div className='grid gap-4 md:grid-cols-2 lg:grid-cols-8'>
@@ -72,9 +81,6 @@ export default function DashboardPage() {
                                     <CardHeader>
                                         <CardTitle className='flex justify-between items-center mb-2'>
                                             Projetos
-                                            <Button className='h-8'>
-                                                Ver projetos
-                                            </Button>
                                         </CardTitle>
                                         <CardDescription>
                                             Estes projetos receberam mais

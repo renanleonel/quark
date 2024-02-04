@@ -3,6 +3,8 @@ import { projects } from '@/content/table-data';
 
 import DeleteProject from './delete-project';
 import { DrawerEditProject } from '@/components/drawer/drawer-edit-project';
+import { DrawerNewProjects } from '@/components/drawer/drawer-new-projects';
+import { Input } from '@/components/ui/input';
 
 const Projects = () => {
     return (
@@ -11,6 +13,11 @@ const Projects = () => {
                 Estes são os projetos cadastrados na organização
                 __organization__
             </h1>
+            <div className='flex gap-4'>
+                <Input placeholder='Procurar ' />
+                {/* if role === admin */}
+                <DrawerNewProjects />
+            </div>
             {projects.map((project, key) => {
                 return (
                     <Card

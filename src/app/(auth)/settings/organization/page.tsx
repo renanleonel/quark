@@ -1,10 +1,9 @@
+import '@/styles/themes.css';
 import { Metadata } from 'next';
 
-import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import '@/styles/themes.css';
-import { TeamMembers } from './components/team-members';
+import { Button } from '@/components/ui/button';
 
 export const metadata: Metadata = {
     title: 'Configurações',
@@ -71,7 +70,6 @@ const Settings = () => {
                     </div>
                 </div>
             </section>
-            <TeamMembers />
         </main>
     );
 };
