@@ -9,9 +9,6 @@ const config = {
     setupFilesAfterEnv: ['<rootDir>/jest.setup.js'],
     testEnvironment: 'jest-environment-jsdom',
     preset: 'ts-jest',
-    moduleNameMapper: {
-        'next-auth': ['<rootDir>/__tests__/mocks/next-auth'],
-    },
 };
 
 module.exports = createJestConfig(config);

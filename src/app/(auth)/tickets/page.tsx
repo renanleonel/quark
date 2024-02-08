@@ -10,8 +10,24 @@ import {
     CardHeader,
     CardTitle,
 } from '@/components/ui/card';
+
+import {
+    Drawer,
+    DrawerClose,
+    DrawerContent,
+    DrawerDescription,
+    DrawerFooter,
+    DrawerHeader,
+    DrawerTitle,
+    DrawerTrigger,
+} from '@/components/ui/drawer';
+
 import { Input } from '@/components/ui/input';
 import { Separator } from '@/components/ui/separator';
+import { Expand, Pencil, Trash } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import Link from 'next/link';
+import { ScrollArea } from '@/components/ui/scroll-area';
 
 export const metadata: Metadata = {
     title: 'Tasks',
@@ -50,18 +66,62 @@ const Tickets = async () => {
                         <Input placeholder='Filtrar ticket' className='h-8 ' />
                         {tickets.map((ticket, key) => {
                             return (
-                                <Card
-                                    className='flex justify-between items-center p-4'
-                                    key={key}
-                                >
-                                    <h2 className='text-lg font-semibold'>
-                                        test
-                                    </h2>
-                                    <div className='flex'>
-                                        {/* EDITAR*/}
-                                        {/* DELETAR */}
-                                    </div>
-                                </Card>
+                                <Drawer key={key}>
+                                    <DrawerTrigger asChild>
+                                        <Card
+                                            key={key}
+                                            className='flex justify-between items-center p-4 cursor-pointer hover:bg-muted/20 gap-8'
+                                        >
+                                            <div className='flex items-center gap-2 truncate'>
+                                                <div className='h-2 w-2 rounded-full bg-green-600' />
+                                                <h2 className='text-sm truncate font-semibold'>
+                                                    {ticket.title}
+                                                </h2>
+                                            </div>
+                                            <div>
+                                                <Expand size={16} />
+                                            </div>
+                                        </Card>
+                                    </DrawerTrigger>
+                                    <DrawerContent>
+                                        <div className='mx-auto w-full max-w-sm'>
+                                            <DrawerHeader>
+                                                <header className='flex justify-end w-full'>
+                                                    <Link
+                                                        href={`/edit/${ticket.id}`}
+                                                        className='hover:bg-muted cursor-pointer p-2 rounded-md'
+                                                    >
+                                                        <Pencil size={16} />
+                                                    </Link>
+                                                    <button className='hover:bg-muted cursor-pointer p-2 rounded-md'>
+                                                        <Trash size={16} />
+                                                    </button>
+                                                </header>
+                                                <DrawerTitle>
+                                                    {ticket.title}
+                                                </DrawerTitle>
+
+                                                <DrawerDescription>
+                                                    <div>{ticket.label}</div>
+                                                    <div>{ticket.priority}</div>
+                                                    <div>{ticket.project}</div>
+                                                    <div>{ticket.status}</div>
+
+                                                    <div>descricao</div>
+                                                    <div>img anexo</div>
+                                                </DrawerDescription>
+                                            </DrawerHeader>
+
+                                            <DrawerFooter>
+                                                <DrawerClose asChild>
+                                                    <Button variant='outline'>
+                                                        Cancelar
+                                                    </Button>
+                                                </DrawerClose>
+                                            </DrawerFooter>
+                                        </div>
+                                    </DrawerContent>
+                                </Drawer>
                             );
                         })}
                     </main>
