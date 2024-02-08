@@ -1,8 +1,16 @@
 import '@testing-library/jest-dom';
-jest.mock('next-auth');
 
-describe('test', () => {
-    it('should pass', () => {
-        expect(true).toBe(true);
+import Auth from '@/app/page';
+import { render } from '@testing-library/react';
+
+jest.mock('react-dom', () => ({
+    ...jest.requireActual('react-dom'),
+    useFormState: () => [{ errors: { email: null } }, null],
+    useFormStatus: () => [null, null],
+}));
+
+describe('Hello World!', () => {
+    it('Hello World!', () => {
+        render(<Auth />);
     });
 });
