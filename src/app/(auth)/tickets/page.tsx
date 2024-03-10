@@ -28,6 +28,7 @@ import { Expand, Pencil, Trash } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import { ScrollArea } from '@/components/ui/scroll-area';
+import { Badge } from '@/components/ui/badge';
 
 export const metadata: Metadata = {
     title: 'Tasks',
@@ -102,13 +103,12 @@ const Tickets = async () => {
                                                 </DrawerTitle>
 
                                                 <DrawerDescription>
-                                                    <div>{ticket.label}</div>
-                                                    <div>{ticket.priority}</div>
                                                     <div>{ticket.project}</div>
+                                                    <Badge>
+                                                        {ticket.label}
+                                                    </Badge>
+                                                    <div>{ticket.priority}</div>
                                                     <div>{ticket.status}</div>
-
-                                                    <div>descricao</div>
-                                                    <div>img anexo</div>
                                                 </DrawerDescription>
                                             </DrawerHeader>
 

@@ -79,12 +79,9 @@ export default function DashboardPage() {
                             <div className='grid gap-4 md:grid-cols-2 lg:grid-cols-8'>
                                 <Card className='col-span-4'>
                                     <CardHeader>
-                                        <CardTitle className='flex justify-between items-center mb-2'>
-                                            Projetos
-                                        </CardTitle>
                                         <CardDescription>
-                                            Estes projetos receberam mais
-                                            tickets nos últimos 30 dias.
+                                            Projetos com mais tickets abertos
+                                            nos últimos 30 dias.
                                         </CardDescription>
                                     </CardHeader>
                                     <CardContent>
@@ -93,9 +90,9 @@ export default function DashboardPage() {
                                 </Card>
                                 <Card className='col-span-4'>
                                     <CardHeader>
-                                        <CardTitle>Projects</CardTitle>
                                         <CardDescription>
-                                            Projects
+                                            Projetos com mais tickets resolvidos
+                                            nos últimos 30 dias.
                                         </CardDescription>
                                     </CardHeader>
                                     <CardContent>

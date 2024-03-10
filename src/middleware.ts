@@ -6,20 +6,17 @@ const { auth } = NextAuth(authConfig);
 
 export default auth((req) => {
     const { nextUrl } = req;
+
     const isAuthenticated = !!req.auth;
     const isPublicRoute = PUBLIC_ROUTES.includes(nextUrl.pathname);
 
-    if (isPublicRoute) {
-        if (isAuthenticated)
-            return Response.redirect(new URL(DEFAULT_REDIRECT, nextUrl));
-
-        return null;
+    if (isPublicRoute && isAuthenticated) {
+        return Response.redirect(new URL(DEFAULT_REDIRECT, nextUrl));
     }
 
-    if (!isAuthenticated && !isPublicRoute)
+    if (!isAuthenticated && !isPublicRoute) {
         return Response.redirect(new URL('/', nextUrl));
-
-    return null;
+    }
 });
 
 export const config = {
