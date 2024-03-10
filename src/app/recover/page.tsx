@@ -10,7 +10,7 @@ export const metadata: Metadata = {
     description: 'Digite seu email para recuperar sua senha',
 };
 
-const Recover = () => {
+export default function Recover() {
     return (
         <main className='min-h-screen flex items-center justify-center'>
             <div className='text-white w-[350px] flex flex-col gap-4'>
@@ -34,6 +34,4 @@ const Recover = () => {
             </div>
         </main>
     );
-};
-
-export default Recover;
+}

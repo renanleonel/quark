@@ -15,13 +15,20 @@ import CardData from './components/card-data';
 import { Button } from '@/components/ui/button';
 import { DrawerNewProjects } from '@/components/drawer/drawer-new-projects';
 import Link from 'next/link';
+import { auth } from '@/auth';
+import { redirect } from 'next/navigation';
 
 export const metadata: Metadata = {
     title: 'Organização',
     description: 'Organização',
 };
 
-export default function DashboardPage() {
+export default async function Organization() {
+    const session = await auth();
+    if (!session) redirect('/');
+
+    const { role } = session.user;
+
     return (
         <Card>
             <CardHeader>
@@ -42,16 +49,20 @@ export default function DashboardPage() {
                                     Analytics
                                 </TabsTrigger>
                             </TabsList>
-                            <div className='space-x-4'>
-                                <Link href='/organization/projects'>
-                                    <Button variant='secondary'>
-                                        Projetos
-                                    </Button>
-                                </Link>
-                                <Link href='/organization/members'>
-                                    <Button variant='secondary'>Membros</Button>
-                                </Link>
-                            </div>
+                            {role === 'admin' && (
+                                <div className='space-x-4'>
+                                    <Link href='/organization/projects'>
+                                        <Button variant='secondary'>
+                                            Projetos
+                                        </Button>
+                                    </Link>
+                                    <Link href='/organization/members'>
+                                        <Button variant='secondary'>
+                                            Membros
+                                        </Button>
+                                    </Link>
+                                </div>
+                            )}
                         </div>
                         <TabsContent value='overview' className='space-y-4'>
                             <div className='grid gap-4 md:grid-cols-2 lg:grid-cols-4'>

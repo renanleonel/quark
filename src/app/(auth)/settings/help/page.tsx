@@ -7,7 +7,7 @@ export const metadata: Metadata = {
     description: 'Ajuda',
 };
 
-const Help = () => {
+export default function Help() {
     return (
         <main>
             <h2 className='text-lg font-medium'>Ajuda</h2>
@@ -18,6 +18,4 @@ const Help = () => {
             <HelpForm />
         </main>
     );
-};
-
-export default Help;
+}

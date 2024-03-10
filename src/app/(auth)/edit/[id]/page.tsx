@@ -10,14 +10,21 @@ import {
 import { Separator } from '@/components/ui/separator';
 import EditForm from '@/components/form/edit/edit-form';
 import { getTicket } from '@/lib/actions';
+import { auth } from '@/auth';
+import { redirect } from 'next/navigation';
 
 export const metadata: Metadata = {
     title: 'Edit',
     description: 'Edit ticket',
 };
+export default async function Edit({ params }: { params: { id: string } }) {
+    const session = await auth();
+    if (!session) redirect('/');
+    const { id, role } = session.user;
 
-const Edit = async ({ params }: { params: { id: string } }) => {
     const ticket = await getTicket(params.id);
+
+    if (role !== 'admin' && ticket.createdBy !== id) redirect('/tickets');
 
     return (
         <Card>
@@ -29,6 +36,4 @@ const Edit = async ({ params }: { params: { id: string } }) => {
             <EditForm ticket={ticket} />
         </Card>
     );
-};
-
-export default Edit;
+}

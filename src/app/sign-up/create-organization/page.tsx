@@ -5,11 +5,11 @@ import { Separator } from '@/components/ui/separator';
 import CreateOrganizationForm from '@/components/form/create-organization/create-organization-form';
 import ValidateOrganizationForm from '@/components/form/valiidate-organization/validate-organization-form';
 
-const CreateOrganization = async ({
+export default async function CreateOrganization({
     searchParams,
 }: {
     searchParams: { [id: string]: string };
-}) => {
+}) {
     const { id } = searchParams;
     if (!id) redirect('/');
 
@@ -37,6 +37,4 @@ const CreateOrganization = async ({
             </div>
         </main>
     );
-};
-
-export default CreateOrganization;
+}

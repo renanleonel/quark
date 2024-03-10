@@ -8,6 +8,8 @@ import {
     CardTitle,
 } from '@/components/ui/card';
 import { TooltipProvider } from '@/components/ui/tooltip';
+import { auth } from '@/auth';
+import { redirect } from 'next/navigation';
 
 const sidebarNavItems = [
     {
@@ -15,16 +17,28 @@ const sidebarNavItems = [
         href: '/settings',
     },
     {
-        title: 'Organização',
-        href: '/settings/organization',
-    },
-    {
         title: 'Ajuda',
         href: '/settings/help',
     },
 ];
 
-export default function Layout({ children }: { children: React.ReactNode }) {
+export default async function Layout({
+    children,
+}: {
+    children: React.ReactNode;
+}) {
+    const session = await auth();
+    if (!session) redirect('/');
+
+    const { role } = session.user;
+
+    if (role === 'admin') {
+        sidebarNavItems.splice(1, 0, {
+            title: 'Organização',
+            href: '/settings/organization',
+        });
+    }
+
     return (
         <Card className='hidden lg:block'>
             <CardHeader>

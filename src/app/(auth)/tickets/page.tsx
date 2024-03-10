@@ -40,7 +40,7 @@ async function getTickets() {
     return tickets;
 }
 
-const Tickets = async () => {
+export default async function Tickets() {
     const tickets = await getTickets();
     const session = await auth();
 
@@ -133,6 +133,4 @@ const Tickets = async () => {
             </div>
         </>
     );
-};
-
-export default Tickets;
+}

@@ -8,7 +8,7 @@ async function getUser(email: string, password: string): Promise<any> {
         name: 'username',
         email: email,
         password: password,
-        role: 'admin',
+        role: 'member',
         organization: '#12345',
     };
 }

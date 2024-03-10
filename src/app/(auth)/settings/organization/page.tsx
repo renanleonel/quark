@@ -4,13 +4,22 @@ import { Metadata } from 'next';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Button } from '@/components/ui/button';
+import { auth } from '@/auth';
+import { redirect } from 'next/navigation';
 
 export const metadata: Metadata = {
     title: 'Configurações',
     description: 'Configurações',
 };
 
-const Settings = () => {
+export default async function Settings() {
+    const session = await auth();
+    if (!session) redirect('/');
+
+    const { role } = session.user;
+
+    if (role !== 'admin') redirect('/tickets');
+
     return (
         <main className='space-y-4'>
             <section className='space-y-4'>
@@ -72,6 +81,4 @@ const Settings = () => {
             </section>
         </main>
     );
-};
-
-export default Settings;
+}

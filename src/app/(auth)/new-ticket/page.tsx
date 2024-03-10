@@ -15,7 +15,7 @@ export const metadata: Metadata = {
     description: 'Crie um novo ticket para a nossa equipe',
 };
 
-const Support = () => {
+export default function NewTicket() {
     return (
         <Card>
             <CardHeader>
@@ -29,6 +29,4 @@ const Support = () => {
             <SupportForm />
         </Card>
     );
-};
-
-export default Support;
+}

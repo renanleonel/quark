@@ -1,3 +1,5 @@
+'use client';
+
 import { DotsHorizontalIcon } from '@radix-ui/react-icons';
 import { Row } from '@tanstack/react-table';
 
@@ -13,8 +15,7 @@ import {
 import Link from 'next/link';
 import { ticketSchema } from '@/types/schema';
 import { DeleteTicket } from '@/app/(auth)/tickets/components/delete-ticket';
-import { auth } from '@/auth';
-import { cn } from '@/lib/utils';
+import { useSession } from 'next-auth/react';
 
 interface DataTableRowActionsProps<TData> {
     row: Row<TData>;
@@ -25,7 +26,11 @@ export function DataTableRowActions<TData>({
 }: DataTableRowActionsProps<TData>) {
     const task = ticketSchema.parse(row.original);
 
-    let role = 'admin';
+    const session = useSession();
+    const role = session.data?.user.role;
+
+    const hasPermissions =
+        role === 'admin' || task.createdBy === session.data?.user.id;
 
     return (
         <DropdownMenu>
@@ -39,7 +44,7 @@ export function DataTableRowActions<TData>({
                 </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align='end' className='w-[160px]'>
-                {role === 'admin' && (
+                {hasPermissions && (
                     <div>
                         <Link href={`/edit/${task.id}`}>
                             <DropdownMenuItem>Edit</DropdownMenuItem>
@@ -48,7 +53,7 @@ export function DataTableRowActions<TData>({
                         <DeleteTicket />
                     </div>
                 )}
-                {role !== 'admin' && (
+                {!hasPermissions && (
                     <div className='pointer-events-none opacity-30'>
                         <DropdownMenuItem>Edit</DropdownMenuItem>
                         <DropdownMenuSeparator />

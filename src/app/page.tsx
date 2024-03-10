@@ -12,7 +12,7 @@ export const metadata: Metadata = {
     description: 'Faça login na sua conta para acessar a dashboard',
 };
 
-const Auth = () => {
+export default function Auth() {
     return (
         <main className='min-h-screen flex items-center justify-center'>
             <div className='text-white w-[350px] flex flex-col gap-4'>
@@ -41,6 +41,4 @@ const Auth = () => {
             </div>
         </main>
     );
-};
-
-export default Auth;
+}

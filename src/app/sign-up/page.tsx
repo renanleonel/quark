@@ -9,7 +9,7 @@ export const metadata: Metadata = {
     description: 'Cadastre-se',
 };
 
-const SignUp = () => {
+export default function SignUp() {
     return (
         <main className='min-h-screen flex items-center justify-center'>
             <div className='text-white w-[350px] flex flex-col gap-4'>
@@ -30,6 +30,4 @@ const SignUp = () => {
             </div>
         </main>
     );
-};
-
-export default SignUp;
+}

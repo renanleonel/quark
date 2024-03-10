@@ -43,7 +43,7 @@ const User = async ({ icon, alt, fallback }: UserProps) => {
                             @{session?.user?.name}
                         </p>
                         <p className='text-xs leading-none text-muted-foreground'>
-                            {session?.user?.email}
+                            {session?.user?.role}
                         </p>
                     </div>
                 </DropdownMenuLabel>

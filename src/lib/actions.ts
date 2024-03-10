@@ -307,5 +307,6 @@ export async function getTicket(id: string) {
         type: 'Tipo',
         createdAt: '2021-09-22',
         updatedAt: '2021-09-22',
+        createdBy: 'eYuuioaeoujiarei987kolpçasdpo',
     };
 }

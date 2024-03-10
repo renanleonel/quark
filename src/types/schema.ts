@@ -68,6 +68,7 @@ export const ticketSchema = z.object({
     status: z.string(),
     label: z.string(),
     priority: z.string(),
+    createdBy: z.string(),
 });
 
 export const createOrganizationSchema = z.object({

@@ -22,9 +22,10 @@ import SubmitButton from '@/components/form/submit-button';
 import { newTicket } from '@/lib/actions';
 import { useFormState } from 'react-dom';
 import { editInitialState } from '@/content/initial-states';
+import { Ticket } from '@/types';
 
 interface EditFormProps {
-    ticket: any;
+    ticket: Ticket;
 }
 
 const EditForm = ({ ticket }: EditFormProps) => {

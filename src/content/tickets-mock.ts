@@ -6,6 +6,7 @@ export const tickets = [
         status: 'na fila',
         label: 'bug',
         priority: 'média',
+        createdBy: 'Renan Leonel',
     },
     {
         id: 'TICKET-7878',
@@ -14,6 +15,7 @@ export const tickets = [
         status: 'em análise',
         label: 'bug',
         priority: 'alta',
+        createdBy: 'Renan Leonel',
     },
     {
         id: 'TICKET-7839',
@@ -22,6 +24,7 @@ export const tickets = [
         status: 'em progresso',
         label: 'sugestão',
         priority: 'baixa',
+        createdBy: 'Renan Leonel',
     },
     {
         id: 'TICKET-7839',
@@ -30,6 +33,7 @@ export const tickets = [
         status: 'em progresso',
         label: 'bug',
         priority: 'baixa',
+        createdBy: 'Renan Leonel',
     },
     {
         id: 'TICKET-7839',
@@ -38,6 +42,7 @@ export const tickets = [
         status: 'em progresso',
         label: 'sugestão',
         priority: 'baixa',
+        createdBy: 'Renan Leonel',
     },
     {
         id: 'TICKET-7839',
@@ -46,6 +51,7 @@ export const tickets = [
         status: 'em progresso',
         label: 'sugestão',
         priority: 'baixa',
+        createdBy: 'Renan Leonel',
     },
     {
         id: 'TICKET-7839',
@@ -54,6 +60,7 @@ export const tickets = [
         status: 'em progresso',
         label: 'sugestão',
         priority: 'baixa',
+        createdBy: 'Renan Leonel',
     },
     {
         id: 'TICKET-8782',
@@ -62,6 +69,7 @@ export const tickets = [
         status: 'na fila',
         label: 'bug',
         priority: 'média',
+        createdBy: 'Renan Leonel',
     },
     {
         id: 'TICKET-7878',
@@ -70,6 +78,7 @@ export const tickets = [
         status: 'em análise',
         label: 'bug',
         priority: 'alta',
+        createdBy: 'Renan Leonel',
     },
     {
         id: 'TICKET-7839',
@@ -78,6 +87,7 @@ export const tickets = [
         status: 'em progresso',
         label: 'sugestão',
         priority: 'baixa',
+        createdBy: 'Renan Leonel',
     },
     {
         id: 'TICKET-7839',
@@ -86,6 +96,7 @@ export const tickets = [
         status: 'em progresso',
         label: 'bug',
         priority: 'baixa',
+        createdBy: 'Renan Leonel',
     },
     {
         id: 'TICKET-7839',
@@ -94,6 +105,7 @@ export const tickets = [
         status: 'em progresso',
         label: 'sugestão',
         priority: 'baixa',
+        createdBy: 'Renan Leonel',
     },
     {
         id: 'TICKET-7839',
@@ -102,6 +114,7 @@ export const tickets = [
         status: 'em progresso',
         label: 'sugestão',
         priority: 'baixa',
+        createdBy: 'Renan Leonel',
     },
     {
         id: 'TICKET-7839',
@@ -110,5 +123,6 @@ export const tickets = [
         status: 'em progresso',
         label: 'sugestão',
         priority: 'baixa',
+        createdBy: 'Renan Leonel',
     },
 ];
