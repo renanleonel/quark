@@ -1,5 +1,3 @@
-'use client';
-
 import { DotsHorizontalIcon } from '@radix-ui/react-icons';
 import { Row } from '@tanstack/react-table';
 
@@ -12,8 +10,8 @@ import {
     DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 
+import Link from 'next/link';
 import { ticketSchema } from '@/types/schema';
-import { useRouter } from 'next/navigation';
 import { DeleteTicket } from '@/app/(auth)/tickets/components/delete-ticket';
 
 interface DataTableRowActionsProps<TData> {
@@ -23,12 +21,7 @@ interface DataTableRowActionsProps<TData> {
 export function DataTableRowActions<TData>({
     row,
 }: DataTableRowActionsProps<TData>) {
-    const router = useRouter();
     const task = ticketSchema.parse(row.original);
-
-    const handleEdit = () => {
-        router.push(`/edit/${task.id}`);
-    };
 
     return (
         <DropdownMenu>
@@ -42,8 +35,9 @@ export function DataTableRowActions<TData>({
                 </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align='end' className='w-[160px]'>
-                <DropdownMenuItem>Ver</DropdownMenuItem>
-                <DropdownMenuItem onClick={handleEdit}>Edit</DropdownMenuItem>
+                <Link href={`/edit/${task.id}`}>
+                    <DropdownMenuItem>Edit</DropdownMenuItem>
+                </Link>
                 <DropdownMenuSeparator />
                 <DeleteTicket />
             </DropdownMenuContent>
