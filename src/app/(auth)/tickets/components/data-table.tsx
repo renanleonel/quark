@@ -28,7 +28,6 @@ import {
 import { DataTableToolbar } from '../components/data-table-toolbar';
 import { DataTablePagination } from '../components/data-table-pagination';
 import { useSearchParams } from 'next/navigation';
-
 interface DataTableProps<TData, TValue> {
     columns: ColumnDef<TData, TValue>[];
     data: TData[];

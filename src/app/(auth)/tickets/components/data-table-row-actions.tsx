@@ -13,6 +13,8 @@ import {
 import Link from 'next/link';
 import { ticketSchema } from '@/types/schema';
 import { DeleteTicket } from '@/app/(auth)/tickets/components/delete-ticket';
+import { auth } from '@/auth';
+import { cn } from '@/lib/utils';
 
 interface DataTableRowActionsProps<TData> {
     row: Row<TData>;
@@ -22,6 +24,8 @@ export function DataTableRowActions<TData>({
     row,
 }: DataTableRowActionsProps<TData>) {
     const task = ticketSchema.parse(row.original);
+
+    let role = 'admin';
 
     return (
         <DropdownMenu>
@@ -35,11 +39,22 @@ export function DataTableRowActions<TData>({
                 </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align='end' className='w-[160px]'>
-                <Link href={`/edit/${task.id}`}>
-                    <DropdownMenuItem>Edit</DropdownMenuItem>
-                </Link>
-                <DropdownMenuSeparator />
-                <DeleteTicket />
+                {role === 'admin' && (
+                    <div>
+                        <Link href={`/edit/${task.id}`}>
+                            <DropdownMenuItem>Edit</DropdownMenuItem>
+                        </Link>
+                        <DropdownMenuSeparator />
+                        <DeleteTicket />
+                    </div>
+                )}
+                {role !== 'admin' && (
+                    <div className='pointer-events-none opacity-30'>
+                        <DropdownMenuItem>Edit</DropdownMenuItem>
+                        <DropdownMenuSeparator />
+                        <DropdownMenuItem>Delete</DropdownMenuItem>
+                    </div>
+                )}
             </DropdownMenuContent>
         </DropdownMenu>
     );
