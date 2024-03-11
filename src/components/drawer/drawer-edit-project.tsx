@@ -24,7 +24,7 @@ export function DrawerEditProject({ project }: DrawerEditProjectProps) {
     return (
         <Drawer>
             <DrawerTrigger asChild>
-                <button className='hover:bg-muted cursor-pointer p-2 rounded-md'>
+                <button className='cursor-pointer rounded-md p-2 hover:bg-muted'>
                     <Pencil size={16} />
                 </button>
             </DrawerTrigger>
@@ -34,7 +34,7 @@ export function DrawerEditProject({ project }: DrawerEditProjectProps) {
                         <DrawerTitle>Editar {project.label}</DrawerTitle>
                     </DrawerHeader>
 
-                    <section className='p-4 max-w-sm flex flex-col gap-4'>
+                    <section className='flex max-w-sm flex-col gap-4 p-4'>
                         <EditProjectForm id={'clt8928932klç'} />
                     </section>
 

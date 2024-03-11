@@ -21,7 +21,7 @@ export default function RootLayout({
 }) {
     return (
         <html lang='pt-BR' className={GeistSans.className}>
-            <body className='min-h-screen h-full bg-background'>
+            <body className='h-full min-h-screen bg-background'>
                 <ThemeProvider
                     attribute='class'
                     defaultTheme='system'

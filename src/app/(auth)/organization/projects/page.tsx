@@ -20,7 +20,7 @@ export default async function Projects() {
             {projects.map((project, key) => {
                 return (
                     <Card
-                        className='flex justify-between items-center p-4'
+                        className='flex items-center justify-between p-4'
                         key={key}
                     >
                         <h2 className='text-lg font-semibold'>

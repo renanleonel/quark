@@ -8,7 +8,7 @@ interface ErrorProps {}
 
 const Error = ({}: ErrorProps) => {
     return (
-        <main className='min-h-screen flex flex-col gap-10 items-center justify-center'>
+        <main className='flex min-h-screen flex-col items-center justify-center gap-10'>
             <Label className='' htmlFor='password'>
                 erro.
             </Label>

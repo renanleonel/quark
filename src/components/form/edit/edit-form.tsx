@@ -33,8 +33,8 @@ const EditForm = ({ ticket }: EditFormProps) => {
 
     return (
         <form action={formAction}>
-            <CardContent className='flex flex-col lg:flex-row gap-6'>
-                <section className='flex flex-col gap-6 w-full'>
+            <CardContent className='flex flex-col gap-6 lg:flex-row'>
+                <section className='flex w-full flex-col gap-6'>
                     <div className='grid gap-2'>
                         <Label htmlFor='subject'>Título</Label>
                         <Input
@@ -43,7 +43,7 @@ const EditForm = ({ ticket }: EditFormProps) => {
                             placeholder='Preciso de ajuda com...'
                         />
                     </div>
-                    <div className='flex flex-col gap-2 h-full'>
+                    <div className='flex h-full flex-col gap-2'>
                         <Label htmlFor='description'>Descrição</Label>
                         <Textarea
                             name='description'
@@ -54,7 +54,7 @@ const EditForm = ({ ticket }: EditFormProps) => {
                     </div>
                 </section>
 
-                <section className='flex flex-col gap-6 w-full'>
+                <section className='flex w-full flex-col gap-6'>
                     {/* <div className='grid gap-2'>
                         <Label htmlFor='nome'>Seu nome</Label>
                         <Input id='nome' placeholder='Nome' name='name' />
@@ -66,7 +66,7 @@ const EditForm = ({ ticket }: EditFormProps) => {
                             <Select defaultValue='1' name='type'>
                                 <SelectTrigger
                                     id='security-level'
-                                    className='line-clamp-1 w-[160px] lg:w-full truncate'
+                                    className='line-clamp-1 w-[160px] truncate lg:w-full'
                                 >
                                     <SelectValue placeholder='Tipo' />
                                 </SelectTrigger>
@@ -83,7 +83,7 @@ const EditForm = ({ ticket }: EditFormProps) => {
                             <Select name='urgency' defaultValue='3'>
                                 <SelectTrigger
                                     id='security-level'
-                                    className='line-clamp-1 w-[160px] lg:w-full truncate'
+                                    className='line-clamp-1 w-[160px] truncate lg:w-full'
                                 >
                                     <SelectValue placeholder='Urgência' />
                                 </SelectTrigger>
@@ -95,7 +95,7 @@ const EditForm = ({ ticket }: EditFormProps) => {
                             </Select>
                         </div>
                     </div>
-                    <div className='grid grid-cols-2 lg:grid-cols-1 gap-4'>
+                    <div className='grid grid-cols-2 gap-4 lg:grid-cols-1'>
                         <div className='grid gap-2'>
                             <Label htmlFor='security-level'>Aplicação</Label>
                             <Combobox
@@ -114,7 +114,7 @@ const EditForm = ({ ticket }: EditFormProps) => {
                         <InputFile name='file' label='Screenshot' />
                     </div>
                     <div className='grid gap-2'>
-                        <div className='flex gap-2 items-center'>
+                        <div className='flex items-center gap-2'>
                             <Label htmlFor='link'>Link</Label>
                             <LinkIcon className='h-3 w-3' />
                         </div>

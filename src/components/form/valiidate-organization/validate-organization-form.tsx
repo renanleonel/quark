@@ -16,7 +16,7 @@ const ValidateOrganizationForm = () => {
 
     return (
         <form action={formAction} className='flex gap-2'>
-            <div className='space-y-2 w-full'>
+            <div className='w-full space-y-2'>
                 <Input
                     id='code'
                     name='code'

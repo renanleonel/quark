@@ -26,7 +26,7 @@ const DeleteProject = ({ project }: DeleteProjectProps) => {
     return (
         <Dialog open={open} onOpenChange={setOpen}>
             <DialogTrigger asChild>
-                <button className='hover:bg-muted cursor-pointer p-2 rounded-md'>
+                <button className='cursor-pointer rounded-md p-2 hover:bg-muted'>
                     <Trash size={16} />
                 </button>
             </DialogTrigger>

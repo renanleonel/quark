@@ -5,7 +5,7 @@ const NAMock = {
         },
         jwt: {
             secret: 'secret',
-        }
+        },
     },
     signIn: jest.fn(),
     signOut: jest.fn(),
@@ -13,7 +13,7 @@ const NAMock = {
         GET: jest.fn(),
         POST: jest.fn(),
     },
-}
+};
 
 export const {
     auth,

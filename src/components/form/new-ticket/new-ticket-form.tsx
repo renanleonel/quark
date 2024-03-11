@@ -35,8 +35,8 @@ const NewTicketForm = () => {
 
     return (
         <form action={formAction}>
-            <CardContent className='flex flex-col lg:flex-row gap-6'>
-                <section className='flex flex-col gap-6 w-full'>
+            <CardContent className='flex flex-col gap-6 lg:flex-row'>
+                <section className='flex w-full flex-col gap-6'>
                     <div className='grid gap-2'>
                         <Label htmlFor='subject'>Título</Label>
                         <Input
@@ -48,7 +48,7 @@ const NewTicketForm = () => {
                             )}
                         />
                     </div>
-                    <div className='flex flex-col gap-2 h-full'>
+                    <div className='flex h-full flex-col gap-2'>
                         <Label htmlFor='description'>Descrição</Label>
                         <Textarea
                             name='description'
@@ -61,7 +61,7 @@ const NewTicketForm = () => {
                         />
                     </div>
                 </section>
-                <section className='flex flex-col gap-6 w-full'>
+                <section className='flex w-full flex-col gap-6'>
                     {/* <div className='grid gap-2 opacity-50 pointer-events-none'>
                         <Label htmlFor='nome'>Seu nome</Label>
                         <Input
@@ -82,7 +82,7 @@ const NewTicketForm = () => {
                                 <SelectTrigger
                                     id='security-level'
                                     className={cn(
-                                        'line-clamp-1 w-[160px] lg:w-full truncate',
+                                        'line-clamp-1 w-[160px] truncate lg:w-full',
                                         formState.errors.type &&
                                             'border-red-400'
                                     )}
@@ -103,7 +103,7 @@ const NewTicketForm = () => {
                                 <SelectTrigger
                                     id='security-level'
                                     className={cn(
-                                        'line-clamp-1 w-[160px] lg:w-full truncate',
+                                        'line-clamp-1 w-[160px] truncate lg:w-full',
                                         formState.errors.urgency &&
                                             'border-red-400'
                                     )}
@@ -118,7 +118,7 @@ const NewTicketForm = () => {
                             </Select>
                         </div>
                     </div>
-                    <div className='grid grid-cols-2 lg:grid-cols-1 gap-4'>
+                    <div className='grid grid-cols-2 gap-4 lg:grid-cols-1'>
                         <div className='grid gap-2'>
                             <Label htmlFor='security-level'>Aplicação</Label>
                             <Combobox
@@ -141,7 +141,7 @@ const NewTicketForm = () => {
                         <InputFile name='file' label='Screenshot' />
                     </div>
                     <div className='grid gap-2'>
-                        <div className='flex gap-2 items-center'>
+                        <div className='flex items-center gap-2'>
                             <Label htmlFor='link'>Link</Label>
                             <Link className='h-3 w-3' />
                         </div>

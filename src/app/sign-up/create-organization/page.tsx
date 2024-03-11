@@ -16,9 +16,9 @@ export default async function CreateOrganization({
     const { email } = await getInvitationOrigin(id);
 
     return (
-        <main className='min-h-screen flex items-center justify-center'>
-            <div className='text-white w-[380px] flex flex-col gap-4'>
-                <h1 className='text-2xl font-semibold text-center'>
+        <main className='flex min-h-screen items-center justify-center'>
+            <div className='flex w-[380px] flex-col gap-4 text-white'>
+                <h1 className='text-center text-2xl font-semibold'>
                     Crie uma organização
                 </h1>
                 <p className='text-muted-foreground'>

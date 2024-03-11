@@ -15,6 +15,6 @@ const NextAuth = () => ({
         POST: jest.fn(),
     },
     AuthError: AuthError,
-})
+});
 
-export default NextAuth
+export default NextAuth;

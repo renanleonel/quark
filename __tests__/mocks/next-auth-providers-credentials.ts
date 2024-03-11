@@ -1,3 +1,3 @@
-const Credentials = jest.fn()
+const Credentials = jest.fn();
 
-export default Credentials
+export default Credentials;

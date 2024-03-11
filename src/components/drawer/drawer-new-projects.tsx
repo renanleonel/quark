@@ -28,7 +28,7 @@ export function DrawerNewProjects() {
                         </DrawerDescription>
                     </DrawerHeader>
 
-                    <section className='p-4 max-w-sm flex flex-col gap-4'>
+                    <section className='flex max-w-sm flex-col gap-4 p-4'>
                         <ProjectsForm />
                     </section>
 

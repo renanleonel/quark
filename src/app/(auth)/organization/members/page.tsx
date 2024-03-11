@@ -16,8 +16,8 @@ export default async function Members() {
             {Array.from({ length: 6 }).map((_, key) => {
                 return (
                     <section key={key} className='flex flex-col gap-6'>
-                        <div className='flex flex-col md:flex-row gap-4 items-center justify-between'>
-                            <div className='flex items-center space-x-4 w-full'>
+                        <div className='flex flex-col items-center justify-between gap-4 md:flex-row'>
+                            <div className='flex w-full items-center space-x-4'>
                                 <Avatar>
                                     <AvatarImage src='/avatars/01.png' />
                                     <AvatarFallback>OM</AvatarFallback>
@@ -31,7 +31,7 @@ export default async function Members() {
                                     </p>
                                 </div>
                             </div>
-                            <div className='flex gap-2 items-center w-full'>
+                            <div className='flex w-full items-center gap-2'>
                                 <Roles />
                                 <DeleteMember />
                             </div>

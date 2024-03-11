@@ -78,12 +78,12 @@ export function DataTable<TData, TValue>({
     }, [params, table]);
 
     return (
-        <div className='space-y-4 flex flex-col w-full p-4'>
+        <div className='flex w-full flex-col space-y-4 p-4'>
             <DataTableToolbar table={table} />
-            <div className='rounded-md border  w-full'>
+            <div className='w-full rounded-md  border'>
                 <div className='h-[500px] overflow-auto'>
                     <Table>
-                        <TableHeader className='sticky top-0 bg-background z-20'>
+                        <TableHeader className='sticky top-0 z-20 bg-background'>
                             {table.getHeaderGroups().map((headerGroup) => (
                                 <TableRow key={headerGroup.id}>
                                     {headerGroup.headers.map((header) => {

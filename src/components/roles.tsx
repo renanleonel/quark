@@ -67,7 +67,7 @@ const Roles = ({}: RolesProps) => {
                 <Button
                     variant='outline'
                     aria-expanded={open}
-                    className='w-full md:w-fit md:ml-auto'
+                    className='w-full md:ml-auto md:w-fit'
                 >
                     {value
                         ? roles.find((role) => role.name === value)?.name
@@ -85,7 +85,7 @@ const Roles = ({}: RolesProps) => {
                                 return (
                                     <AlertDialog key={key}>
                                         <AlertDialogTrigger className='w-full'>
-                                            <CommandItem className='teamaspace-y-1 flex flex-col items-start px-4 py-2 cursor-pointer'>
+                                            <CommandItem className='teamaspace-y-1 flex cursor-pointer flex-col items-start px-4 py-2'>
                                                 <p>{role.name}</p>
                                                 <p className='text-sm text-muted-foreground'>
                                                     {role.description}
