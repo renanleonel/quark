@@ -1,8 +1,8 @@
-import { Metadata } from 'next';
-import { Separator } from '@/components/ui/separator';
-import { ThemeCustomizer } from '@/components/theme';
-
 import '@/styles/themes.css';
+import { Metadata } from 'next';
+
+import { ThemeCustomizer } from '@/components/theme';
+import { Separator } from '@/components/ui/separator';
 import { AccountForm } from '@/components/form/account/account-form';
 
 export const metadata: Metadata = {

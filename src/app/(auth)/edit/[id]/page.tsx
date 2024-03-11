@@ -1,4 +1,7 @@
+import { auth } from '@/auth';
 import { Metadata } from 'next';
+import { getTicket } from '@/lib/actions';
+import { redirect } from 'next/navigation';
 
 import {
     Card,
@@ -6,12 +9,8 @@ import {
     CardHeader,
     CardTitle,
 } from '@/components/ui/card';
-
 import { Separator } from '@/components/ui/separator';
 import EditForm from '@/components/form/edit/edit-form';
-import { getTicket } from '@/lib/actions';
-import { auth } from '@/auth';
-import { redirect } from 'next/navigation';
 
 export const metadata: Metadata = {
     title: 'Edit',

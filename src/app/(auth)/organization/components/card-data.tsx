@@ -7,7 +7,7 @@ interface CardProps {
     description: string;
 }
 
-const CardData = ({ title, icon, value, description }: CardProps) => {
+export const CardData = ({ title, icon, value, description }: CardProps) => {
     return (
         <Card>
             <CardHeader className='flex flex-row items-center justify-between space-y-0 pb-2'>
@@ -32,5 +32,3 @@ const CardData = ({ title, icon, value, description }: CardProps) => {
         </Card>
     );
 };
-
-export default CardData;

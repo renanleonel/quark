@@ -1,4 +1,4 @@
-const ProjectRanking = () => {
+export const ProjectRanking = () => {
     return (
         <div className='space-y-8'>
             <div className='flex items-center'>
@@ -59,5 +59,3 @@ const ProjectRanking = () => {
         </div>
     );
 };
-
-export default ProjectRanking;

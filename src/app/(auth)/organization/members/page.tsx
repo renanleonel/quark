@@ -1,7 +1,7 @@
 import Roles from '@/components/roles';
 import { Input } from '@/components/ui/input';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { DeleteMember } from '@/app/(auth)/settings/organization/components/delete-member';
+import { DeleteMember } from '../../settings/organization/components/delete-member';
 
 export default async function Members() {
     return (

@@ -12,7 +12,7 @@ const Navbar = ({ className, ...props }: React.HTMLAttributes<HTMLElement>) => {
     return (
         <div
             className={cn(
-                'fixed left-0 top-0 z-10 flex h-16 w-full items-center bg-background px-4 py-4'
+                'fixed left-0 top-0 z-10 flex h-16 w-full items-center bg-background px-4 py-4 lg:static lg:px-0'
                 // pathname === '/create-organization' && 'hidden'
             )}
         >

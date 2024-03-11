@@ -1,10 +1,9 @@
 import { Metadata } from 'next';
-
 import HelpForm from '@/components/form/help/help-form';
 
 export const metadata: Metadata = {
-    title: 'Ajuda',
-    description: 'Ajuda',
+    title: 'Help',
+    description: 'Help',
 };
 
 export default function Help() {

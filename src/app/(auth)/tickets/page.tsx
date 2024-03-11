@@ -1,5 +1,7 @@
-import { tickets } from '@/content/tickets-mock';
+import Link from 'next/link';
 import { Metadata } from 'next';
+import { cn } from '@/lib/utils';
+import { Expand, X } from 'lucide-react';
 
 import { columns } from './components/columns';
 import { DataTable } from './components/data-table';
@@ -23,17 +25,16 @@ import {
 } from '@/components/ui/drawer';
 
 import { Input } from '@/components/ui/input';
-import { Separator } from '@/components/ui/separator';
-import { Expand, Pencil, Trash, X } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import Link from 'next/link';
 import { Badge } from '@/components/ui/badge';
-import { cn } from '@/lib/utils';
+import { Button } from '@/components/ui/button';
+import { Separator } from '@/components/ui/separator';
 import { DeleteTicket } from './components/delete-ticket';
+
+import { tickets } from '@/content/tickets-mock';
 
 export const metadata: Metadata = {
     title: 'Tasks',
-    description: 'A task and issue tracker build using Tanstack Table.',
+    description: 'Tasks page',
 };
 
 async function getTickets() {

@@ -1,4 +1,7 @@
+import Link from 'next/link';
+import { auth } from '@/auth';
 import { Metadata } from 'next';
+import { redirect } from 'next/navigation';
 
 import {
     Card,
@@ -7,16 +10,13 @@ import {
     CardHeader,
     CardTitle,
 } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+
 import { Chart } from './components/chart';
-import ProjectRanking from './components/project-ranking';
-import CardData from './components/card-data';
-import { Button } from '@/components/ui/button';
-import { DrawerNewProjects } from '@/components/drawer/drawer-new-projects';
-import Link from 'next/link';
-import { auth } from '@/auth';
-import { redirect } from 'next/navigation';
+import { CardData } from './components/card-data';
+import { ProjectRanking } from './components/project-ranking';
 
 export const metadata: Metadata = {
     title: 'Organização',

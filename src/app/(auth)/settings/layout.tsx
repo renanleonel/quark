@@ -1,15 +1,15 @@
-import { Separator } from '@/components/ui/separator';
-import { SidebarNav } from '@/components/sidebar-nav';
+import { auth } from '@/auth';
+import { redirect } from 'next/navigation';
 
+import { SidebarNav } from '@/components/sidebar-nav';
+import { Separator } from '@/components/ui/separator';
+import { TooltipProvider } from '@/components/ui/tooltip';
 import {
     Card,
     CardDescription,
     CardHeader,
     CardTitle,
 } from '@/components/ui/card';
-import { TooltipProvider } from '@/components/ui/tooltip';
-import { auth } from '@/auth';
-import { redirect } from 'next/navigation';
 
 const sidebarNavItems = [
     {
