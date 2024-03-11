@@ -24,10 +24,12 @@ import {
 
 import { Input } from '@/components/ui/input';
 import { Separator } from '@/components/ui/separator';
-import { Expand, Pencil, Trash } from 'lucide-react';
+import { Expand, Pencil, Trash, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import { Badge } from '@/components/ui/badge';
+import { cn } from '@/lib/utils';
+import { DeleteTicket } from './components/delete-ticket';
 
 export const metadata: Metadata = {
     title: 'Tasks',
@@ -70,7 +72,11 @@ export default async function Tickets() {
                                     <DrawerTrigger asChild>
                                         <Card
                                             key={key}
-                                            className='flex justify-between items-center p-4 cursor-pointer hover:bg-muted/20 gap-8'
+                                            className={cn(
+                                                'flex justify-between items-center p-4 cursor-pointer hover:bg-muted/20 gap-8',
+                                                ticket.status === 'concluído' &&
+                                                    'opacity-40'
+                                            )}
                                         >
                                             <div className='flex items-center gap-2 truncate'>
                                                 <div className='h-2 w-2 rounded-full bg-green-600' />
@@ -87,36 +93,61 @@ export default async function Tickets() {
                                         <div className='mx-auto w-full max-w-sm'>
                                             <DrawerHeader>
                                                 <header className='flex justify-end w-full'>
-                                                    <Link
-                                                        href={`/edit/${ticket.id}`}
-                                                        className='hover:bg-muted cursor-pointer p-2 rounded-md'
-                                                    >
-                                                        <Pencil size={16} />
-                                                    </Link>
-                                                    <button className='hover:bg-muted cursor-pointer p-2 rounded-md'>
-                                                        <Trash size={16} />
-                                                    </button>
+                                                    <div className='p-2 hover:bg-muted/20 rounded-lg cursor-pointer'>
+                                                        <DrawerClose asChild>
+                                                            <X size={16} />
+                                                        </DrawerClose>
+                                                    </div>
                                                 </header>
-                                                <DrawerTitle>
+                                                <DrawerTitle className='text-start'>
                                                     {ticket.title}
                                                 </DrawerTitle>
 
-                                                <DrawerDescription>
-                                                    <div>{ticket.project}</div>
-                                                    <Badge>
-                                                        {ticket.label}
-                                                    </Badge>
-                                                    <div>{ticket.priority}</div>
-                                                    <div>{ticket.status}</div>
+                                                <DrawerDescription className='pt-4 space-y-2'>
+                                                    <div className='flex justify-between'>
+                                                        <h1>
+                                                            {ticket.project}
+                                                        </h1>
+                                                        <Badge>
+                                                            {ticket.label}
+                                                        </Badge>
+                                                    </div>
+                                                    <div className='flex flex-col gap-2 items-start'>
+                                                        <div>
+                                                            Priority:{' '}
+                                                            {ticket.priority}
+                                                        </div>
+                                                        <div>
+                                                            Status:{' '}
+                                                            {ticket.status}
+                                                        </div>
+                                                    </div>
                                                 </DrawerDescription>
                                             </DrawerHeader>
 
                                             <DrawerFooter>
-                                                <DrawerClose asChild>
-                                                    <Button variant='outline'>
-                                                        Cancelar
-                                                    </Button>
-                                                </DrawerClose>
+                                                <div className='space-y-2'>
+                                                    <Link
+                                                        href={`/edit/${ticket.id}`}
+                                                        className='w-full'
+                                                    >
+                                                        <Button
+                                                            variant='default'
+                                                            className='w-full'
+                                                        >
+                                                            Edit
+                                                        </Button>
+                                                    </Link>
+
+                                                    <DeleteTicket>
+                                                        <Button
+                                                            variant='destructive'
+                                                            className='w-full'
+                                                        >
+                                                            Delete
+                                                        </Button>
+                                                    </DeleteTicket>
+                                                </div>
                                             </DrawerFooter>
                                         </div>
                                     </DrawerContent>

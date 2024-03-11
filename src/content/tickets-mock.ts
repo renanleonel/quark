@@ -3,7 +3,7 @@ export const tickets = [
         id: 'TICKET-8782',
         title: 'Problemas na Dashboard',
         project: 'projeto 1',
-        status: 'na fila',
+        status: 'concluído',
         label: 'bug',
         priority: 'média',
         createdBy: 'Renan Leonel',

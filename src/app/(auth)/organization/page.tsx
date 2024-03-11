@@ -40,24 +40,42 @@ export default async function Organization() {
             <main className='flex flex-col'>
                 <div className='flex-1 space-y-4 px-8 pb-8'>
                     <Tabs defaultValue='overview' className='space-y-4'>
-                        <div className='flex justify-between'>
-                            <TabsList>
-                                <TabsTrigger value='overview'>
+                        <div className='flex justify-between flex-col-reverse md:flex-row gap-4'>
+                            <TabsList className='w-full md:w-fit'>
+                                <TabsTrigger
+                                    value='overview'
+                                    className='w-full'
+                                >
                                     Overview
                                 </TabsTrigger>
-                                <TabsTrigger value='analytics'>
+                                <TabsTrigger
+                                    value='analytics'
+                                    className='w-full'
+                                >
                                     Analytics
                                 </TabsTrigger>
                             </TabsList>
                             {role === 'admin' && (
-                                <div className='space-x-4'>
-                                    <Link href='/organization/projects'>
-                                        <Button variant='secondary'>
+                                <div className='flex flex-col sm:flex-row gap-4 md:gap-2'>
+                                    <Link
+                                        href='/organization/projects'
+                                        className='w-full'
+                                    >
+                                        <Button
+                                            variant='secondary'
+                                            className='w-full md:w-fit'
+                                        >
                                             Projetos
                                         </Button>
                                     </Link>
-                                    <Link href='/organization/members'>
-                                        <Button variant='secondary'>
+                                    <Link
+                                        href='/organization/members'
+                                        className='w-full'
+                                    >
+                                        <Button
+                                            variant='secondary'
+                                            className='w-full md:w-fit'
+                                        >
                                             Membros
                                         </Button>
                                     </Link>

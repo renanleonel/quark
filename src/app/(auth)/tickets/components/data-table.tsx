@@ -28,6 +28,7 @@ import {
 import { DataTableToolbar } from '../components/data-table-toolbar';
 import { DataTablePagination } from '../components/data-table-pagination';
 import { useSearchParams } from 'next/navigation';
+import { cn } from '@/lib/utils';
 interface DataTableProps<TData, TValue> {
     columns: ColumnDef<TData, TValue>[];
     data: TData[];
@@ -110,6 +111,10 @@ export function DataTable<TData, TValue>({
                                         data-state={
                                             row.getIsSelected() && 'selected'
                                         }
+                                        className={cn(
+                                            row.getValue('status') ===
+                                                'concluído' && 'opacity-40'
+                                        )}
                                     >
                                         {row.getVisibleCells().map((cell) => (
                                             <TableCell key={cell.id}>

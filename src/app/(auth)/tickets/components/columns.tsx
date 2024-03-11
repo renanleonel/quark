@@ -44,7 +44,7 @@ export const columns: ColumnDef<Ticket>[] = [
         cell: ({ row }) => {
             return (
                 <div className='flex space-x-2'>
-                    <span className='max-w-[400px] truncate font-medium'>
+                    <span className='w-[320px] truncate font-medium'>
                         {row.getValue('title')}
                     </span>
                 </div>

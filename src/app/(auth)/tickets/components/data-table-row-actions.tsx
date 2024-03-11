@@ -49,13 +49,19 @@ export function DataTableRowActions<TData>({
                         <Link href={`/edit/${task.id}`}>
                             <DropdownMenuItem>Edit</DropdownMenuItem>
                         </Link>
+                        <DropdownMenuItem>Conclude</DropdownMenuItem>
                         <DropdownMenuSeparator />
-                        <DeleteTicket />
+                        <DeleteTicket>
+                            <h1 className='hover:bg-accent relative flex cursor-pointer select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none transition-colors focus:bg-accent focus:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50'>
+                                Delete
+                            </h1>
+                        </DeleteTicket>
                     </div>
                 )}
                 {!hasPermissions && (
                     <div className='pointer-events-none opacity-30'>
                         <DropdownMenuItem>Edit</DropdownMenuItem>
+                        <DropdownMenuItem>Conclude</DropdownMenuItem>
                         <DropdownMenuSeparator />
                         <DropdownMenuItem>Delete</DropdownMenuItem>
                     </div>
