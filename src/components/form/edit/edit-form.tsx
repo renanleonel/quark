@@ -36,9 +36,29 @@ const EditForm = ({ ticket }: EditFormProps) => {
             <CardContent className='flex flex-col lg:flex-row gap-6'>
                 <section className='flex flex-col gap-6 w-full'>
                     <div className='grid gap-2'>
+                        <Label htmlFor='subject'>Título</Label>
+                        <Input
+                            name='title'
+                            id='subject'
+                            placeholder='Preciso de ajuda com...'
+                        />
+                    </div>
+                    <div className='flex flex-col gap-2 h-full'>
+                        <Label htmlFor='description'>Descrição</Label>
+                        <Textarea
+                            name='description'
+                            id='description'
+                            className='h-full'
+                            placeholder='Insira todas as informações necessárias para que possamos te ajudar.'
+                        />
+                    </div>
+                </section>
+
+                <section className='flex flex-col gap-6 w-full'>
+                    {/* <div className='grid gap-2'>
                         <Label htmlFor='nome'>Seu nome</Label>
                         <Input id='nome' placeholder='Nome' name='name' />
-                    </div>
+                    </div> */}
 
                     <div className='grid grid-cols-2 gap-4'>
                         <div className='grid gap-2'>
@@ -99,26 +119,6 @@ const EditForm = ({ ticket }: EditFormProps) => {
                             <LinkIcon className='h-3 w-3' />
                         </div>
                         <Input id='link' name='link' placeholder='Link' />
-                    </div>
-                </section>
-
-                <section className='flex flex-col gap-6 w-full'>
-                    <div className='grid gap-2'>
-                        <Label htmlFor='subject'>Título</Label>
-                        <Input
-                            name='title'
-                            id='subject'
-                            placeholder='Preciso de ajuda com...'
-                        />
-                    </div>
-                    <div className='flex flex-col gap-2 h-full'>
-                        <Label htmlFor='description'>Descrição</Label>
-                        <Textarea
-                            name='description'
-                            id='description'
-                            className='h-full'
-                            placeholder='Insira todas as informações necessárias para que possamos te ajudar.'
-                        />
                     </div>
                 </section>
             </CardContent>

@@ -27,9 +27,7 @@ import { Separator } from '@/components/ui/separator';
 import { Expand, Pencil, Trash } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
-import { ScrollArea } from '@/components/ui/scroll-area';
 import { Badge } from '@/components/ui/badge';
-import { auth } from '@/auth';
 
 export const metadata: Metadata = {
     title: 'Tasks',
@@ -42,9 +40,6 @@ async function getTickets() {
 
 export default async function Tickets() {
     const tickets = await getTickets();
-    const session = await auth();
-
-    console.log(session);
 
     return (
         <>

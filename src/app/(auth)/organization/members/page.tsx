@@ -2,16 +2,8 @@ import Roles from '@/components/roles';
 import { Input } from '@/components/ui/input';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { DeleteMember } from '@/app/(auth)/settings/organization/components/delete-member';
-import { auth } from '@/auth';
-import { redirect } from 'next/navigation';
 
 export default async function Members() {
-    const session = await auth();
-    if (!session) redirect('/');
-
-    const { role } = session.user;
-    if (role !== 'admin') redirect('/tickets');
-
     return (
         <main className='space-y-8'>
             <div>
