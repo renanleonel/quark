@@ -18,8 +18,8 @@ export const defaultSignUpValues = {
 export const defaultSupportValues = {
     name: '',
     type: '',
-    urgency: '',
-    application: '',
+    priority: '',
+    project: '',
     file: '',
     link: '',
     title: '',

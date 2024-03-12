@@ -6,21 +6,22 @@ import { signIn, signOut } from '@/auth';
 
 import {
     authSchema,
-    createOrganizationSchema,
-    recoverSchema,
     signUpForm,
-    supportSchema,
+    ticketSchema,
+    recoverSchema,
+    createOrganizationSchema,
     validateOrganizationSchema,
 } from '@/types/schema';
 
 import {
     defaultAuthValues,
-    defaultRecoverValues,
     defaultSignUpValues,
     defaultSupportValues,
+    defaultRecoverValues,
     defaultCreateOrganizationValues,
     defaultValidateOrganizationValues,
 } from '@/content/default-values';
+import { Ticket } from '@/types';
 
 export async function signout() {
     await signOut();
@@ -255,18 +256,18 @@ export async function newTicket(prevState: any, formData: FormData) {
     try {
         const name = formData.get('name');
         const type = formData.get('type');
-        const urgency = formData.get('urgency');
-        const application = formData.get('application');
+        const priority = formData.get('priority');
+        const project = formData.get('project');
         const file = formData.get('file');
         const link = formData.get('link');
         const title = formData.get('title');
         const description = formData.get('description');
 
-        const validatedFields = supportSchema.safeParse({
+        const validatedFields = ticketSchema.safeParse({
             name: name,
             type: type,
-            urgency: urgency,
-            application: application,
+            priority: priority,
+            project: project,
             file: file,
             link: link,
             title: title,
@@ -295,18 +296,23 @@ export async function newTicket(prevState: any, formData: FormData) {
     }
 }
 
-export async function getTicket(id: string) {
+export async function getTicket(id: string): Promise<Ticket> {
     return {
         id: id,
-        username: 'Usuário',
         title: 'Título do ticket',
         description: 'Descrição do ticket.',
-        urgency: 'Alta',
-        status: 'Aberto',
-        application: 'Aplicação',
         type: 'Tipo',
+        priority: 'Alta',
+        project: 'Projeto',
+        file: {
+            size: 123,
+            type: 'Tipo',
+            name: 'Nome do arquivo',
+            lastModified: 123,
+        },
+        createdBy: 'eYuuioaeoujiarei987kolpçasdpo',
         createdAt: '2021-09-22',
         updatedAt: '2021-09-22',
-        createdBy: 'eYuuioaeoujiarei987kolpçasdpo',
+        status: 'Aberto',
     };
 }

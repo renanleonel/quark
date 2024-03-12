@@ -1,6 +1,8 @@
 'use client';
 
-import * as React from 'react';
+import { cn } from '@/lib/utils';
+import { useEffect, useState } from 'react';
+import { useSearchParams } from 'next/navigation';
 import {
     ColumnDef,
     ColumnFiltersState,
@@ -27,8 +29,6 @@ import {
 
 import { DataTableToolbar } from '../components/data-table-toolbar';
 import { DataTablePagination } from '../components/data-table-pagination';
-import { useSearchParams } from 'next/navigation';
-import { cn } from '@/lib/utils';
 interface DataTableProps<TData, TValue> {
     columns: ColumnDef<TData, TValue>[];
     data: TData[];
@@ -38,12 +38,12 @@ export function DataTable<TData, TValue>({
     columns,
     data,
 }: DataTableProps<TData, TValue>) {
-    const [rowSelection, setRowSelection] = React.useState({});
-    const [columnVisibility, setColumnVisibility] =
-        React.useState<VisibilityState>({});
-    const [columnFilters, setColumnFilters] =
-        React.useState<ColumnFiltersState>([]);
-    const [sorting, setSorting] = React.useState<SortingState>([]);
+    const [rowSelection, setRowSelection] = useState({});
+    const [columnVisibility, setColumnVisibility] = useState<VisibilityState>(
+        {}
+    );
+    const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
+    const [sorting, setSorting] = useState<SortingState>([]);
 
     const table = useReactTable({
         data,
@@ -69,7 +69,7 @@ export function DataTable<TData, TValue>({
 
     const params = useSearchParams();
 
-    React.useEffect(() => {
+    useEffect(() => {
         const filters = params.get('filters');
         if (filters) {
             const parsedFilters = JSON.parse(filters);

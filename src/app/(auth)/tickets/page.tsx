@@ -110,7 +110,7 @@ export default async function Tickets() {
                                                             {ticket.project}
                                                         </h1>
                                                         <Badge>
-                                                            {ticket.label}
+                                                            {ticket.type}
                                                         </Badge>
                                                     </div>
                                                     <div className='flex flex-col items-start gap-2'>

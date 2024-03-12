@@ -62,19 +62,6 @@ const NewTicketForm = () => {
                     </div>
                 </section>
                 <section className='flex w-full flex-col gap-6'>
-                    {/* <div className='grid gap-2 opacity-50 pointer-events-none'>
-                        <Label htmlFor='nome'>Seu nome</Label>
-                        <Input
-                            id='nome'
-                            name='name'
-                            placeholder='Nome'
-                            defaultValue={name}
-                            className={cn(
-                                formState.errors.name && 'border-red-400'
-                            )}
-                        />
-                    </div> */}
-
                     <div className='grid grid-cols-2 gap-4'>
                         <div className='grid gap-2'>
                             <Label htmlFor='security-level'>Tipo</Label>
@@ -98,17 +85,17 @@ const NewTicketForm = () => {
                         </div>
 
                         <div className='grid gap-2'>
-                            <Label htmlFor='security-level'>Urgência</Label>
-                            <Select name='urgency' defaultValue='3'>
+                            <Label htmlFor='security-level'>Prioridade</Label>
+                            <Select name='priority' defaultValue='3'>
                                 <SelectTrigger
                                     id='security-level'
                                     className={cn(
                                         'line-clamp-1 w-[160px] truncate lg:w-full',
-                                        formState.errors.urgency &&
+                                        formState.errors.priority &&
                                             'border-red-400'
                                     )}
                                 >
-                                    <SelectValue placeholder='Urgência' />
+                                    <SelectValue placeholder='Prioridade' />
                                 </SelectTrigger>
                                 <SelectContent>
                                     <SelectItem value='1'>Alta</SelectItem>
@@ -120,7 +107,7 @@ const NewTicketForm = () => {
                     </div>
                     <div className='grid grid-cols-2 gap-4 lg:grid-cols-1'>
                         <div className='grid gap-2'>
-                            <Label htmlFor='security-level'>Aplicação</Label>
+                            <Label htmlFor='security-level'>Projeto</Label>
                             <Combobox
                                 options={[
                                     { value: '1', label: 'Site' },
@@ -130,12 +117,11 @@ const NewTicketForm = () => {
                                     },
                                 ]}
                                 className={cn(
-                                    formState.errors.application &&
-                                        'border-red-400'
+                                    formState.errors.project && 'border-red-400'
                                 )}
                                 placeholderText='Selecione'
                                 searchText='Pesquise'
-                                name='application'
+                                name='project'
                             />
                         </div>
                         <InputFile name='file' label='Screenshot' />

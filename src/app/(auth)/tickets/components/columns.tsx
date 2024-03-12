@@ -88,7 +88,7 @@ export const columns: ColumnDef<Ticket>[] = [
         ),
         cell: ({ row }) => {
             const label = labels.find(
-                (label) => label.value === row.original.label
+                (label) => label.value === row.original.type
             );
 
             return (
@@ -102,7 +102,7 @@ export const columns: ColumnDef<Ticket>[] = [
     {
         accessorKey: 'priority',
         header: ({ column }) => (
-            <DataTableColumnHeader column={column} title='Urgência' />
+            <DataTableColumnHeader column={column} title='Prioridade' />
         ),
         cell: ({ row }) => {
             const priority = priorities.find(

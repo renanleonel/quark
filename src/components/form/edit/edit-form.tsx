@@ -79,13 +79,13 @@ const EditForm = ({ ticket }: EditFormProps) => {
                         </div>
 
                         <div className='grid gap-2'>
-                            <Label htmlFor='security-level'>Urgência</Label>
-                            <Select name='urgency' defaultValue='3'>
+                            <Label htmlFor='security-level'>Prioridade</Label>
+                            <Select name='priority' defaultValue='3'>
                                 <SelectTrigger
                                     id='security-level'
                                     className='line-clamp-1 w-[160px] truncate lg:w-full'
                                 >
-                                    <SelectValue placeholder='Urgência' />
+                                    <SelectValue placeholder='Prioridade' />
                                 </SelectTrigger>
                                 <SelectContent>
                                     <SelectItem value='1'>Alta</SelectItem>
@@ -108,7 +108,7 @@ const EditForm = ({ ticket }: EditFormProps) => {
                                 ]}
                                 placeholderText='Selecione'
                                 searchText='Pesquise'
-                                name='application'
+                                name='project'
                             />
                         </div>
                         <InputFile name='file' label='Screenshot' />

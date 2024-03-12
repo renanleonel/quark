@@ -12,7 +12,6 @@ export default auth((req) => {
     const isAuthenticated = !!req.auth;
     const isPublicRoute = PUBLIC_ROUTES.includes(nextUrl.pathname);
     const isAdminRoute = ADMIN_ROUTES.includes(nextUrl.pathname);
-    console.log(isAdminRoute);
 
     if (isPublicRoute && isAuthenticated) {
         return Response.redirect(new URL(DEFAULT_REDIRECT, nextUrl));
