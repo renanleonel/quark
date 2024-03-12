@@ -23,6 +23,7 @@ import { newTicket } from '@/lib/actions';
 import { useFormState } from 'react-dom';
 import { editInitialState } from '@/content/initial-states';
 import { Ticket } from '@/types';
+import { cn } from '@/lib/utils';
 
 interface EditFormProps {
     ticket: Ticket;
@@ -55,11 +56,6 @@ const EditForm = ({ ticket }: EditFormProps) => {
                 </section>
 
                 <section className='flex w-full flex-col gap-6'>
-                    {/* <div className='grid gap-2'>
-                        <Label htmlFor='nome'>Seu nome</Label>
-                        <Input id='nome' placeholder='Nome' name='name' />
-                    </div> */}
-
                     <div className='grid grid-cols-2 gap-4'>
                         <div className='grid gap-2'>
                             <Label htmlFor='security-level'>Tipo</Label>
@@ -111,8 +107,34 @@ const EditForm = ({ ticket }: EditFormProps) => {
                                 name='project'
                             />
                         </div>
-                        <InputFile name='file' label='Screenshot' />
+                        <div className='grid gap-2'>
+                            <Label htmlFor='status'>Status</Label>
+                            <Select name='priority' defaultValue='1' disabled>
+                                <SelectTrigger
+                                    id='status'
+                                    className={cn(
+                                        'line-clamp-1 truncate lg:w-full',
+                                        formState.errors.priority &&
+                                            'border-red-400'
+                                    )}
+                                >
+                                    <SelectValue placeholder='Prioridade' />
+                                </SelectTrigger>
+                                <SelectContent>
+                                    <SelectItem value='1'>Na fila</SelectItem>
+                                    <SelectItem value='2'>
+                                        Em análise
+                                    </SelectItem>
+                                    <SelectItem value='3'>
+                                        Em progresso
+                                    </SelectItem>
+                                    <SelectItem value='4'>Concluído</SelectItem>
+                                    <SelectItem value='5'>Cancelado</SelectItem>
+                                </SelectContent>
+                            </Select>
+                        </div>
                     </div>
+                    <InputFile name='file' label='Screenshot' />
                     <div className='grid gap-2'>
                         <div className='flex items-center gap-2'>
                             <Label htmlFor='link'>Link</Label>

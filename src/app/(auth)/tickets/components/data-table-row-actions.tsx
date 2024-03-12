@@ -16,6 +16,7 @@ import Link from 'next/link';
 import { ticketSchema } from '@/types/schema';
 import { DeleteTicket } from '@/app/(auth)/tickets/components/delete-ticket';
 import { useSession } from 'next-auth/react';
+import ChangeTicketStatus from './change-ticket-status';
 
 interface DataTableRowActionsProps<TData> {
     row: Row<TData>;
@@ -49,7 +50,10 @@ export function DataTableRowActions<TData>({
                         <Link href={`/edit/${task.id}`}>
                             <DropdownMenuItem>Edit</DropdownMenuItem>
                         </Link>
-                        <DropdownMenuItem>Conclude</DropdownMenuItem>
+
+                        <ChangeTicketStatus selected={task.status}>
+                            <DropdownMenuItem>Change status</DropdownMenuItem>
+                        </ChangeTicketStatus>
                         <DropdownMenuSeparator />
                         <DeleteTicket>
                             <h1 className='relative flex cursor-pointer select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none transition-colors hover:bg-accent focus:bg-accent focus:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50'>
@@ -61,7 +65,7 @@ export function DataTableRowActions<TData>({
                 {!hasPermissions && (
                     <div className='pointer-events-none opacity-30'>
                         <DropdownMenuItem>Edit</DropdownMenuItem>
-                        <DropdownMenuItem>Conclude</DropdownMenuItem>
+                        <DropdownMenuItem>Change status</DropdownMenuItem>
                         <DropdownMenuSeparator />
                         <DropdownMenuItem>Delete</DropdownMenuItem>
                     </div>

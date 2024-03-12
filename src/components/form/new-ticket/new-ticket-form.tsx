@@ -64,12 +64,12 @@ const NewTicketForm = () => {
                 <section className='flex w-full flex-col gap-6'>
                     <div className='grid grid-cols-2 gap-4'>
                         <div className='grid gap-2'>
-                            <Label htmlFor='security-level'>Tipo</Label>
+                            <Label htmlFor='type'>Tipo</Label>
                             <Select defaultValue='3' name='type'>
                                 <SelectTrigger
-                                    id='security-level'
+                                    id='type'
                                     className={cn(
-                                        'line-clamp-1 w-[160px] truncate lg:w-full',
+                                        'line-clamp-1 truncate lg:w-full',
                                         formState.errors.type &&
                                             'border-red-400'
                                     )}
@@ -85,12 +85,12 @@ const NewTicketForm = () => {
                         </div>
 
                         <div className='grid gap-2'>
-                            <Label htmlFor='security-level'>Prioridade</Label>
+                            <Label htmlFor='priority'>Prioridade</Label>
                             <Select name='priority' defaultValue='3'>
                                 <SelectTrigger
-                                    id='security-level'
+                                    id='priority'
                                     className={cn(
-                                        'line-clamp-1 w-[160px] truncate lg:w-full',
+                                        'line-clamp-1 truncate lg:w-full',
                                         formState.errors.priority &&
                                             'border-red-400'
                                     )}
@@ -107,7 +107,7 @@ const NewTicketForm = () => {
                     </div>
                     <div className='grid grid-cols-2 gap-4 lg:grid-cols-1'>
                         <div className='grid gap-2'>
-                            <Label htmlFor='security-level'>Projeto</Label>
+                            <Label htmlFor='project'>Projeto</Label>
                             <Combobox
                                 options={[
                                     { value: '1', label: 'Site' },
@@ -124,8 +124,34 @@ const NewTicketForm = () => {
                                 name='project'
                             />
                         </div>
-                        <InputFile name='file' label='Screenshot' />
+                        <div className='grid gap-2'>
+                            <Label htmlFor='status'>Status</Label>
+                            <Select name='priority' defaultValue='1' disabled>
+                                <SelectTrigger
+                                    id='status'
+                                    className={cn(
+                                        'line-clamp-1 truncate lg:w-full',
+                                        formState.errors.priority &&
+                                            'border-red-400'
+                                    )}
+                                >
+                                    <SelectValue placeholder='Prioridade' />
+                                </SelectTrigger>
+                                <SelectContent>
+                                    <SelectItem value='1'>Na fila</SelectItem>
+                                    <SelectItem value='2'>
+                                        Em análise
+                                    </SelectItem>
+                                    <SelectItem value='3'>
+                                        Em progresso
+                                    </SelectItem>
+                                    <SelectItem value='4'>Concluído</SelectItem>
+                                    <SelectItem value='5'>Cancelado</SelectItem>
+                                </SelectContent>
+                            </Select>
+                        </div>
                     </div>
+                    <InputFile name='file' label='Screenshot' />
                     <div className='grid gap-2'>
                         <div className='flex items-center gap-2'>
                             <Label htmlFor='link'>Link</Label>
