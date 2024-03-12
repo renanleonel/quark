@@ -67,14 +67,14 @@ export function ProjectsForm() {
                             render={({ field }) => (
                                 <FormItem className='mb-4'>
                                     <FormControl>
-                                        <div className='flex gap-2 items-center'>
+                                        <div className='flex items-center gap-2'>
                                             <Input {...field} />
                                             <TrashIcon
                                                 onClick={() =>
                                                     fields.length > 1 &&
                                                     remove(index)
                                                 }
-                                                className='cursor-pointer  h-4 w-4 text-muted-foreground'
+                                                className='h-4  w-4 cursor-pointer text-muted-foreground'
                                             />
                                         </div>
                                     </FormControl>
@@ -84,7 +84,7 @@ export function ProjectsForm() {
                         />
                     ))}
                 </ScrollArea>
-                <footer className='space-y-4 mt-2 w-full'>
+                <footer className='mt-2 w-full space-y-4'>
                     <Button
                         type='button'
                         className='w-full'

@@ -2,11 +2,9 @@ import Link from 'next/link';
 import { Label } from '@/components/ui/label';
 import { Button } from '@/components/ui/button';
 
-interface NotFoundProps {}
-
-const NotFound = ({}: NotFoundProps) => {
+export default function NotFound() {
     return (
-        <main className='min-h-screen flex flex-col gap-10 items-center justify-center'>
+        <main className='flex min-h-screen flex-col items-center justify-center gap-10'>
             <Label className='' htmlFor='password'>
                 não encontrado.
             </Label>
@@ -17,6 +15,4 @@ const NotFound = ({}: NotFoundProps) => {
             </Link>
         </main>
     );
-};
-
-export default NotFound;
+}

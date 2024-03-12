@@ -1,4 +1,7 @@
+import { auth } from '@/auth';
 import { Metadata } from 'next';
+import { getTicket } from '@/lib/actions';
+import { redirect } from 'next/navigation';
 
 import {
     Card,
@@ -6,18 +9,21 @@ import {
     CardHeader,
     CardTitle,
 } from '@/components/ui/card';
-
 import { Separator } from '@/components/ui/separator';
 import EditForm from '@/components/form/edit/edit-form';
-import { getTicket } from '@/lib/actions';
 
 export const metadata: Metadata = {
     title: 'Edit',
     description: 'Edit ticket',
 };
+export default async function Edit({ params }: { params: { id: string } }) {
+    const session = await auth();
+    if (!session) redirect('/');
+    const { id, role } = session.user;
 
-const Edit = async ({ params }: { params: { id: string } }) => {
     const ticket = await getTicket(params.id);
+
+    if (role !== 'admin' && ticket.createdBy !== id) redirect('/tickets');
 
     return (
         <Card>
@@ -29,6 +35,4 @@ const Edit = async ({ params }: { params: { id: string } }) => {
             <EditForm ticket={ticket} />
         </Card>
     );
-};
-
-export default Edit;
+}

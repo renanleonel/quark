@@ -1,4 +1,7 @@
+import Link from 'next/link';
+import { auth } from '@/auth';
 import { Metadata } from 'next';
+import { redirect } from 'next/navigation';
 
 import {
     Card,
@@ -7,20 +10,25 @@ import {
     CardHeader,
     CardTitle,
 } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+
 import { Chart } from './components/chart';
-import ProjectRanking from './components/project-ranking';
-import CardData from './components/card-data';
-import { Button } from '@/components/ui/button';
-import { DrawerNewProjects } from '@/components/drawer-new-projects';
+import { CardData } from './components/card-data';
+import { ProjectRanking } from './components/project-ranking';
 
 export const metadata: Metadata = {
     title: 'Organização',
     description: 'Organização',
 };
 
-export default function DashboardPage() {
+export default async function Organization() {
+    const session = await auth();
+    if (!session) redirect('/');
+
+    const { role } = session.user;
+
     return (
         <Card>
             <CardHeader>
@@ -32,50 +40,77 @@ export default function DashboardPage() {
             <main className='flex flex-col'>
                 <div className='flex-1 space-y-4 px-8 pb-8'>
                     <Tabs defaultValue='overview' className='space-y-4'>
-                        <div className='flex justify-between'>
-                            <TabsList>
-                                <TabsTrigger value='overview'>
+                        <div className='flex flex-col-reverse justify-between gap-4 md:flex-row'>
+                            <TabsList className='w-full md:w-fit'>
+                                <TabsTrigger
+                                    value='overview'
+                                    className='w-full'
+                                >
                                     Overview
                                 </TabsTrigger>
-                                <TabsTrigger value='analytics'>
+                                <TabsTrigger
+                                    value='analytics'
+                                    className='w-full'
+                                >
                                     Analytics
                                 </TabsTrigger>
                             </TabsList>
-                            {/* if role === admin */}
-                            <DrawerNewProjects>
-                                <Button>Novo projeto</Button>
-                            </DrawerNewProjects>
+                            {role === 'admin' && (
+                                <div className='flex flex-col gap-4 sm:flex-row md:gap-2'>
+                                    <Link
+                                        href='/organization/projects'
+                                        className='w-full'
+                                    >
+                                        <Button
+                                            variant='secondary'
+                                            className='w-full md:w-fit'
+                                        >
+                                            Projetos
+                                        </Button>
+                                    </Link>
+                                    <Link
+                                        href='/organization/members'
+                                        className='w-full'
+                                    >
+                                        <Button
+                                            variant='secondary'
+                                            className='w-full md:w-fit'
+                                        >
+                                            Membros
+                                        </Button>
+                                    </Link>
+                                </div>
+                            )}
                         </div>
                         <TabsContent value='overview' className='space-y-4'>
                             <div className='grid gap-4 md:grid-cols-2 lg:grid-cols-4'>
                                 <CardData
                                     title='Tickets'
-                                    value='0'
-                                    description='Total de tickets'
+                                    value='18'
+                                    description='tickets abertos no momento'
                                 />
                                 <CardData
-                                    title='Tickets'
-                                    value='0'
-                                    description='Total de tickets'
+                                    title='Features'
+                                    value='4'
+                                    description='sugestões de features'
                                 />
                                 <CardData
-                                    title='Tickets'
-                                    value='0'
-                                    description='Total de tickets'
+                                    title='Membros'
+                                    value='53'
+                                    description='membros cadastrados na organização'
                                 />
                                 <CardData
-                                    title='Tickets'
-                                    value='0'
-                                    description='Total de tickets'
+                                    title='Projetos'
+                                    value='7'
+                                    description='projetos cadastrados na organização'
                                 />
                             </div>
                             <div className='grid gap-4 md:grid-cols-2 lg:grid-cols-8'>
                                 <Card className='col-span-4'>
                                     <CardHeader>
-                                        <CardTitle>Projetos</CardTitle>
                                         <CardDescription>
-                                            Estes projetos receberam mais
-                                            tickets nos últimos 30 dias.
+                                            Projetos com mais tickets abertos
+                                            nos últimos 30 dias.
                                         </CardDescription>
                                     </CardHeader>
                                     <CardContent>
@@ -84,9 +119,9 @@ export default function DashboardPage() {
                                 </Card>
                                 <Card className='col-span-4'>
                                     <CardHeader>
-                                        <CardTitle>Projects</CardTitle>
                                         <CardDescription>
-                                            Projects
+                                            Projetos com mais tickets resolvidos
+                                            nos últimos 30 dias.
                                         </CardDescription>
                                     </CardHeader>
                                     <CardContent>

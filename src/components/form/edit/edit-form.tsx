@@ -15,15 +15,17 @@ import {
 import { Textarea } from '@/components/ui/textarea';
 
 import { InputFile } from '@/components/input-file';
-import { Link } from 'lucide-react';
+import { Link as LinkIcon } from 'lucide-react';
+import Link from 'next/link';
 import SubmitButton from '@/components/form/submit-button';
 
 import { newTicket } from '@/lib/actions';
 import { useFormState } from 'react-dom';
 import { editInitialState } from '@/content/initial-states';
+import { Ticket } from '@/types';
 
 interface EditFormProps {
-    ticket: any;
+    ticket: Ticket;
 }
 
 const EditForm = ({ ticket }: EditFormProps) => {
@@ -31,12 +33,32 @@ const EditForm = ({ ticket }: EditFormProps) => {
 
     return (
         <form action={formAction}>
-            <CardContent className='flex flex-col lg:flex-row gap-6'>
-                <section className='flex flex-col gap-6 w-full'>
+            <CardContent className='flex flex-col gap-6 lg:flex-row'>
+                <section className='flex w-full flex-col gap-6'>
                     <div className='grid gap-2'>
+                        <Label htmlFor='subject'>Título</Label>
+                        <Input
+                            name='title'
+                            id='subject'
+                            placeholder='Preciso de ajuda com...'
+                        />
+                    </div>
+                    <div className='flex h-full flex-col gap-2'>
+                        <Label htmlFor='description'>Descrição</Label>
+                        <Textarea
+                            name='description'
+                            id='description'
+                            className='h-full'
+                            placeholder='Insira todas as informações necessárias para que possamos te ajudar.'
+                        />
+                    </div>
+                </section>
+
+                <section className='flex w-full flex-col gap-6'>
+                    {/* <div className='grid gap-2'>
                         <Label htmlFor='nome'>Seu nome</Label>
                         <Input id='nome' placeholder='Nome' name='name' />
-                    </div>
+                    </div> */}
 
                     <div className='grid grid-cols-2 gap-4'>
                         <div className='grid gap-2'>
@@ -44,7 +66,7 @@ const EditForm = ({ ticket }: EditFormProps) => {
                             <Select defaultValue='1' name='type'>
                                 <SelectTrigger
                                     id='security-level'
-                                    className='line-clamp-1 w-[160px] lg:w-full truncate'
+                                    className='line-clamp-1 w-[160px] truncate lg:w-full'
                                 >
                                     <SelectValue placeholder='Tipo' />
                                 </SelectTrigger>
@@ -57,13 +79,13 @@ const EditForm = ({ ticket }: EditFormProps) => {
                         </div>
 
                         <div className='grid gap-2'>
-                            <Label htmlFor='security-level'>Urgência</Label>
-                            <Select name='urgency' defaultValue='3'>
+                            <Label htmlFor='security-level'>Prioridade</Label>
+                            <Select name='priority' defaultValue='3'>
                                 <SelectTrigger
                                     id='security-level'
-                                    className='line-clamp-1 w-[160px] lg:w-full truncate'
+                                    className='line-clamp-1 w-[160px] truncate lg:w-full'
                                 >
-                                    <SelectValue placeholder='Urgência' />
+                                    <SelectValue placeholder='Prioridade' />
                                 </SelectTrigger>
                                 <SelectContent>
                                     <SelectItem value='1'>Alta</SelectItem>
@@ -73,7 +95,7 @@ const EditForm = ({ ticket }: EditFormProps) => {
                             </Select>
                         </div>
                     </div>
-                    <div className='grid grid-cols-2 lg:grid-cols-1 gap-4'>
+                    <div className='grid grid-cols-2 gap-4 lg:grid-cols-1'>
                         <div className='grid gap-2'>
                             <Label htmlFor='security-level'>Aplicação</Label>
                             <Combobox
@@ -86,44 +108,24 @@ const EditForm = ({ ticket }: EditFormProps) => {
                                 ]}
                                 placeholderText='Selecione'
                                 searchText='Pesquise'
-                                name='application'
+                                name='project'
                             />
                         </div>
                         <InputFile name='file' label='Screenshot' />
                     </div>
                     <div className='grid gap-2'>
-                        <div className='flex gap-2 items-center'>
+                        <div className='flex items-center gap-2'>
                             <Label htmlFor='link'>Link</Label>
-                            <Link className='h-3 w-3' />
+                            <LinkIcon className='h-3 w-3' />
                         </div>
                         <Input id='link' name='link' placeholder='Link' />
                     </div>
                 </section>
-
-                <section className='flex flex-col gap-6 w-full'>
-                    <div className='grid gap-2'>
-                        <Label htmlFor='subject'>Título</Label>
-                        <Input
-                            name='title'
-                            id='subject'
-                            placeholder='Preciso de ajuda com...'
-                        />
-                    </div>
-                    <div className='flex flex-col gap-2 h-full'>
-                        <Label htmlFor='description'>Descrição</Label>
-                        <Textarea
-                            name='description'
-                            id='description'
-                            className='h-full'
-                            placeholder='Insira todas as informações necessárias para que possamos te ajudar.'
-                        />
-                    </div>
-                </section>
             </CardContent>
             <CardFooter className='justify-between space-x-2'>
-                <Button type='reset' variant='ghost'>
-                    Cancelar
-                </Button>
+                <Link href='/tickets'>
+                    <Button variant='ghost'>Cancelar</Button>
+                </Link>
                 <SubmitButton text='Enviar' className='w-24' />
             </CardFooter>
         </form>

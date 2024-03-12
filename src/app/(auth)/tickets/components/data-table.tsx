@@ -1,6 +1,8 @@
 'use client';
 
-import * as React from 'react';
+import { cn } from '@/lib/utils';
+import { useEffect, useState } from 'react';
+import { useSearchParams } from 'next/navigation';
 import {
     ColumnDef,
     ColumnFiltersState,
@@ -27,9 +29,6 @@ import {
 
 import { DataTableToolbar } from '../components/data-table-toolbar';
 import { DataTablePagination } from '../components/data-table-pagination';
-import { useSearchParams } from 'next/navigation';
-import Link from 'next/link';
-
 interface DataTableProps<TData, TValue> {
     columns: ColumnDef<TData, TValue>[];
     data: TData[];
@@ -39,12 +38,12 @@ export function DataTable<TData, TValue>({
     columns,
     data,
 }: DataTableProps<TData, TValue>) {
-    const [rowSelection, setRowSelection] = React.useState({});
-    const [columnVisibility, setColumnVisibility] =
-        React.useState<VisibilityState>({});
-    const [columnFilters, setColumnFilters] =
-        React.useState<ColumnFiltersState>([]);
-    const [sorting, setSorting] = React.useState<SortingState>([]);
+    const [rowSelection, setRowSelection] = useState({});
+    const [columnVisibility, setColumnVisibility] = useState<VisibilityState>(
+        {}
+    );
+    const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
+    const [sorting, setSorting] = useState<SortingState>([]);
 
     const table = useReactTable({
         data,
@@ -70,21 +69,21 @@ export function DataTable<TData, TValue>({
 
     const params = useSearchParams();
 
-    React.useEffect(() => {
+    useEffect(() => {
         const filters = params.get('filters');
         if (filters) {
             const parsedFilters = JSON.parse(filters);
             table.setColumnFilters(parsedFilters);
         }
-    }, [params]);
+    }, [params, table]);
 
     return (
-        <div className='space-y-4 flex flex-col w-full p-4'>
+        <div className='flex w-full flex-col space-y-4 p-4'>
             <DataTableToolbar table={table} />
-            <div className='rounded-md border  w-full'>
+            <div className='w-full rounded-md  border'>
                 <div className='h-[500px] overflow-auto'>
                     <Table>
-                        <TableHeader className='sticky top-0 bg-background z-20'>
+                        <TableHeader className='sticky top-0 z-20 bg-background'>
                             {table.getHeaderGroups().map((headerGroup) => (
                                 <TableRow key={headerGroup.id}>
                                     {headerGroup.headers.map((header) => {
@@ -112,6 +111,10 @@ export function DataTable<TData, TValue>({
                                         data-state={
                                             row.getIsSelected() && 'selected'
                                         }
+                                        className={cn(
+                                            row.getValue('status') ===
+                                                'concluído' && 'opacity-40'
+                                        )}
                                     >
                                         {row.getVisibleCells().map((cell) => (
                                             <TableCell key={cell.id}>

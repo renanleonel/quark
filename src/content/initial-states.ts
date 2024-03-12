@@ -13,8 +13,8 @@ export const editInitialState = {
     errors: {
         name: '',
         type: '',
-        urgency: '',
-        application: '',
+        priority: '',
+        project: '',
         title: '',
         description: '',
         file: '',
@@ -28,8 +28,8 @@ export const newTicketInitialState = {
     errors: {
         name: '',
         type: '',
-        urgency: '',
-        application: '',
+        priority: '',
+        project: '',
         title: '',
         description: '',
         file: '',

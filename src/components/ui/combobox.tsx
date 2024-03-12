@@ -77,6 +77,7 @@ const Combobox = ({
                                     name={name}
                                     value={option.value}
                                     className='hidden'
+                                    onChange={() => {}}
                                 />
 
                                 {option.label}

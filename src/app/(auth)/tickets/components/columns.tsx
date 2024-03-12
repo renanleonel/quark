@@ -6,34 +6,34 @@ import { Badge } from '@/components/ui/badge';
 import { Checkbox } from '@/components/ui/checkbox';
 
 import { Ticket } from '@/types';
-import { labels, priorities, statuses } from '@/content/table-data';
+import { labels, priorities, projects, statuses } from '@/content/table-data';
 import { DataTableColumnHeader } from './data-table-column-header';
 import { DataTableRowActions } from './data-table-row-actions';
 
 export const columns: ColumnDef<Ticket>[] = [
-    {
-        id: 'select',
-        enableSorting: false,
-        enableHiding: false,
-        header: ({ table }) => (
-            <Checkbox
-                checked={table.getIsAllPageRowsSelected()}
-                onCheckedChange={(value) =>
-                    table.toggleAllPageRowsSelected(!!value)
-                }
-                aria-label='Select all'
-                className='translate-y-[2px]'
-            />
-        ),
-        cell: ({ row }) => (
-            <Checkbox
-                checked={row.getIsSelected()}
-                onCheckedChange={(value) => row.toggleSelected(!!value)}
-                aria-label='Select row'
-                className='translate-y-[2px]'
-            />
-        ),
-    },
+    // {
+    //     id: 'select',
+    //     enableSorting: false,
+    //     enableHiding: false,
+    //     header: ({ table }) => (
+    //         <Checkbox
+    //             checked={table.getIsAllPageRowsSelected()}
+    //             onCheckedChange={(value) =>
+    //                 table.toggleAllPageRowsSelected(!!value)
+    //             }
+    //             aria-label='Select all'
+    //             className='translate-y-[2px]'
+    //         />
+    //     ),
+    //     cell: ({ row }) => (
+    //         <Checkbox
+    //             checked={row.getIsSelected()}
+    //             onCheckedChange={(value) => row.toggleSelected(!!value)}
+    //             aria-label='Select row'
+    //             className='translate-y-[2px]'
+    //         />
+    //     ),
+    // },
     {
         accessorKey: 'title',
         enableSorting: false,
@@ -44,7 +44,7 @@ export const columns: ColumnDef<Ticket>[] = [
         cell: ({ row }) => {
             return (
                 <div className='flex space-x-2'>
-                    <span className='max-w-[400px] truncate font-medium'>
+                    <span className='w-[320px] truncate font-medium'>
                         {row.getValue('title')}
                     </span>
                 </div>
@@ -59,13 +59,24 @@ export const columns: ColumnDef<Ticket>[] = [
             <DataTableColumnHeader column={column} title='Projeto' />
         ),
         cell: ({ row }) => {
+            const project = projects.find(
+                (project) => project.value === row.original.project
+            );
+
+            if (!project) {
+                return null;
+            }
+
             return (
                 <div className='flex space-x-2'>
                     <span className='max-w-[400px] truncate font-medium'>
-                        {row.getValue('project')}
+                        {project.label}
                     </span>
                 </div>
             );
+        },
+        filterFn: (row, id, value) => {
+            return value.includes(row.getValue(id));
         },
     },
     {
@@ -77,7 +88,7 @@ export const columns: ColumnDef<Ticket>[] = [
         ),
         cell: ({ row }) => {
             const label = labels.find(
-                (label) => label.value === row.original.label
+                (label) => label.value === row.original.type
             );
 
             return (
@@ -91,7 +102,7 @@ export const columns: ColumnDef<Ticket>[] = [
     {
         accessorKey: 'priority',
         header: ({ column }) => (
-            <DataTableColumnHeader column={column} title='Urgência' />
+            <DataTableColumnHeader column={column} title='Prioridade' />
         ),
         cell: ({ row }) => {
             const priority = priorities.find(
@@ -130,7 +141,7 @@ export const columns: ColumnDef<Ticket>[] = [
             }
 
             return (
-                <div className='flex w-[100px] items-center'>
+                <div className='flex  items-center'>
                     {status.icon && (
                         <status.icon className='mr-2 h-4 w-4 text-muted-foreground' />
                     )}

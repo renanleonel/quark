@@ -12,9 +12,10 @@ import {
     DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 
+import Link from 'next/link';
 import { ticketSchema } from '@/types/schema';
-import { useRouter } from 'next/navigation';
 import { DeleteTicket } from '@/app/(auth)/tickets/components/delete-ticket';
+import { useSession } from 'next-auth/react';
 
 interface DataTableRowActionsProps<TData> {
     row: Row<TData>;
@@ -23,12 +24,13 @@ interface DataTableRowActionsProps<TData> {
 export function DataTableRowActions<TData>({
     row,
 }: DataTableRowActionsProps<TData>) {
-    const router = useRouter();
     const task = ticketSchema.parse(row.original);
 
-    const handleEdit = () => {
-        router.push(`/edit/${task.id}`);
-    };
+    const session = useSession();
+    const role = session.data?.user.role;
+
+    const hasPermissions =
+        role === 'admin' || task.createdBy === session.data?.user.id;
 
     return (
         <DropdownMenu>
@@ -42,10 +44,28 @@ export function DataTableRowActions<TData>({
                 </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align='end' className='w-[160px]'>
-                <DropdownMenuItem>Ver</DropdownMenuItem>
-                <DropdownMenuItem onClick={handleEdit}>Edit</DropdownMenuItem>
-                <DropdownMenuSeparator />
-                <DeleteTicket />
+                {hasPermissions && (
+                    <div>
+                        <Link href={`/edit/${task.id}`}>
+                            <DropdownMenuItem>Edit</DropdownMenuItem>
+                        </Link>
+                        <DropdownMenuItem>Conclude</DropdownMenuItem>
+                        <DropdownMenuSeparator />
+                        <DeleteTicket>
+                            <h1 className='relative flex cursor-pointer select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none transition-colors hover:bg-accent focus:bg-accent focus:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50'>
+                                Delete
+                            </h1>
+                        </DeleteTicket>
+                    </div>
+                )}
+                {!hasPermissions && (
+                    <div className='pointer-events-none opacity-30'>
+                        <DropdownMenuItem>Edit</DropdownMenuItem>
+                        <DropdownMenuItem>Conclude</DropdownMenuItem>
+                        <DropdownMenuSeparator />
+                        <DropdownMenuItem>Delete</DropdownMenuItem>
+                    </div>
+                )}
             </DropdownMenuContent>
         </DropdownMenu>
     );

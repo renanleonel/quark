@@ -1,9 +1,11 @@
 'use client';
 
-import * as React from 'react';
-
-import { useMediaQuery } from '@/hooks/use-media-query';
+import { toast } from 'sonner';
+import { useState } from 'react';
+import { TrashIcon } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { useMediaQuery } from '@/hooks/use-media-query';
+
 import {
     Dialog,
     DialogContent,
@@ -24,11 +26,8 @@ import {
     DrawerTrigger,
 } from '@/components/ui/drawer';
 
-import { toast } from 'sonner';
-import { TrashIcon } from 'lucide-react';
-
 export function DeleteMember() {
-    const [open, setOpen] = React.useState(false);
+    const [open, setOpen] = useState(false);
     const isDesktop = useMediaQuery('(min-width: 768px)');
 
     const handleDeleteMember = () => {
@@ -42,7 +41,7 @@ export function DeleteMember() {
                 <DialogTrigger asChild>
                     <Button
                         variant='ghost'
-                        className='flex h-8 w-8 p- hover:bg-muted'
+                        className='p- flex h-8 w-8 hover:bg-muted'
                     >
                         <TrashIcon className='h-4 w-4 text-muted-foreground' />
                     </Button>
@@ -71,7 +70,7 @@ export function DeleteMember() {
             <DrawerTrigger asChild>
                 <Button
                     variant='ghost'
-                    className='flex h-8 w-8 p- hover:bg-muted'
+                    className='p- flex h-8 w-8 hover:bg-muted'
                 >
                     <TrashIcon className='h-4 w-4 text-muted-foreground' />
                 </Button>

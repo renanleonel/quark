@@ -12,7 +12,7 @@ const Navbar = ({ className, ...props }: React.HTMLAttributes<HTMLElement>) => {
     return (
         <div
             className={cn(
-                'flex h-16 items-center py-4'
+                'lg:px-0- fixed left-0 top-0 z-10 flex h-16 w-full items-center bg-background px-4 py-4 lg:static'
                 // pathname === '/create-organization' && 'hidden'
             )}
         >
@@ -26,7 +26,7 @@ const Navbar = ({ className, ...props }: React.HTMLAttributes<HTMLElement>) => {
                 <Link
                     href='/tickets'
                     className={cn(
-                        'text-sm font-medium transition-colors hover:text-primary text-muted-foreground hover:underline'
+                        'text-sm font-medium text-muted-foreground transition-colors hover:text-primary hover:underline'
                         // pathname === '/tickets' && 'text-primary'
                     )}
                 >
@@ -35,7 +35,7 @@ const Navbar = ({ className, ...props }: React.HTMLAttributes<HTMLElement>) => {
                 <Link
                     href='/new-ticket'
                     className={cn(
-                        'text-sm font-medium transition-colors hover:text-primary text-muted-foreground hover:underline'
+                        'text-sm font-medium text-muted-foreground transition-colors hover:text-primary hover:underline'
                         // pathname === '/support' && 'text-primary'
                     )}
                 >
@@ -44,7 +44,7 @@ const Navbar = ({ className, ...props }: React.HTMLAttributes<HTMLElement>) => {
                 <Link
                     href='/organization'
                     className={cn(
-                        'text-sm font-medium transition-colors hover:text-primary text-muted-foreground hover:underline'
+                        'text-sm font-medium text-muted-foreground transition-colors hover:text-primary hover:underline'
                         // pathname === '/organization' && 'text-primary'
                     )}
                 >

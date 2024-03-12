@@ -1,8 +1,9 @@
 import '@/styles/globals.css';
 import type { Metadata } from 'next';
-import { GeistSans } from 'geist/font';
+import { GeistSans } from 'geist/font/sans';
 
 import { Toaster } from '@/components/ui/sonner';
+import { SessionProvider } from 'next-auth/react';
 
 import { ThemeWrapper } from '@/components/theme-wrapper';
 import { ThemeProvider } from '@/components/theme-provider';
@@ -20,7 +21,7 @@ export default function RootLayout({
 }) {
     return (
         <html lang='pt-BR' className={GeistSans.className}>
-            <body className='min-min-h-screen bg-background'>
+            <body className='h-full min-h-screen bg-background'>
                 <ThemeProvider
                     attribute='class'
                     defaultTheme='system'
@@ -28,7 +29,9 @@ export default function RootLayout({
                     disableTransitionOnChange
                 >
                     <ThemeWrapper>
-                        <main className='bg-background flex-1'>{children}</main>
+                        <SessionProvider>
+                            <main>{children}</main>
+                        </SessionProvider>
                     </ThemeWrapper>
                     <ThemeSwitcher />
                 </ThemeProvider>

@@ -1,4 +1,4 @@
-const Policy = () => {
+export default function Policy() {
     return (
         <main className='flex justify-center p-4'>
             <div className='max-w-sm'>
@@ -12,6 +12,4 @@ const Policy = () => {
             </div>
         </main>
     );
-};
-
-export default Policy;
+}

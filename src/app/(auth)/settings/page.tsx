@@ -1,8 +1,8 @@
-import { Metadata } from 'next';
-import { Separator } from '@/components/ui/separator';
-import { ThemeCustomizer } from '@/components/theme';
-
 import '@/styles/themes.css';
+import { Metadata } from 'next';
+
+import { ThemeCustomizer } from '@/components/theme';
+import { Separator } from '@/components/ui/separator';
 import { AccountForm } from '@/components/form/account/account-form';
 
 export const metadata: Metadata = {
@@ -10,7 +10,7 @@ export const metadata: Metadata = {
     description: 'Configurações',
 };
 
-const Settings = () => {
+export default function Settings() {
     return (
         <div className='space-y-6'>
             <div>
@@ -24,6 +24,4 @@ const Settings = () => {
             <AccountForm />
         </div>
     );
-};
-
-export default Settings;
+}

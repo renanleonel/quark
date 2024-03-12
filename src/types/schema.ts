@@ -17,6 +17,10 @@ export const authSchema = z.object({
 
 export const signUpForm = z
     .object({
+        name: z
+            .string()
+            .min(1, { message: 'Insira o nome!' })
+            .min(3, { message: 'Nome deve ter no mínimo 3 caracteres!' }),
         email: z
             .string()
             .min(1, { message: 'Insira o email!' })
@@ -24,27 +28,22 @@ export const signUpForm = z
         password: z
             .string()
             .min(1, { message: 'Insira a senha!' })
-            .min(3, { message: 'Senha deve ter no mínimo 6 caracteres!' }),
+            .min(6, { message: 'Senha deve ter no mínimo 6 caracteres!' }),
         confirmPassword: z.string().min(1, { message: 'Confirme a senha!' }),
-        name: z.string().min(3, { message: 'Insira o nome!' }),
-        // code: z
-        //     .string()
-        //     .length(6, {
-        //         message: 'Código inválido!',
-        //     })
-        //     .optional()
-        //     .or(z.literal('')),
     })
     .refine((data) => data.password === data.confirmPassword, {
         message: 'Senhas não coincidem!',
         path: ['confirmPassword'],
     });
 
-export const supportSchema = z.object({
-    name: z.string().min(1, { message: 'Insira o nome!' }),
+export const ticketSchema = z.object({
+    id: z.string(),
+    title: z.string().min(1, { message: 'Insira o título!' }),
+    description: z.string().min(1, { message: 'Insira a descrição!' }),
+    project: z.string().min(1, { message: 'Insira o projeto!' }),
     type: z.string().min(1, { message: 'Insira o tipo!' }),
-    urgency: z.string().min(1, { message: 'Insira a urgência!' }),
-    application: z.string().min(1, { message: 'Insira a aplicação!' }),
+    priority: z.string().min(1, { message: 'Insira a prioridade!' }),
+    status: z.string(),
     file: z
         .object({
             size: z.number(),
@@ -54,17 +53,9 @@ export const supportSchema = z.object({
         })
         .optional(),
     link: z.string().optional(),
-    title: z.string().min(1, { message: 'Insira o título!' }),
-    description: z.string().min(1, { message: 'Insira a descrição!' }),
-});
-
-export const ticketSchema = z.object({
-    id: z.string(),
-    title: z.string(),
-    project: z.string(),
-    status: z.string(),
-    label: z.string(),
-    priority: z.string(),
+    createdBy: z.string(),
+    createdAt: z.string(),
+    updatedAt: z.string(),
 });
 
 export const createOrganizationSchema = z.object({

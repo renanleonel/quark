@@ -1,17 +1,16 @@
+import '@/styles/themes.css';
 import { Metadata } from 'next';
 
-import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import '@/styles/themes.css';
-import { TeamMembers } from './components/team-members';
+import { Button } from '@/components/ui/button';
 
 export const metadata: Metadata = {
     title: 'Configurações',
     description: 'Configurações',
 };
 
-const Settings = () => {
+export default async function Settings() {
     return (
         <main className='space-y-4'>
             <section className='space-y-4'>
@@ -71,9 +70,6 @@ const Settings = () => {
                     </div>
                 </div>
             </section>
-            <TeamMembers />
         </main>
     );
-};
-
-export default Settings;
+}

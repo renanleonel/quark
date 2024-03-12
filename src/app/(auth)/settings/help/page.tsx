@@ -1,13 +1,12 @@
 import { Metadata } from 'next';
-
 import HelpForm from '@/components/form/help/help-form';
 
 export const metadata: Metadata = {
-    title: 'Ajuda',
-    description: 'Ajuda',
+    title: 'Help',
+    description: 'Help',
 };
 
-const Help = () => {
+export default function Help() {
     return (
         <main>
             <h2 className='text-lg font-medium'>Ajuda</h2>
@@ -18,6 +17,4 @@ const Help = () => {
             <HelpForm />
         </main>
     );
-};
-
-export default Help;
+}

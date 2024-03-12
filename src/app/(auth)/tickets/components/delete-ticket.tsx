@@ -1,3 +1,5 @@
+'use client';
+
 import * as React from 'react';
 
 import { cn } from '@/lib/utils';
@@ -25,7 +27,11 @@ import {
 
 import { toast } from 'sonner';
 
-export function DeleteTicket() {
+interface DeleteTicketProps {
+    children: React.ReactNode;
+}
+
+export function DeleteTicket({ children }: DeleteTicketProps) {
     const [open, setOpen] = React.useState(false);
     const isDesktop = useMediaQuery('(min-width: 768px)');
 
@@ -38,13 +44,14 @@ export function DeleteTicket() {
         return (
             <Dialog open={open} onOpenChange={setOpen}>
                 <DialogTrigger asChild>
-                    <h1
+                    {/* <h1
                         className={cn(
                             'hover:bg-accent relative flex cursor-pointer select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none transition-colors focus:bg-accent focus:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50'
                         )}
                     >
                         Delete
-                    </h1>
+                    </h1> */}
+                    {children}
                 </DialogTrigger>
                 <DialogContent className='sm:max-w-[425px]'>
                     <DialogHeader>
@@ -68,13 +75,14 @@ export function DeleteTicket() {
     return (
         <Drawer open={open} onOpenChange={setOpen}>
             <DrawerTrigger asChild>
-                <h1
+                {/* <h1
                     className={cn(
                         'hover:bg-accent relative flex cursor-pointer select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none transition-colors focus:bg-accent focus:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50'
                     )}
                 >
                     Delete
-                </h1>
+                </h1> */}
+                {children}
             </DrawerTrigger>
             <DrawerContent>
                 <DrawerHeader className='text-left'>
