@@ -4,7 +4,7 @@ import { cn } from '@/lib/utils';
 import { Link } from 'lucide-react';
 import { useFormState } from 'react-dom';
 import { newTicket } from '@/lib/actions';
-import { newTicketInitialState } from '@/content/initial-states';
+import { ticketInitialState } from '@/content/initial-states';
 
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -12,7 +12,6 @@ import Combobox from '@/components/ui/combobox';
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
 import { CardContent, CardFooter } from '@/components/ui/card';
-import { useSession } from 'next-auth/react';
 import {
     Select,
     SelectContent,
@@ -25,13 +24,9 @@ import { InputFile } from '@/components/input-file';
 import SubmitButton from '@/components/form/submit-button';
 
 const NewTicketForm = () => {
-    const [formState, formAction] = useFormState(
-        newTicket,
-        newTicketInitialState
-    );
+    const [formState, formAction] = useFormState(newTicket, ticketInitialState);
 
-    const session = useSession();
-    const name = session.data?.user?.name;
+    const { errors } = formState;
 
     return (
         <form action={formAction}>
@@ -43,9 +38,7 @@ const NewTicketForm = () => {
                             name='title'
                             id='subject'
                             placeholder='Preciso de ajuda com...'
-                            className={cn(
-                                formState.errors.title && 'border-red-400'
-                            )}
+                            className={cn(errors.title && 'border-red-400')}
                         />
                     </div>
                     <div className='flex h-full flex-col gap-2'>
@@ -55,7 +48,7 @@ const NewTicketForm = () => {
                             id='description'
                             className={cn(
                                 'h-full',
-                                formState.errors.description && 'border-red-400'
+                                errors.description && 'border-red-400'
                             )}
                             placeholder='Insira todas as informações necessárias para que possamos te ajudar.'
                         />
@@ -70,8 +63,7 @@ const NewTicketForm = () => {
                                     id='type'
                                     className={cn(
                                         'line-clamp-1 truncate lg:w-full',
-                                        formState.errors.type &&
-                                            'border-red-400'
+                                        errors.type && 'border-red-400'
                                     )}
                                 >
                                     <SelectValue placeholder='Tipo' />
@@ -91,8 +83,7 @@ const NewTicketForm = () => {
                                     id='priority'
                                     className={cn(
                                         'line-clamp-1 truncate lg:w-full',
-                                        formState.errors.priority &&
-                                            'border-red-400'
+                                        errors.priority && 'border-red-400'
                                     )}
                                 >
                                     <SelectValue placeholder='Prioridade' />
@@ -117,7 +108,7 @@ const NewTicketForm = () => {
                                     },
                                 ]}
                                 className={cn(
-                                    formState.errors.project && 'border-red-400'
+                                    errors.project && 'border-red-400'
                                 )}
                                 placeholderText='Selecione'
                                 searchText='Pesquise'
@@ -131,8 +122,7 @@ const NewTicketForm = () => {
                                     id='status'
                                     className={cn(
                                         'line-clamp-1 truncate lg:w-full',
-                                        formState.errors.priority &&
-                                            'border-red-400'
+                                        errors.priority && 'border-red-400'
                                     )}
                                 >
                                     <SelectValue placeholder='Prioridade' />

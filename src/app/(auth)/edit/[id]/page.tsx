@@ -32,7 +32,7 @@ export default async function Edit({ params }: { params: { id: string } }) {
                 <CardDescription>{params.id}</CardDescription>
             </CardHeader>
             <Separator className='mb-6' />
-            <EditForm ticket={ticket} />
+            <EditForm />
         </Card>
     );
 }

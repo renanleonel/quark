@@ -19,18 +19,15 @@ import { Link as LinkIcon } from 'lucide-react';
 import Link from 'next/link';
 import SubmitButton from '@/components/form/submit-button';
 
+import { cn } from '@/lib/utils';
 import { newTicket } from '@/lib/actions';
 import { useFormState } from 'react-dom';
-import { editInitialState } from '@/content/initial-states';
-import { Ticket } from '@/types';
-import { cn } from '@/lib/utils';
+import { ticketInitialState } from '@/content/initial-states';
 
-interface EditFormProps {
-    ticket: Ticket;
-}
+const EditForm = () => {
+    const [formState, formAction] = useFormState(newTicket, ticketInitialState);
 
-const EditForm = ({ ticket }: EditFormProps) => {
-    const [formState, formAction] = useFormState(newTicket, editInitialState);
+    const { errors } = formState;
 
     return (
         <form action={formAction}>
@@ -42,6 +39,7 @@ const EditForm = ({ ticket }: EditFormProps) => {
                             name='title'
                             id='subject'
                             placeholder='Preciso de ajuda com...'
+                            className={cn(errors.title && 'border-red-400')}
                         />
                     </div>
                     <div className='flex h-full flex-col gap-2'>
@@ -49,7 +47,10 @@ const EditForm = ({ ticket }: EditFormProps) => {
                         <Textarea
                             name='description'
                             id='description'
-                            className='h-full'
+                            className={cn(
+                                'h-full',
+                                errors.description && 'border-red-400'
+                            )}
                             placeholder='Insira todas as informações necessárias para que possamos te ajudar.'
                         />
                     </div>
@@ -58,11 +59,14 @@ const EditForm = ({ ticket }: EditFormProps) => {
                 <section className='flex w-full flex-col gap-6'>
                     <div className='grid grid-cols-2 gap-4'>
                         <div className='grid gap-2'>
-                            <Label htmlFor='security-level'>Tipo</Label>
+                            <Label htmlFor='type'>Tipo</Label>
                             <Select defaultValue='1' name='type'>
                                 <SelectTrigger
-                                    id='security-level'
-                                    className='line-clamp-1 w-[160px] truncate lg:w-full'
+                                    id='type'
+                                    className={cn(
+                                        'line-clamp-1 truncate lg:w-full',
+                                        errors.type && 'border-red-400'
+                                    )}
                                 >
                                     <SelectValue placeholder='Tipo' />
                                 </SelectTrigger>
@@ -75,11 +79,14 @@ const EditForm = ({ ticket }: EditFormProps) => {
                         </div>
 
                         <div className='grid gap-2'>
-                            <Label htmlFor='security-level'>Prioridade</Label>
+                            <Label htmlFor='priority'>Prioridade</Label>
                             <Select name='priority' defaultValue='3'>
                                 <SelectTrigger
-                                    id='security-level'
-                                    className='line-clamp-1 w-[160px] truncate lg:w-full'
+                                    id='priority'
+                                    className={cn(
+                                        'line-clamp-1 truncate lg:w-full',
+                                        errors.priority && 'border-red-400'
+                                    )}
                                 >
                                     <SelectValue placeholder='Prioridade' />
                                 </SelectTrigger>
@@ -93,7 +100,7 @@ const EditForm = ({ ticket }: EditFormProps) => {
                     </div>
                     <div className='grid grid-cols-2 gap-4 lg:grid-cols-1'>
                         <div className='grid gap-2'>
-                            <Label htmlFor='security-level'>Aplicação</Label>
+                            <Label htmlFor='project'>Project</Label>
                             <Combobox
                                 options={[
                                     { value: '1', label: 'Site' },
@@ -105,6 +112,9 @@ const EditForm = ({ ticket }: EditFormProps) => {
                                 placeholderText='Selecione'
                                 searchText='Pesquise'
                                 name='project'
+                                className={cn(
+                                    errors.project && 'border-red-400'
+                                )}
                             />
                         </div>
                         <div className='grid gap-2'>
@@ -114,8 +124,7 @@ const EditForm = ({ ticket }: EditFormProps) => {
                                     id='status'
                                     className={cn(
                                         'line-clamp-1 truncate lg:w-full',
-                                        formState.errors.priority &&
-                                            'border-red-400'
+                                        errors.priority && 'border-red-400'
                                     )}
                                 >
                                     <SelectValue placeholder='Prioridade' />
@@ -141,6 +150,11 @@ const EditForm = ({ ticket }: EditFormProps) => {
                             <LinkIcon className='h-3 w-3' />
                         </div>
                         <Input id='link' name='link' placeholder='Link' />
+                        {errors.file && (
+                            <span className='text-xs text-red-500'>
+                                {errors.file}
+                            </span>
+                        )}
                     </div>
                 </section>
             </CardContent>

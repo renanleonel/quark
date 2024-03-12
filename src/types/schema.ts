@@ -43,7 +43,7 @@ export const ticketSchema = z.object({
     project: z.string().min(1, { message: 'Insira o projeto!' }),
     type: z.string().min(1, { message: 'Insira o tipo!' }),
     priority: z.string().min(1, { message: 'Insira a prioridade!' }),
-    status: z.string(),
+    status: z.string().min(1, { message: 'Insira o status!' }),
     file: z
         .object({
             size: z.number(),

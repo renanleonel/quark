@@ -8,25 +8,9 @@ export const authInitialState = {
     },
 };
 
-export const editInitialState = {
+export const ticketInitialState = {
     message: '',
     errors: {
-        name: '',
-        type: '',
-        priority: '',
-        project: '',
-        title: '',
-        description: '',
-        file: '',
-        link: '',
-        unknown: '',
-    },
-};
-
-export const newTicketInitialState = {
-    message: '',
-    errors: {
-        name: '',
         type: '',
         priority: '',
         project: '',
@@ -53,7 +37,6 @@ export const signUpInitialState = {
         password: '',
         confirmPassword: '',
         name: '',
-        // code: '',
         unknown: '',
     },
 };

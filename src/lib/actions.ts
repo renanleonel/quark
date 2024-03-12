@@ -16,7 +16,7 @@ import {
 import {
     defaultAuthValues,
     defaultSignUpValues,
-    defaultSupportValues,
+    defaultTicketValues,
     defaultRecoverValues,
     defaultCreateOrganizationValues,
     defaultValidateOrganizationValues,
@@ -254,24 +254,22 @@ export async function validateOrganization(prevState: any, formData: FormData) {
 
 export async function newTicket(prevState: any, formData: FormData) {
     try {
-        const name = formData.get('name');
-        const type = formData.get('type');
-        const priority = formData.get('priority');
-        const project = formData.get('project');
-        const file = formData.get('file');
-        const link = formData.get('link');
         const title = formData.get('title');
         const description = formData.get('description');
+        const project = formData.get('project');
+        const type = formData.get('type');
+        const priority = formData.get('priority');
+        const file = formData.get('file');
+        const link = formData.get('link');
 
         const validatedFields = ticketSchema.safeParse({
-            name: name,
-            type: type,
-            priority: priority,
-            project: project,
-            file: file,
-            link: link,
             title: title,
             description: description,
+            project: project,
+            type: type,
+            priority: priority,
+            file: file,
+            link: link,
         });
 
         if (!validatedFields.success) {
@@ -289,7 +287,7 @@ export async function newTicket(prevState: any, formData: FormData) {
         return {
             message: 'unknown error',
             errors: {
-                ...defaultSupportValues,
+                ...defaultTicketValues,
                 unknown: 'Erro desconhecido.',
             },
         };
