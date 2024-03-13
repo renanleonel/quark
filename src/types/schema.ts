@@ -65,3 +65,7 @@ export const createOrganizationSchema = z.object({
 export const validateOrganizationSchema = z.object({
     code: z.string().min(1, { message: 'Insira o código!' }),
 });
+
+export const editProjectSchema = z.object({
+    name: z.string().min(1, { message: 'Insira o nome!' }),
+});

@@ -22,14 +22,31 @@ import {
 
 import { InputFile } from '@/components/input-file';
 import SubmitButton from '@/components/form/submit-button';
+import { useEffect, useRef } from 'react';
+import { toast } from 'sonner';
 
 const NewTicketForm = () => {
     const [formState, formAction] = useFormState(newTicket, ticketInitialState);
 
-    const { errors } = formState;
+    const { errors, message } = formState;
+    const ref = useRef<HTMLFormElement>(null);
+
+    useEffect(() => {
+        console.log(formState);
+
+        if (message === 'success') {
+            toast.success('Created!');
+
+            ref.current?.reset();
+        }
+
+        if (message === 'unknown error') {
+            toast.error('Error!');
+        }
+    }, [message, formState]);
 
     return (
-        <form action={formAction}>
+        <form action={formAction} ref={ref}>
             <CardContent className='flex flex-col gap-6 lg:flex-row'>
                 <section className='flex w-full flex-col gap-6'>
                     <div className='grid gap-2'>

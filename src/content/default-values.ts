@@ -32,3 +32,8 @@ export const defaultValidateOrganizationValues = {
     id: '',
     code: '',
 };
+
+export const defaultEditProjectValues = {
+    id: '',
+    name: '',
+};

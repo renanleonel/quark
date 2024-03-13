@@ -11,6 +11,7 @@ import {
     recoverSchema,
     createOrganizationSchema,
     validateOrganizationSchema,
+    editProjectSchema,
 } from '@/types/schema';
 
 import {
@@ -20,6 +21,7 @@ import {
     defaultRecoverValues,
     defaultCreateOrganizationValues,
     defaultValidateOrganizationValues,
+    defaultEditProjectValues,
 } from '@/content/default-values';
 import { Ticket } from '@/types';
 
@@ -27,7 +29,7 @@ export async function signout() {
     await signOut();
 }
 
-export async function authenticate(prevState: any, formData: FormData) {
+export async function authenticate(_: any, formData: FormData) {
     try {
         const email = formData.get('email');
         const password = formData.get('password');
@@ -75,7 +77,7 @@ export async function authenticate(prevState: any, formData: FormData) {
     }
 }
 
-export async function signup(prevState: any, formData: FormData) {
+export async function signup(_: any, formData: FormData) {
     try {
         const name = formData.get('name') as string;
         const email = formData.get('email') as string;
@@ -118,7 +120,7 @@ export async function signup(prevState: any, formData: FormData) {
     }
 }
 
-export async function recover(prevState: any, formData: FormData) {
+export async function recover(_: any, formData: FormData) {
     let success = false;
 
     try {
@@ -192,7 +194,7 @@ export async function getInvitationOrigin(id: string) {
     };
 }
 
-export async function createOrganization(prevState: any, formData: FormData) {
+export async function createOrganization(_: any, formData: FormData) {
     try {
         const name = formData.get('name') as string;
 
@@ -222,7 +224,7 @@ export async function createOrganization(prevState: any, formData: FormData) {
     }
 }
 
-export async function validateOrganization(prevState: any, formData: FormData) {
+export async function validateOrganization(_: any, formData: FormData) {
     try {
         const code = formData.get('code') as string;
 
@@ -252,7 +254,7 @@ export async function validateOrganization(prevState: any, formData: FormData) {
     }
 }
 
-export async function newTicket(prevState: any, formData: FormData) {
+export async function newTicket(_: any, formData: FormData) {
     try {
         const title = formData.get('title');
         const description = formData.get('description');
@@ -276,6 +278,18 @@ export async function newTicket(prevState: any, formData: FormData) {
             return {
                 message: 'validation error',
                 errors: validatedFields.error.flatten().fieldErrors,
+            };
+        }
+
+        const request = false;
+
+        if (!request) {
+            return {
+                message: 'unknown error',
+                errors: {
+                    ...defaultTicketValues,
+                    unknown: 'Erro desconhecido.',
+                },
             };
         }
 
@@ -313,4 +327,34 @@ export async function getTicket(id: string): Promise<Ticket> {
         updatedAt: '2021-09-22',
         status: 'Aberto',
     };
+}
+
+export async function editProject(id: string, _: any, formData: FormData) {
+    try {
+        const name = formData.get('name');
+
+        const validatedFields = editProjectSchema.safeParse({
+            name: name,
+        });
+
+        if (!validatedFields.success) {
+            return {
+                message: 'validation error',
+                errors: validatedFields.error.flatten().fieldErrors,
+            };
+        }
+
+        return {
+            message: 'success',
+            errors: {},
+        };
+    } catch (error) {
+        return {
+            message: 'unknown error',
+            errors: {
+                ...defaultEditProjectValues,
+                unknown: 'Erro desconhecido.',
+            },
+        };
+    }
 }

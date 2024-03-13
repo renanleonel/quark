@@ -58,3 +58,12 @@ export const validateOrganizationInitialState = {
         unknown: '',
     },
 };
+
+export const editProjectInitialState = {
+    message: '',
+    errors: {
+        id: '',
+        name: '',
+        unknown: '',
+    },
+};

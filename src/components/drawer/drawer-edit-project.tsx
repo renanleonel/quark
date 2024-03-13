@@ -1,4 +1,4 @@
-import * as React from 'react';
+'use client';
 
 import { Button } from '@/components/ui/button';
 import {
@@ -12,6 +12,7 @@ import {
 } from '@/components/ui/drawer';
 import { Pencil } from 'lucide-react';
 import EditProjectForm from '../form/projects/edit-project-form';
+import { useState } from 'react';
 
 interface DrawerEditProjectProps {
     project: {
@@ -21,8 +22,10 @@ interface DrawerEditProjectProps {
 }
 
 export function DrawerEditProject({ project }: DrawerEditProjectProps) {
+    const [open, setOpen] = useState(false);
+
     return (
-        <Drawer>
+        <Drawer open={open} onOpenChange={setOpen}>
             <DrawerTrigger asChild>
                 <button className='cursor-pointer rounded-md p-2 hover:bg-muted'>
                     <Pencil size={16} />
@@ -35,7 +38,10 @@ export function DrawerEditProject({ project }: DrawerEditProjectProps) {
                     </DrawerHeader>
 
                     <section className='flex max-w-sm flex-col gap-4 p-4'>
-                        <EditProjectForm id={'clt8928932klç'} />
+                        <EditProjectForm
+                            id={'clt8928932klç'}
+                            setOpen={setOpen}
+                        />
                     </section>
 
                     <DrawerFooter>
