@@ -30,32 +30,15 @@ import {
     AlertDialogTrigger,
 } from '@/components/ui/alert-dialog';
 import { Button } from '@/components/ui/button';
+import { roles } from '@/content/constants';
 
-const roles = [
-    {
-        name: 'Member',
-        description: 'Can view and create tickets.',
-        permissions: 'The user will be allowed to view and create tickets.',
-    },
-    {
-        name: 'Developer',
-        description: 'Can view, create and manage tickets.',
-        permissions:
-            'The user will be allowed to view, create and manage tickets.',
-    },
-    {
-        name: 'Admin',
-        description: 'Admin-level access to all resources.',
-        permissions:
-            'The user will be granted admin-level access to all resources.',
-    },
-];
+interface RolesProps {
+    role: string;
+}
 
-interface RolesProps {}
-
-const Roles = ({}: RolesProps) => {
+const Roles = ({ role }: RolesProps) => {
     const [open, setOpen] = useState(false);
-    const [value, setValue] = useState('Developer');
+    const [value, setValue] = useState(role);
 
     const handleChangeRole = (role: string) => {
         setValue(role);
@@ -70,7 +53,7 @@ const Roles = ({}: RolesProps) => {
                     className='w-full md:ml-auto md:w-fit'
                 >
                     {value
-                        ? roles.find((role) => role.name === value)?.name
+                        ? roles.find((role) => role.value === value)?.name
                         : 'Select framework...'}
                     <ChevronDownIcon className='ml-2 h-4 w-4 text-muted-foreground' />
                 </Button>
@@ -112,7 +95,7 @@ const Roles = ({}: RolesProps) => {
                                                 <AlertDialogAction
                                                     onClick={() => {
                                                         handleChangeRole(
-                                                            role.name
+                                                            role.value
                                                         );
                                                         setOpen(false);
                                                     }}

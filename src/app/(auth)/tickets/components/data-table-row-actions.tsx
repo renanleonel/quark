@@ -13,24 +13,23 @@ import {
 } from '@/components/ui/dropdown-menu';
 
 import Link from 'next/link';
-import { ticketSchema } from '@/types/schema';
 import { DeleteTicket } from '@/app/(auth)/tickets/components/delete-ticket';
 import { useSession } from 'next-auth/react';
+import ChangeTicketStatus from './change-ticket-status';
+import { Ticket } from '@/types';
 
-interface DataTableRowActionsProps<TData> {
-    row: Row<TData>;
+interface DataTableRowActionsProps {
+    row: Row<Ticket>;
 }
 
-export function DataTableRowActions<TData>({
-    row,
-}: DataTableRowActionsProps<TData>) {
-    const task = ticketSchema.parse(row.original);
+export function DataTableRowActions({ row }: DataTableRowActionsProps) {
+    const ticket = row.original;
 
     const session = useSession();
     const role = session.data?.user.role;
 
     const hasPermissions =
-        role === 'admin' || task.createdBy === session.data?.user.id;
+        role === 'admin' || ticket.createdBy === session.data?.user.id;
 
     return (
         <DropdownMenu>
@@ -46,10 +45,13 @@ export function DataTableRowActions<TData>({
             <DropdownMenuContent align='end' className='w-[160px]'>
                 {hasPermissions && (
                     <div>
-                        <Link href={`/edit/${task.id}`}>
+                        <Link href={`/edit/${ticket.id}`}>
                             <DropdownMenuItem>Edit</DropdownMenuItem>
                         </Link>
-                        <DropdownMenuItem>Conclude</DropdownMenuItem>
+
+                        <ChangeTicketStatus selected={ticket.status}>
+                            <DropdownMenuItem>Change status</DropdownMenuItem>
+                        </ChangeTicketStatus>
                         <DropdownMenuSeparator />
                         <DeleteTicket>
                             <h1 className='relative flex cursor-pointer select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none transition-colors hover:bg-accent focus:bg-accent focus:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50'>
@@ -61,7 +63,7 @@ export function DataTableRowActions<TData>({
                 {!hasPermissions && (
                     <div className='pointer-events-none opacity-30'>
                         <DropdownMenuItem>Edit</DropdownMenuItem>
-                        <DropdownMenuItem>Conclude</DropdownMenuItem>
+                        <DropdownMenuItem>Change status</DropdownMenuItem>
                         <DropdownMenuSeparator />
                         <DropdownMenuItem>Delete</DropdownMenuItem>
                     </div>

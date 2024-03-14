@@ -11,23 +11,26 @@ import {
     recoverSchema,
     createOrganizationSchema,
     validateOrganizationSchema,
+    editProjectSchema,
 } from '@/types/schema';
 
 import {
     defaultAuthValues,
     defaultSignUpValues,
-    defaultSupportValues,
+    defaultTicketValues,
     defaultRecoverValues,
     defaultCreateOrganizationValues,
     defaultValidateOrganizationValues,
+    defaultEditProjectValues,
 } from '@/content/default-values';
 import { Ticket } from '@/types';
+import { revalidatePath } from 'next/cache';
 
 export async function signout() {
     await signOut();
 }
 
-export async function authenticate(prevState: any, formData: FormData) {
+export async function authenticate(_: any, formData: FormData) {
     try {
         const email = formData.get('email');
         const password = formData.get('password');
@@ -75,7 +78,7 @@ export async function authenticate(prevState: any, formData: FormData) {
     }
 }
 
-export async function signup(prevState: any, formData: FormData) {
+export async function signup(_: any, formData: FormData) {
     try {
         const name = formData.get('name') as string;
         const email = formData.get('email') as string;
@@ -118,7 +121,7 @@ export async function signup(prevState: any, formData: FormData) {
     }
 }
 
-export async function recover(prevState: any, formData: FormData) {
+export async function recover(_: any, formData: FormData) {
     let success = false;
 
     try {
@@ -192,7 +195,7 @@ export async function getInvitationOrigin(id: string) {
     };
 }
 
-export async function createOrganization(prevState: any, formData: FormData) {
+export async function createOrganization(_: any, formData: FormData) {
     try {
         const name = formData.get('name') as string;
 
@@ -222,7 +225,7 @@ export async function createOrganization(prevState: any, formData: FormData) {
     }
 }
 
-export async function validateOrganization(prevState: any, formData: FormData) {
+export async function validateOrganization(_: any, formData: FormData) {
     try {
         const code = formData.get('code') as string;
 
@@ -252,26 +255,146 @@ export async function validateOrganization(prevState: any, formData: FormData) {
     }
 }
 
-export async function newTicket(prevState: any, formData: FormData) {
+export async function newTicket(_: any, formData: FormData) {
     try {
-        const name = formData.get('name');
-        const type = formData.get('type');
-        const priority = formData.get('priority');
-        const project = formData.get('project');
-        const file = formData.get('file');
-        const link = formData.get('link');
         const title = formData.get('title');
         const description = formData.get('description');
+        const project = formData.get('project');
+        const status = 'na fila';
+        const type = formData.get('type');
+        const priority = formData.get('priority');
+        const file = formData.get('file');
+        const link = formData.get('link');
 
         const validatedFields = ticketSchema.safeParse({
-            name: name,
-            type: type,
-            priority: priority,
-            project: project,
-            file: file,
-            link: link,
             title: title,
             description: description,
+            project: project,
+            type: type,
+            status: status,
+            priority: priority,
+            file: file,
+            link: link,
+        });
+
+        if (!validatedFields.success) {
+            return {
+                message: 'validation error',
+                errors: validatedFields.error.flatten().fieldErrors,
+            };
+        }
+
+        const request = false;
+
+        if (!request) {
+            return {
+                message: 'unknown error',
+                errors: {
+                    ...defaultTicketValues,
+                    unknown: 'Erro desconhecido.',
+                },
+            };
+        }
+
+        return {
+            message: 'success',
+            errors: {},
+        };
+    } catch (error) {
+        return {
+            message: 'unknown error',
+            errors: {
+                ...defaultTicketValues,
+                unknown: 'Erro desconhecido.',
+            },
+        };
+    }
+}
+
+export async function editTicket(_: any, formData: FormData) {
+    try {
+        const title = formData.get('title');
+        const description = formData.get('description');
+        const project = formData.get('project');
+        const status = formData.get('status');
+        const type = formData.get('type');
+        const priority = formData.get('priority');
+        const file = formData.get('file');
+        const link = formData.get('link');
+
+        const validatedFields = ticketSchema.safeParse({
+            title: title,
+            description: description,
+            project: project,
+            type: type,
+            status: status,
+            priority: priority,
+            file: file,
+            link: link,
+        });
+
+        if (!validatedFields.success) {
+            return {
+                message: 'validation error',
+                errors: validatedFields.error.flatten().fieldErrors,
+            };
+        }
+
+        const request = false;
+
+        if (!request) {
+            return {
+                message: 'unknown error',
+                errors: {
+                    ...defaultTicketValues,
+                    unknown: 'Erro desconhecido.',
+                },
+            };
+        }
+
+        return {
+            message: 'success',
+            errors: {},
+        };
+    } catch (error) {
+        return {
+            message: 'unknown error',
+            errors: {
+                ...defaultTicketValues,
+                unknown: 'Erro desconhecido.',
+            },
+        };
+    }
+}
+
+export async function getTicket(id: string): Promise<Ticket> {
+    return {
+        id: id,
+        title: 'Título do ticket',
+        description: 'Descrição do ticket.',
+        type: 'bug',
+        priority: 'alta',
+        status: 'concluído',
+        project: 'projeto 1',
+        link: 'https://www.google.com',
+        file: {
+            size: 123,
+            type: 'Tipo',
+            name: 'Nome do arquivo',
+            lastModified: 123,
+        },
+        createdBy: 'eYuuioaeoujiarei987kolpçasdpo',
+        createdAt: '2021-09-22',
+        updatedAt: '2021-09-22',
+    };
+}
+
+export async function editProject(id: string, _: any, formData: FormData) {
+    try {
+        const name = formData.get('name');
+
+        const validatedFields = editProjectSchema.safeParse({
+            name: name,
         });
 
         if (!validatedFields.success) {
@@ -289,30 +412,15 @@ export async function newTicket(prevState: any, formData: FormData) {
         return {
             message: 'unknown error',
             errors: {
-                ...defaultSupportValues,
+                ...defaultEditProjectValues,
                 unknown: 'Erro desconhecido.',
             },
         };
     }
 }
 
-export async function getTicket(id: string): Promise<Ticket> {
-    return {
-        id: id,
-        title: 'Título do ticket',
-        description: 'Descrição do ticket.',
-        type: 'Tipo',
-        priority: 'Alta',
-        project: 'Projeto',
-        file: {
-            size: 123,
-            type: 'Tipo',
-            name: 'Nome do arquivo',
-            lastModified: 123,
-        },
-        createdBy: 'eYuuioaeoujiarei987kolpçasdpo',
-        createdAt: '2021-09-22',
-        updatedAt: '2021-09-22',
-        status: 'Aberto',
-    };
+export async function deleteMember(memberID: string) {
+    revalidatePath('/organization/members');
+
+    return true;
 }

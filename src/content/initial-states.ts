@@ -8,30 +8,15 @@ export const authInitialState = {
     },
 };
 
-export const editInitialState = {
+export const ticketInitialState = {
     message: '',
     errors: {
-        name: '',
+        title: '',
+        description: '',
         type: '',
         priority: '',
         project: '',
-        title: '',
-        description: '',
-        file: '',
-        link: '',
-        unknown: '',
-    },
-};
-
-export const newTicketInitialState = {
-    message: '',
-    errors: {
-        name: '',
-        type: '',
-        priority: '',
-        project: '',
-        title: '',
-        description: '',
+        status: '',
         file: '',
         link: '',
         unknown: '',
@@ -53,7 +38,6 @@ export const signUpInitialState = {
         password: '',
         confirmPassword: '',
         name: '',
-        // code: '',
         unknown: '',
     },
 };
@@ -72,6 +56,15 @@ export const validateOrganizationInitialState = {
     errors: {
         id: '',
         code: '',
+        unknown: '',
+    },
+};
+
+export const editProjectInitialState = {
+    message: '',
+    errors: {
+        id: '',
+        name: '',
         unknown: '',
     },
 };

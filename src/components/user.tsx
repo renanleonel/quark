@@ -42,9 +42,6 @@ const User = async ({ icon, alt, fallback }: UserProps) => {
                         <p className='text-xs leading-none text-muted-foreground'>
                             @{session?.user?.name}
                         </p>
-                        <p className='text-xs leading-none text-muted-foreground'>
-                            {session?.user?.role}
-                        </p>
                     </div>
                 </DropdownMenuLabel>
                 <DropdownMenuSeparator />

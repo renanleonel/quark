@@ -37,13 +37,12 @@ export const signUpForm = z
     });
 
 export const ticketSchema = z.object({
-    id: z.string(),
     title: z.string().min(1, { message: 'Insira o título!' }),
     description: z.string().min(1, { message: 'Insira a descrição!' }),
     project: z.string().min(1, { message: 'Insira o projeto!' }),
     type: z.string().min(1, { message: 'Insira o tipo!' }),
     priority: z.string().min(1, { message: 'Insira a prioridade!' }),
-    status: z.string(),
+    status: z.string().min(1, { message: 'Insira o status!' }),
     file: z
         .object({
             size: z.number(),
@@ -53,9 +52,6 @@ export const ticketSchema = z.object({
         })
         .optional(),
     link: z.string().optional(),
-    createdBy: z.string(),
-    createdAt: z.string(),
-    updatedAt: z.string(),
 });
 
 export const createOrganizationSchema = z.object({
@@ -64,4 +60,8 @@ export const createOrganizationSchema = z.object({
 
 export const validateOrganizationSchema = z.object({
     code: z.string().min(1, { message: 'Insira o código!' }),
+});
+
+export const editProjectSchema = z.object({
+    name: z.string().min(1, { message: 'Insira o nome!' }),
 });
