@@ -1,7 +1,7 @@
 import DeleteProject from './delete-project';
 import { Card } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
-import { projects } from '@/content/table-data';
+import { projects } from '@/content/constants';
 
 import { DrawerEditProject } from '@/components/drawer/drawer-edit-project';
 import { DrawerNewProjects } from '@/components/drawer/drawer-new-projects';

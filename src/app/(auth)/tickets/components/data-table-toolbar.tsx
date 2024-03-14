@@ -6,7 +6,7 @@ import { Table } from '@tanstack/react-table';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 
-import { priorities, projects, statuses } from '@/content/table-data';
+import { priorities, projects, statuses } from '@/content/constants';
 import { DataTableFacetedFilter } from './data-table-faceted-filter';
 import { DataTableViewOptions } from './data-table-view-options';
 

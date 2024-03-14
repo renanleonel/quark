@@ -10,7 +10,7 @@ import {
     CardTitle,
 } from '@/components/ui/card';
 import { Separator } from '@/components/ui/separator';
-import EditForm from '@/components/form/edit/edit-form';
+import EditTicketForm from '@/components/form/edit-ticket/edit-ticket-form';
 
 export const metadata: Metadata = {
     title: 'Edit',
@@ -28,11 +28,11 @@ export default async function Edit({ params }: { params: { id: string } }) {
     return (
         <Card>
             <CardHeader>
-                <CardTitle>Edit</CardTitle>
-                <CardDescription>{params.id}</CardDescription>
+                <CardTitle>Edit ticket</CardTitle>
+                <CardDescription>Edit an existing ticket</CardDescription>
             </CardHeader>
             <Separator className='mb-6' />
-            <EditForm />
+            <EditTicketForm ticket={ticket} />
         </Card>
     );
 }

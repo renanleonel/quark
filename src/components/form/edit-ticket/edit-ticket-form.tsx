@@ -20,14 +20,25 @@ import Link from 'next/link';
 import SubmitButton from '@/components/form/submit-button';
 
 import { cn } from '@/lib/utils';
-import { newTicket } from '@/lib/actions';
+import { editTicket } from '@/lib/actions';
 import { useFormState } from 'react-dom';
 import { ticketInitialState } from '@/content/initial-states';
+import { priorities, projects, statuses, types } from '@/content/constants';
+import { Ticket } from '@/types';
 
-const EditForm = () => {
-    const [formState, formAction] = useFormState(newTicket, ticketInitialState);
+interface EditFormProps {
+    ticket: Ticket;
+}
+
+const EditTicketForm = ({ ticket }: EditFormProps) => {
+    const [formState, formAction] = useFormState(
+        editTicket,
+        ticketInitialState
+    );
 
     const { errors } = formState;
+
+    console.log(ticket.status);
 
     return (
         <form action={formAction}>
@@ -38,6 +49,7 @@ const EditForm = () => {
                         <Input
                             name='title'
                             id='subject'
+                            defaultValue={ticket.title}
                             placeholder='Preciso de ajuda com...'
                             className={cn(errors.title && 'border-red-400')}
                         />
@@ -47,6 +59,7 @@ const EditForm = () => {
                         <Textarea
                             name='description'
                             id='description'
+                            defaultValue={ticket.description}
                             className={cn(
                                 'h-full',
                                 errors.description && 'border-red-400'
@@ -60,7 +73,7 @@ const EditForm = () => {
                     <div className='grid grid-cols-2 gap-4'>
                         <div className='grid gap-2'>
                             <Label htmlFor='type'>Tipo</Label>
-                            <Select defaultValue='1' name='type'>
+                            <Select defaultValue={ticket.type} name='type'>
                                 <SelectTrigger
                                     id='type'
                                     className={cn(
@@ -71,16 +84,26 @@ const EditForm = () => {
                                     <SelectValue placeholder='Tipo' />
                                 </SelectTrigger>
                                 <SelectContent>
-                                    <SelectItem value='1'>Bug</SelectItem>
-                                    <SelectItem value='2'>Sugestão</SelectItem>
-                                    <SelectItem value='3'>Outro</SelectItem>
+                                    {types.map((type, key) => {
+                                        return (
+                                            <SelectItem
+                                                key={key}
+                                                value={type.value}
+                                            >
+                                                {type.label}
+                                            </SelectItem>
+                                        );
+                                    })}
                                 </SelectContent>
                             </Select>
                         </div>
 
                         <div className='grid gap-2'>
                             <Label htmlFor='priority'>Prioridade</Label>
-                            <Select name='priority' defaultValue='3'>
+                            <Select
+                                name='priority'
+                                defaultValue={ticket.priority}
+                            >
                                 <SelectTrigger
                                     id='priority'
                                     className={cn(
@@ -91,9 +114,16 @@ const EditForm = () => {
                                     <SelectValue placeholder='Prioridade' />
                                 </SelectTrigger>
                                 <SelectContent>
-                                    <SelectItem value='1'>Alta</SelectItem>
-                                    <SelectItem value='2'>Média</SelectItem>
-                                    <SelectItem value='3'>Baixa</SelectItem>
+                                    {priorities.map((priority, key) => {
+                                        return (
+                                            <SelectItem
+                                                key={key}
+                                                value={priority.value}
+                                            >
+                                                {priority.label}
+                                            </SelectItem>
+                                        );
+                                    })}
                                 </SelectContent>
                             </Select>
                         </div>
@@ -102,13 +132,7 @@ const EditForm = () => {
                         <div className='grid gap-2'>
                             <Label htmlFor='project'>Project</Label>
                             <Combobox
-                                options={[
-                                    { value: '1', label: 'Site' },
-                                    {
-                                        value: '2',
-                                        label: 'App',
-                                    },
-                                ]}
+                                options={projects}
                                 placeholderText='Selecione'
                                 searchText='Pesquise'
                                 name='project'
@@ -119,7 +143,10 @@ const EditForm = () => {
                         </div>
                         <div className='grid gap-2'>
                             <Label htmlFor='status'>Status</Label>
-                            <Select name='priority' defaultValue='1' disabled>
+                            <Select
+                                name='priority'
+                                defaultValue={ticket.status}
+                            >
                                 <SelectTrigger
                                     id='status'
                                     className={cn(
@@ -130,15 +157,16 @@ const EditForm = () => {
                                     <SelectValue placeholder='Prioridade' />
                                 </SelectTrigger>
                                 <SelectContent>
-                                    <SelectItem value='1'>Na fila</SelectItem>
-                                    <SelectItem value='2'>
-                                        Em análise
-                                    </SelectItem>
-                                    <SelectItem value='3'>
-                                        Em progresso
-                                    </SelectItem>
-                                    <SelectItem value='4'>Concluído</SelectItem>
-                                    <SelectItem value='5'>Cancelado</SelectItem>
+                                    {statuses.map((status, key) => {
+                                        return (
+                                            <SelectItem
+                                                key={key}
+                                                value={status.value}
+                                            >
+                                                {status.label}
+                                            </SelectItem>
+                                        );
+                                    })}
                                 </SelectContent>
                             </Select>
                         </div>
@@ -149,7 +177,12 @@ const EditForm = () => {
                             <Label htmlFor='link'>Link</Label>
                             <LinkIcon className='h-3 w-3' />
                         </div>
-                        <Input id='link' name='link' placeholder='Link' />
+                        <Input
+                            id='link'
+                            name='link'
+                            placeholder='Link'
+                            defaultValue={ticket.link}
+                        />
                         {errors.file && (
                             <span className='text-xs text-red-500'>
                                 {errors.file}
@@ -168,4 +201,4 @@ const EditForm = () => {
     );
 };
 
-export default EditForm;
+export default EditTicketForm;

@@ -25,6 +25,8 @@ import SubmitButton from '@/components/form/submit-button';
 import { useEffect, useRef } from 'react';
 import { toast } from 'sonner';
 
+import { priorities, projects, statuses, types } from '@/content/constants';
+
 const NewTicketForm = () => {
     const [formState, formAction] = useFormState(newTicket, ticketInitialState);
 
@@ -75,7 +77,7 @@ const NewTicketForm = () => {
                     <div className='grid grid-cols-2 gap-4'>
                         <div className='grid gap-2'>
                             <Label htmlFor='type'>Tipo</Label>
-                            <Select defaultValue='3' name='type'>
+                            <Select defaultValue='outro' name='type'>
                                 <SelectTrigger
                                     id='type'
                                     className={cn(
@@ -86,16 +88,23 @@ const NewTicketForm = () => {
                                     <SelectValue placeholder='Tipo' />
                                 </SelectTrigger>
                                 <SelectContent>
-                                    <SelectItem value='1'>Bug</SelectItem>
-                                    <SelectItem value='2'>Sugestão</SelectItem>
-                                    <SelectItem value='3'>Outro</SelectItem>
+                                    {types.map((type, key) => {
+                                        return (
+                                            <SelectItem
+                                                key={key}
+                                                value={type.value}
+                                            >
+                                                {type.label}
+                                            </SelectItem>
+                                        );
+                                    })}
                                 </SelectContent>
                             </Select>
                         </div>
 
                         <div className='grid gap-2'>
                             <Label htmlFor='priority'>Prioridade</Label>
-                            <Select name='priority' defaultValue='3'>
+                            <Select name='priority' defaultValue='baixa'>
                                 <SelectTrigger
                                     id='priority'
                                     className={cn(
@@ -106,9 +115,16 @@ const NewTicketForm = () => {
                                     <SelectValue placeholder='Prioridade' />
                                 </SelectTrigger>
                                 <SelectContent>
-                                    <SelectItem value='1'>Alta</SelectItem>
-                                    <SelectItem value='2'>Média</SelectItem>
-                                    <SelectItem value='3'>Baixa</SelectItem>
+                                    {priorities.map((priority, key) => {
+                                        return (
+                                            <SelectItem
+                                                key={key}
+                                                value={priority.value}
+                                            >
+                                                {priority.label}
+                                            </SelectItem>
+                                        );
+                                    })}
                                 </SelectContent>
                             </Select>
                         </div>
@@ -117,13 +133,7 @@ const NewTicketForm = () => {
                         <div className='grid gap-2'>
                             <Label htmlFor='project'>Projeto</Label>
                             <Combobox
-                                options={[
-                                    { value: '1', label: 'Site' },
-                                    {
-                                        value: '2',
-                                        label: 'App',
-                                    },
-                                ]}
+                                options={projects}
                                 className={cn(
                                     errors.project && 'border-red-400'
                                 )}
@@ -134,7 +144,11 @@ const NewTicketForm = () => {
                         </div>
                         <div className='grid gap-2'>
                             <Label htmlFor='status'>Status</Label>
-                            <Select name='priority' defaultValue='1' disabled>
+                            <Select
+                                name='priority'
+                                defaultValue='na fila'
+                                disabled
+                            >
                                 <SelectTrigger
                                     id='status'
                                     className={cn(
@@ -145,15 +159,16 @@ const NewTicketForm = () => {
                                     <SelectValue placeholder='Prioridade' />
                                 </SelectTrigger>
                                 <SelectContent>
-                                    <SelectItem value='1'>Na fila</SelectItem>
-                                    <SelectItem value='2'>
-                                        Em análise
-                                    </SelectItem>
-                                    <SelectItem value='3'>
-                                        Em progresso
-                                    </SelectItem>
-                                    <SelectItem value='4'>Concluído</SelectItem>
-                                    <SelectItem value='5'>Cancelado</SelectItem>
+                                    {statuses.map((status, key) => {
+                                        return (
+                                            <SelectItem
+                                                key={key}
+                                                value={status.value}
+                                            >
+                                                {status.label}
+                                            </SelectItem>
+                                        );
+                                    })}
                                 </SelectContent>
                             </Select>
                         </div>

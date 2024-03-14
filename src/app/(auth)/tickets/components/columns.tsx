@@ -6,7 +6,7 @@ import { Badge } from '@/components/ui/badge';
 import { Checkbox } from '@/components/ui/checkbox';
 
 import { Ticket } from '@/types';
-import { labels, priorities, projects, statuses } from '@/content/table-data';
+import { types, priorities, projects, statuses } from '@/content/constants';
 import { DataTableColumnHeader } from './data-table-column-header';
 import { DataTableRowActions } from './data-table-row-actions';
 
@@ -87,13 +87,11 @@ export const columns: ColumnDef<Ticket>[] = [
             <DataTableColumnHeader column={column} title='Tipo' />
         ),
         cell: ({ row }) => {
-            const label = labels.find(
-                (label) => label.value === row.original.type
-            );
+            const type = types.find((type) => type.value === row.original.type);
 
             return (
                 <div className='flex justify-center space-x-2'>
-                    {label && <Badge variant='outline'>{label.label}</Badge>}
+                    {type && <Badge variant='outline'>{type.label}</Badge>}
                 </div>
             );
         },

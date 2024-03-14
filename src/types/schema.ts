@@ -37,7 +37,6 @@ export const signUpForm = z
     });
 
 export const ticketSchema = z.object({
-    id: z.string(),
     title: z.string().min(1, { message: 'Insira o título!' }),
     description: z.string().min(1, { message: 'Insira a descrição!' }),
     project: z.string().min(1, { message: 'Insira o projeto!' }),
@@ -53,9 +52,6 @@ export const ticketSchema = z.object({
         })
         .optional(),
     link: z.string().optional(),
-    createdBy: z.string(),
-    createdAt: z.string(),
-    updatedAt: z.string(),
 });
 
 export const createOrganizationSchema = z.object({

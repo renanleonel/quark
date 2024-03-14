@@ -259,6 +259,7 @@ export async function newTicket(_: any, formData: FormData) {
         const title = formData.get('title');
         const description = formData.get('description');
         const project = formData.get('project');
+        const status = 'na fila';
         const type = formData.get('type');
         const priority = formData.get('priority');
         const file = formData.get('file');
@@ -269,6 +270,63 @@ export async function newTicket(_: any, formData: FormData) {
             description: description,
             project: project,
             type: type,
+            status: status,
+            priority: priority,
+            file: file,
+            link: link,
+        });
+
+        if (!validatedFields.success) {
+            return {
+                message: 'validation error',
+                errors: validatedFields.error.flatten().fieldErrors,
+            };
+        }
+
+        const request = false;
+
+        if (!request) {
+            return {
+                message: 'unknown error',
+                errors: {
+                    ...defaultTicketValues,
+                    unknown: 'Erro desconhecido.',
+                },
+            };
+        }
+
+        return {
+            message: 'success',
+            errors: {},
+        };
+    } catch (error) {
+        return {
+            message: 'unknown error',
+            errors: {
+                ...defaultTicketValues,
+                unknown: 'Erro desconhecido.',
+            },
+        };
+    }
+}
+
+export async function editTicket(_: any, formData: FormData) {
+    try {
+        const title = formData.get('title');
+        const description = formData.get('description');
+        const project = formData.get('project');
+        const status = formData.get('status');
+        const type = formData.get('type');
+        const priority = formData.get('priority');
+        const file = formData.get('file');
+        const link = formData.get('link');
+
+        const validatedFields = ticketSchema.safeParse({
+            title: title,
+            description: description,
+            project: project,
+            type: type,
+            status: status,
             priority: priority,
             file: file,
             link: link,
@@ -313,9 +371,11 @@ export async function getTicket(id: string): Promise<Ticket> {
         id: id,
         title: 'Título do ticket',
         description: 'Descrição do ticket.',
-        type: 'Tipo',
-        priority: 'Alta',
+        type: 'bug',
+        priority: 'alta',
+        status: 'concluído',
         project: 'Projeto',
+        link: 'https://www.google.com',
         file: {
             size: 123,
             type: 'Tipo',
@@ -325,7 +385,6 @@ export async function getTicket(id: string): Promise<Ticket> {
         createdBy: 'eYuuioaeoujiarei987kolpçasdpo',
         createdAt: '2021-09-22',
         updatedAt: '2021-09-22',
-        status: 'Aberto',
     };
 }
 
