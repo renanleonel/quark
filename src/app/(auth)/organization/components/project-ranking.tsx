@@ -1,61 +1,28 @@
-export const ProjectRanking = () => {
+interface ProjectRankingProps {
+    projects: {
+        value: string;
+        label: string;
+    }[];
+}
+
+export const ProjectRanking = ({ projects }: ProjectRankingProps) => {
     return (
         <div className='space-y-8'>
-            <div className='flex items-center'>
-                <div className='space-y-1'>
-                    <p className='text-sm font-medium leading-none'>
-                        Project 1
-                    </p>
-                    <p className='text-sm text-muted-foreground'>
-                        www.project1.com.br
-                    </p>
-                </div>
-                <div className='ml-auto font-medium'>+7</div>
-            </div>
-            <div className='flex items-center'>
-                <div className='space-y-1'>
-                    <p className='text-sm font-medium leading-none'>
-                        Project 1
-                    </p>
-                    <p className='text-sm text-muted-foreground'>
-                        www.project1.com.br
-                    </p>
-                </div>
-                <div className='ml-auto font-medium'>+7</div>
-            </div>
-            <div className='flex items-center'>
-                <div className='space-y-1'>
-                    <p className='text-sm font-medium leading-none'>
-                        Project 1
-                    </p>
-                    <p className='text-sm text-muted-foreground'>
-                        www.project1.com.br
-                    </p>
-                </div>
-                <div className='ml-auto font-medium'>+7</div>
-            </div>
-            <div className='flex items-center'>
-                <div className='space-y-1'>
-                    <p className='text-sm font-medium leading-none'>
-                        Project 1
-                    </p>
-                    <p className='text-sm text-muted-foreground'>
-                        www.project1.com.br
-                    </p>
-                </div>
-                <div className='ml-auto font-medium'>+7</div>
-            </div>
-            <div className='flex items-center'>
-                <div className='space-y-1'>
-                    <p className='text-sm font-medium leading-none'>
-                        Project 1
-                    </p>
-                    <p className='text-sm text-muted-foreground'>
-                        www.project1.com.br
-                    </p>
-                </div>
-                <div className='ml-auto font-medium'>+7</div>
-            </div>
+            {projects.map((project, index) => {
+                return (
+                    <div key={index} className='flex items-center'>
+                        <div className='space-y-1'>
+                            <p className='text-sm font-medium leading-none'>
+                                {project.label}
+                            </p>
+                            <p className='text-sm text-muted-foreground'>
+                                www.com.br
+                            </p>
+                        </div>
+                        <div className='ml-auto font-medium'>+{index}</div>
+                    </div>
+                );
+            })}
         </div>
     );
 };

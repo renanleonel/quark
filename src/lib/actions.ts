@@ -24,6 +24,7 @@ import {
     defaultEditProjectValues,
 } from '@/content/default-values';
 import { Ticket } from '@/types';
+import { revalidatePath } from 'next/cache';
 
 export async function signout() {
     await signOut();
@@ -416,4 +417,10 @@ export async function editProject(id: string, _: any, formData: FormData) {
             },
         };
     }
+}
+
+export async function deleteMember(memberID: string) {
+    revalidatePath('/organization/members');
+
+    return true;
 }

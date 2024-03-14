@@ -3,7 +3,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 interface CardProps {
     title: string;
     icon?: string;
-    value: string;
+    value: string | number;
     description: string;
 }
 

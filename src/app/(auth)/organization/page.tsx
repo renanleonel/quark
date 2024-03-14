@@ -1,8 +1,9 @@
-import Link from 'next/link';
 import { auth } from '@/auth';
 import { Metadata } from 'next';
+import Link from 'next/link';
 import { redirect } from 'next/navigation';
 
+import { Button } from '@/components/ui/button';
 import {
     Card,
     CardContent,
@@ -10,12 +11,12 @@ import {
     CardHeader,
     CardTitle,
 } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 
-import { Chart } from './components/chart';
+import { getOrganization, getTickets } from '@/lib/api';
 import { CardData } from './components/card-data';
+import { Chart } from './components/chart';
 import { ProjectRanking } from './components/project-ranking';
 
 export const metadata: Metadata = {
@@ -28,6 +29,11 @@ export default async function Organization() {
     if (!session) redirect('/');
 
     const { role } = session.user;
+    const tickets = await getTickets();
+    const organization = await getOrganization();
+
+    const features = tickets.filter((ticket) => ticket.type === 'feature');
+    const { members, projects } = organization;
 
     return (
         <Card>
@@ -85,24 +91,41 @@ export default async function Organization() {
                         <TabsContent value='overview' className='space-y-4'>
                             <div className='grid gap-4 md:grid-cols-2 lg:grid-cols-4'>
                                 <CardData
-                                    title='Tickets'
-                                    value='18'
-                                    description='tickets abertos no momento'
+                                    title={
+                                        tickets.length === 1
+                                            ? 'Ticket'
+                                            : 'Tickets'
+                                    }
+                                    value={tickets.length}
+                                    description={
+                                        tickets.length === 1
+                                            ? 'ticket aberto no momento'
+                                            : 'tickets abertos no momento'
+                                    }
                                 />
                                 <CardData
                                     title='Features'
-                                    value='4'
-                                    description='sugestões de features'
+                                    value={features.length}
+                                    // description='sugestões de features'
+                                    description={
+                                        features.length === 1
+                                            ? 'sugestão de feature'
+                                            : 'sugestões de features'
+                                    }
                                 />
                                 <CardData
                                     title='Membros'
-                                    value='53'
+                                    value={members.length}
                                     description='membros cadastrados na organização'
                                 />
                                 <CardData
                                     title='Projetos'
-                                    value='7'
-                                    description='projetos cadastrados na organização'
+                                    value={projects.length}
+                                    description={
+                                        projects.length === 1
+                                            ? 'projeto cadastrado na organização'
+                                            : 'projetos cadastrados na organização'
+                                    }
                                 />
                             </div>
                             <div className='grid gap-4 md:grid-cols-2 lg:grid-cols-8'>
@@ -110,22 +133,20 @@ export default async function Organization() {
                                     <CardHeader>
                                         <CardDescription>
                                             Projetos com mais tickets abertos
-                                            nos últimos 30 dias.
                                         </CardDescription>
                                     </CardHeader>
                                     <CardContent>
-                                        <ProjectRanking />
+                                        <ProjectRanking projects={projects} />
                                     </CardContent>
                                 </Card>
                                 <Card className='col-span-4'>
                                     <CardHeader>
                                         <CardDescription>
                                             Projetos com mais tickets resolvidos
-                                            nos últimos 30 dias.
                                         </CardDescription>
                                     </CardHeader>
                                     <CardContent>
-                                        <ProjectRanking />
+                                        <ProjectRanking projects={projects} />
                                     </CardContent>
                                 </Card>
                             </div>

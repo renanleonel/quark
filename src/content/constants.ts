@@ -84,3 +84,26 @@ export const projects = [
         label: 'Projeto 3',
     },
 ];
+
+export const roles = [
+    {
+        name: 'Member',
+        value: 'member',
+        description: 'Can view and create tickets.',
+        permissions: 'The user will be allowed to view and create tickets.',
+    },
+    {
+        name: 'Developer',
+        value: 'developer',
+        description: 'Can view, create and manage tickets.',
+        permissions:
+            'The user will be allowed to view, create and manage tickets.',
+    },
+    {
+        name: 'Admin',
+        value: 'admin',
+        description: 'Admin-level access to all resources.',
+        permissions:
+            'The user will be granted admin-level access to all resources.',
+    },
+];

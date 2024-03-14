@@ -25,14 +25,22 @@ import {
     DrawerTitle,
     DrawerTrigger,
 } from '@/components/ui/drawer';
+import { deleteMember } from '@/lib/actions';
 
 export function DeleteMember() {
     const [open, setOpen] = useState(false);
     const isDesktop = useMediaQuery('(min-width: 768px)');
 
-    const handleDeleteMember = () => {
+    const handleDeleteMember = async () => {
+        const req = await deleteMember('memberID');
+
         setOpen(false);
-        toast.success('Membro deletado com sucesso!');
+
+        if (!req) {
+            return toast.error('Erro ao deletar membro');
+        }
+
+        return toast.success('Membro deletado com sucesso!');
     };
 
     if (isDesktop) {
