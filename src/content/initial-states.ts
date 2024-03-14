@@ -11,11 +11,12 @@ export const authInitialState = {
 export const ticketInitialState = {
     message: '',
     errors: {
+        title: '',
+        description: '',
         type: '',
         priority: '',
         project: '',
-        title: '',
-        description: '',
+        status: '',
         file: '',
         link: '',
         unknown: '',

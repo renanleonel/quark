@@ -17,9 +17,10 @@ export const defaultSignUpValues = {
 export const defaultTicketValues = {
     title: '',
     description: '',
-    project: '',
     type: '',
     priority: '',
+    project: '',
+    status: '',
     file: '',
     link: '',
 };

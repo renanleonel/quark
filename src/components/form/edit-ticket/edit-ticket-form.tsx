@@ -25,20 +25,36 @@ import { useFormState } from 'react-dom';
 import { ticketInitialState } from '@/content/initial-states';
 import { priorities, projects, statuses, types } from '@/content/constants';
 import { Ticket } from '@/types';
+import { useRouter } from 'next/navigation';
+import { useEffect, useRef } from 'react';
+import { toast } from 'sonner';
 
 interface EditFormProps {
     ticket: Ticket;
 }
 
 const EditTicketForm = ({ ticket }: EditFormProps) => {
+    const router = useRouter();
     const [formState, formAction] = useFormState(
         editTicket,
         ticketInitialState
     );
 
-    const { errors } = formState;
+    const { errors, message } = formState;
+    const ref = useRef<HTMLFormElement>(null);
 
-    console.log(ticket.status);
+    useEffect(() => {
+        if (message === 'success') {
+            toast.success('Successfully updated');
+
+            ref.current?.reset();
+            router.replace('/tickets');
+        }
+
+        if (message === 'unknown error') {
+            toast.error('Error!');
+        }
+    }, [message, formState, router]);
 
     return (
         <form action={formAction}>
@@ -133,6 +149,7 @@ const EditTicketForm = ({ ticket }: EditFormProps) => {
                             <Label htmlFor='project'>Project</Label>
                             <Combobox
                                 options={projects}
+                                defaultValue={ticket.project}
                                 placeholderText='Selecione'
                                 searchText='Pesquise'
                                 name='project'
@@ -143,15 +160,12 @@ const EditTicketForm = ({ ticket }: EditFormProps) => {
                         </div>
                         <div className='grid gap-2'>
                             <Label htmlFor='status'>Status</Label>
-                            <Select
-                                name='priority'
-                                defaultValue={ticket.status}
-                            >
+                            <Select name='status' defaultValue={ticket.status}>
                                 <SelectTrigger
                                     id='status'
                                     className={cn(
                                         'line-clamp-1 truncate lg:w-full',
-                                        errors.priority && 'border-red-400'
+                                        errors.status && 'border-red-400'
                                     )}
                                 >
                                     <SelectValue placeholder='Prioridade' />

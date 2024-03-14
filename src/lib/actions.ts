@@ -374,7 +374,7 @@ export async function getTicket(id: string): Promise<Ticket> {
         type: 'bug',
         priority: 'alta',
         status: 'concluído',
-        project: 'Projeto',
+        project: 'projeto 1',
         link: 'https://www.google.com',
         file: {
             size: 123,

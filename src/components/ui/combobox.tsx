@@ -25,6 +25,7 @@ interface ComboboxProps {
     searchText: string;
     className?: string;
     name?: string;
+    defaultValue?: string;
 }
 
 const Combobox = ({
@@ -33,9 +34,10 @@ const Combobox = ({
     searchText,
     className,
     name,
+    defaultValue = '',
 }: ComboboxProps) => {
     const [open, setOpen] = React.useState(false);
-    const [value, setValue] = React.useState('');
+    const [value, setValue] = React.useState(defaultValue);
 
     return (
         <Popover open={open} onOpenChange={setOpen}>
@@ -46,7 +48,11 @@ const Combobox = ({
                     aria-expanded={open}
                     className={cn('justify-between', className)}
                 >
-                    <Input name={name} value={value} className='hidden' />
+                    <Input
+                        name={name}
+                        defaultValue={value}
+                        className='hidden'
+                    />
 
                     {value
                         ? options.find((option) => option.value === value)
@@ -75,9 +81,8 @@ const Combobox = ({
                             >
                                 <Input
                                     name={name}
-                                    value={option.value}
+                                    defaultValue={option.value}
                                     className='hidden'
-                                    onChange={() => {}}
                                 />
 
                                 {option.label}

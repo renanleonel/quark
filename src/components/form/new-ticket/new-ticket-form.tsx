@@ -34,8 +34,6 @@ const NewTicketForm = () => {
     const ref = useRef<HTMLFormElement>(null);
 
     useEffect(() => {
-        console.log(formState);
-
         if (message === 'success') {
             toast.success('Created!');
 
