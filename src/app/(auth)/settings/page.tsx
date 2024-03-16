@@ -1,7 +1,5 @@
-import '@/styles/themes.css';
 import { Metadata } from 'next';
-
-import { ThemeCustomizer } from '@/components/theme';
+import { Theme } from '@/components/ui/theme';
 import { Separator } from '@/components/ui/separator';
 import { AccountForm } from '@/components/form/account/account-form';
 
@@ -19,9 +17,11 @@ export default function Settings() {
                     This is how others will see you on the site.
                 </p>
             </div>
-            <ThemeCustomizer />
             <Separator />
             <AccountForm />
+            <div className='flex w-full justify-end'>
+                <Theme />
+            </div>
         </div>
     );
 }

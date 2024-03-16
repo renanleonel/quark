@@ -1,4 +1,3 @@
-import '@/styles/themes.css';
 import { Metadata } from 'next';
 
 import { Input } from '@/components/ui/input';
