@@ -19,7 +19,6 @@ const ChangePasswordForm = () => {
     );
 
     useEffect(() => {
-        console.log(formState);
         if (formState?.message === 'success') {
             toast.success('Password updated successfully!');
             formRef.current?.reset();

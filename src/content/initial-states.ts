@@ -80,3 +80,11 @@ export const changePasswordInitialState = {
         unknown: '',
     },
 };
+
+export const deactivateAccountInitialState = {
+    message: '',
+    errors: {
+        email: '',
+        unknown: '',
+    },
+};

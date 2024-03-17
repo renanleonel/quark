@@ -46,3 +46,7 @@ export const defaultChangePasswordValues = {
     newPassword: '',
     confirmNewPassword: '',
 };
+
+export const defaultDeactivateAccountValues = {
+    email: '',
+};

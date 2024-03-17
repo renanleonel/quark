@@ -2,7 +2,7 @@
 
 import { Resend } from 'resend';
 import { AuthError } from 'next-auth';
-import { signIn, signOut } from '@/auth';
+import { auth, signIn, signOut } from '@/auth';
 
 import {
     authSchema,
@@ -22,9 +22,11 @@ import {
     defaultChangePasswordValues,
     defaultValidateOrganizationValues,
     defaultEditProjectValues,
+    defaultDeactivateAccountValues,
 } from '@/content/default-values';
 import { Ticket } from '@/types';
 import { revalidatePath } from 'next/cache';
+import { redirect } from 'next/navigation';
 
 export async function signout() {
     await signOut();
@@ -142,8 +144,6 @@ export async function signup(_: any, formData: FormData) {
 }
 
 export async function recover(_: any, formData: FormData) {
-    let success = false;
-
     try {
         const email = formData.get('email') as string;
 
@@ -452,6 +452,44 @@ export async function changePassword(_: any, formData: FormData) {
                 ...defaultChangePasswordValues,
                 unknown: 'Erro desconhecido.',
             },
+        };
+    }
+}
+
+export async function deactivateAccount(_: any, formData: FormData) {
+    let success = false;
+
+    try {
+        const email = formData.get('email');
+        const session = await auth();
+
+        if (session?.user?.email !== email) {
+            return {
+                message: 'validation error',
+                errors: {
+                    email: 'Email incorreto.',
+                },
+            };
+        }
+        success = true;
+
+        // delete user
+    } catch (error) {
+        return {
+            message: 'unknown error',
+            errors: {
+                ...defaultDeactivateAccountValues,
+                unknown: 'Erro desconhecido.',
+            },
+        };
+    }
+
+    if (success) {
+        await signOut();
+
+        return {
+            message: 'success',
+            errors: {},
         };
     }
 }
