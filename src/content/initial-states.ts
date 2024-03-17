@@ -34,10 +34,12 @@ export const recoverInitialState = {
 export const signUpInitialState = {
     message: '',
     errors: {
+        name: '',
         email: '',
         password: '',
         confirmPassword: '',
-        name: '',
+        organizationName: '',
+        organizationCode: '',
         unknown: '',
     },
 };

@@ -15,8 +15,8 @@ This project aims to provide a simple platform to create and manage tickets for 
 
 #### Organizations
 
--   It should be able to create a new organization.
--   It should be able to enter an organization using the organizations invite code.
+-   It should be able to create a new organization while creating an account.
+-   It should be able to enter an organization using the organizations invite code while creating an account.
 -   It should be able to invite a user to an organization.
 -   It should be able to update the organization name.
 -   It should be able to delete the organization.

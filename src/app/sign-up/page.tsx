@@ -12,7 +12,7 @@ export const metadata: Metadata = {
 export default function SignUp() {
     return (
         <main className='flex min-h-screen items-center justify-center'>
-            <div className='flex w-[350px] flex-col gap-4 text-white'>
+            <div className='flex w-[450px] flex-col gap-4 text-white'>
                 <div className='flex flex-col gap-2 text-center'>
                     <h1 className='text-2xl font-semibold'>Cadastro</h1>
                     <p className='text-sm text-muted-foreground'>
