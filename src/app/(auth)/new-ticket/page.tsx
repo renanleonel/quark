@@ -8,7 +8,7 @@ import {
 } from '@/components/ui/card';
 import { Separator } from '@/components/ui/separator';
 
-import SupportForm from '@/components/form/new-ticket/new-ticket-form';
+import NewTicketForm from '@/components/form/new-ticket-form';
 
 export const metadata: Metadata = {
     title: 'Novo ticket',
@@ -26,7 +26,7 @@ export default function NewTicket() {
             </CardHeader>
             <Separator className='mb-6' />
 
-            <SupportForm />
+            <NewTicketForm />
         </Card>
     );
 }

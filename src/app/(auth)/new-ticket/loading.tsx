@@ -7,7 +7,7 @@ import {
     CardTitle,
 } from '@/components/ui/card';
 
-import SupportForm from '@/components/form/new-ticket/new-ticket-form';
+import SupportForm from '@/components/form/new-ticket-form';
 import { Separator } from '@/components/ui/separator';
 
 export const metadata: Metadata = {

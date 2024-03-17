@@ -11,7 +11,7 @@ import {
     DrawerTitle,
     DrawerTrigger,
 } from '@/components/ui/drawer';
-import { ProjectsForm } from '../form/projects/projects-form';
+import { ProjectsForm } from '../form/projects-form';
 
 export function DrawerNewProjects() {
     return (

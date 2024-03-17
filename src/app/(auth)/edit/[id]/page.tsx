@@ -10,7 +10,7 @@ import {
     CardTitle,
 } from '@/components/ui/card';
 import { Separator } from '@/components/ui/separator';
-import EditTicketForm from '@/components/form/edit-ticket/edit-ticket-form';
+import EditTicketForm from '@/components/form/edit-ticket-form';
 
 export const metadata: Metadata = {
     title: 'Edit',

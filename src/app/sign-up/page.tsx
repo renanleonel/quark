@@ -2,7 +2,7 @@ import Link from 'next/link';
 import { Metadata } from 'next';
 
 import { Button } from '@/components/ui/button';
-import SignUpForm from '@/components/form/sign-up/sign-up-form';
+import SignUpForm from '@/components/form/sign-up-form';
 
 export const metadata: Metadata = {
     title: 'Cadastro',

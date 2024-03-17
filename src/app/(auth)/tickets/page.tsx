@@ -1,10 +1,7 @@
+import Link from 'next/link';
+import { Metadata } from 'next';
 import { cn } from '@/lib/utils';
 import { Expand, X } from 'lucide-react';
-import { Metadata } from 'next';
-import Link from 'next/link';
-
-import { columns } from './components/columns';
-import { DataTable } from './components/data-table';
 
 import {
     Card,
@@ -25,8 +22,10 @@ import {
 } from '@/components/ui/drawer';
 
 import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import { columns } from './components/columns';
+import { Button } from '@/components/ui/button';
+import { DataTable } from './components/data-table';
 import { Separator } from '@/components/ui/separator';
 import { DeleteTicket } from './components/delete-ticket';
 

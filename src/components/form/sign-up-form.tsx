@@ -4,15 +4,14 @@ import { toast } from 'sonner';
 import { cn } from '@/lib/utils';
 import { signup } from '@/lib/actions';
 import { useFormState } from 'react-dom';
+import { useRouter } from 'next/navigation';
 import { useEffect, useRef, useState } from 'react';
 
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import { Separator } from '@/components/ui/separator';
 import SubmitButton from '@/components/form/submit-button';
 import { signUpInitialState } from '@/content/initial-states';
-import { Separator } from '@/components/ui/separator';
-import { Button } from '@/components/ui/button';
-import { useRouter } from 'next/navigation';
 
 interface SignUpFormProps extends React.HTMLAttributes<HTMLDivElement> {}
 

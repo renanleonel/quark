@@ -1,7 +1,7 @@
 import { Metadata } from 'next';
 import { Theme } from '@/components/ui/theme';
 import { Separator } from '@/components/ui/separator';
-import { AccountForm } from '@/components/form/account/account-form';
+import { AccountForm } from '@/components/form/account-form';
 
 export const metadata: Metadata = {
     title: 'Configurações',

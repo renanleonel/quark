@@ -1,5 +1,5 @@
 import { Metadata } from 'next';
-import HelpForm from '@/components/form/help/help-form';
+import HelpForm from '@/components/form/help-form';
 
 export const metadata: Metadata = {
     title: 'Help',
