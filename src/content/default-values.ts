@@ -40,3 +40,9 @@ export const defaultEditProjectValues = {
     id: '',
     name: '',
 };
+
+export const defaultChangePasswordValues = {
+    password: '',
+    newPassword: '',
+    confirmNewPassword: '',
+};

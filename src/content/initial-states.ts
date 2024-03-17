@@ -70,3 +70,13 @@ export const editProjectInitialState = {
         unknown: '',
     },
 };
+
+export const changePasswordInitialState = {
+    message: '',
+    errors: {
+        password: '',
+        newPassword: '',
+        confirmNewPassword: '',
+        unknown: '',
+    },
+};

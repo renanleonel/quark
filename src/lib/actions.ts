@@ -9,9 +9,9 @@ import {
     signUpForm,
     ticketSchema,
     recoverSchema,
-    createOrganizationSchema,
     validateOrganizationSchema,
     editProjectSchema,
+    changePasswordSchema,
 } from '@/types/schema';
 
 import {
@@ -19,7 +19,7 @@ import {
     defaultSignUpValues,
     defaultTicketValues,
     defaultRecoverValues,
-    defaultCreateOrganizationValues,
+    defaultChangePasswordValues,
     defaultValidateOrganizationValues,
     defaultEditProjectValues,
 } from '@/content/default-values';
@@ -420,4 +420,38 @@ export async function deleteMember(memberID: string) {
     revalidatePath('/organization/members');
 
     return true;
+}
+
+export async function changePassword(_: any, formData: FormData) {
+    try {
+        const password = formData.get('password');
+        const newPassword = formData.get('newPassword');
+        const confirmNewPassword = formData.get('confirmNewPassword');
+
+        const validatedFields = changePasswordSchema.safeParse({
+            password: password,
+            newPassword: newPassword,
+            confirmNewPassword: confirmNewPassword,
+        });
+
+        if (!validatedFields.success) {
+            return {
+                message: 'validation error',
+                errors: validatedFields.error.flatten().fieldErrors,
+            };
+        }
+
+        return {
+            message: 'success',
+            errors: {},
+        };
+    } catch (error) {
+        return {
+            message: 'unknown error',
+            errors: {
+                ...defaultChangePasswordValues,
+                unknown: 'Erro desconhecido.',
+            },
+        };
+    }
 }

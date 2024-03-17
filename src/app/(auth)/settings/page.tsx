@@ -1,7 +1,7 @@
 import { Metadata } from 'next';
 import { Theme } from '@/components/ui/theme';
 import { Separator } from '@/components/ui/separator';
-import { AccountForm } from '@/components/form/account-form';
+import { ProfileForm } from '@/components/form/profile-form';
 
 export const metadata: Metadata = {
     title: 'Configurações',
@@ -18,7 +18,7 @@ export default function Settings() {
                 </p>
             </div>
             <Separator />
-            <AccountForm />
+            <ProfileForm />
             <div className='flex w-full justify-end'>
                 <Theme />
             </div>
