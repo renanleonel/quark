@@ -4,8 +4,7 @@ import { Metadata } from 'next';
 import { Label } from '@/components/ui/label';
 import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
-
-import AuthForm from '@/components/form/auth/auth-form';
+import AuthForm from '@/components/form/auth-form';
 
 export const metadata: Metadata = {
     title: 'Entrar',

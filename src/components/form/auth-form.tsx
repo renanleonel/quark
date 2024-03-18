@@ -1,26 +1,22 @@
 'use client';
 
 import { cn } from '@/lib/utils';
-
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-
 import { useFormState } from 'react-dom';
 import { authenticate } from '@/lib/actions';
 
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
 import SubmitButton from '@/components/form/submit-button';
 import { authInitialState } from '@/content/initial-states';
 
-interface AuthFormProps extends React.HTMLAttributes<HTMLDivElement> {}
-
-const AuthForm = ({ className, ...props }: AuthFormProps) => {
+const AuthForm = () => {
     const [formState, formAction] = useFormState(
         authenticate,
         authInitialState
     );
 
     return (
-        <main className={cn('dark grid gap-6', className)} {...props}>
+        <main className='grid gap-6'>
             <form action={formAction}>
                 <section className='grid gap-4'>
                     <div className='grid gap-1'>

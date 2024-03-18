@@ -8,10 +8,12 @@ export const defaultAuthValues = {
 };
 
 export const defaultSignUpValues = {
+    name: '',
     email: '',
     password: '',
     confirmPassword: '',
-    name: '',
+    organizationName: '',
+    organizationCode: '',
 };
 
 export const defaultTicketValues = {
@@ -37,4 +39,14 @@ export const defaultValidateOrganizationValues = {
 export const defaultEditProjectValues = {
     id: '',
     name: '',
+};
+
+export const defaultChangePasswordValues = {
+    password: '',
+    newPassword: '',
+    confirmNewPassword: '',
+};
+
+export const defaultDeactivateAccountValues = {
+    email: '',
 };

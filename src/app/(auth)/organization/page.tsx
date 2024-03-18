@@ -1,9 +1,8 @@
+import Link from 'next/link';
 import { auth } from '@/auth';
 import { Metadata } from 'next';
-import Link from 'next/link';
 import { redirect } from 'next/navigation';
 
-import { Button } from '@/components/ui/button';
 import {
     Card,
     CardContent,
@@ -11,13 +10,15 @@ import {
     CardHeader,
     CardTitle,
 } from '@/components/ui/card';
+
+import { Chart } from './components/chart';
+import { Button } from '@/components/ui/button';
+import { CardData } from './components/card-data';
 import { Separator } from '@/components/ui/separator';
+import { ProjectRanking } from './components/project-ranking';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 
 import { getOrganization, getTickets } from '@/lib/api';
-import { CardData } from './components/card-data';
-import { Chart } from './components/chart';
-import { ProjectRanking } from './components/project-ranking';
 
 export const metadata: Metadata = {
     title: 'Organização',

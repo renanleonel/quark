@@ -34,10 +34,12 @@ export const recoverInitialState = {
 export const signUpInitialState = {
     message: '',
     errors: {
+        name: '',
         email: '',
         password: '',
         confirmPassword: '',
-        name: '',
+        organizationName: '',
+        organizationCode: '',
         unknown: '',
     },
 };
@@ -65,6 +67,24 @@ export const editProjectInitialState = {
     errors: {
         id: '',
         name: '',
+        unknown: '',
+    },
+};
+
+export const changePasswordInitialState = {
+    message: '',
+    errors: {
+        password: '',
+        newPassword: '',
+        confirmNewPassword: '',
+        unknown: '',
+    },
+};
+
+export const deactivateAccountInitialState = {
+    message: '',
+    errors: {
+        email: '',
         unknown: '',
     },
 };

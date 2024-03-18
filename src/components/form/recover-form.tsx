@@ -11,9 +11,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import SubmitButton from '@/components/form/submit-button';
 
-interface RecoverFormProps extends React.HTMLAttributes<HTMLDivElement> {}
-
-const RecoverForm = ({ className, ...props }: RecoverFormProps) => {
+const RecoverForm = () => {
     const formRef = useRef<HTMLFormElement>(null);
     const [formState, formAction] = useFormState(recover, recoverInitialState);
 
@@ -25,7 +23,7 @@ const RecoverForm = ({ className, ...props }: RecoverFormProps) => {
     }, [formState]);
 
     return (
-        <main className={cn('dark grid gap-6', className)} {...props}>
+        <main className='grid gap-6'>
             <form action={formAction} ref={formRef}>
                 <section className='grid gap-4'>
                     <div className='grid gap-1'>

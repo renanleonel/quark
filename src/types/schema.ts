@@ -30,6 +30,8 @@ export const signUpForm = z
             .min(1, { message: 'Insira a senha!' })
             .min(6, { message: 'Senha deve ter no mínimo 6 caracteres!' }),
         confirmPassword: z.string().min(1, { message: 'Confirme a senha!' }),
+        organizationName: z.string().optional(),
+        organizationCode: z.string().optional(),
     })
     .refine((data) => data.password === data.confirmPassword, {
         message: 'Senhas não coincidem!',
@@ -65,3 +67,16 @@ export const validateOrganizationSchema = z.object({
 export const editProjectSchema = z.object({
     name: z.string().min(1, { message: 'Insira o nome!' }),
 });
+
+export const changePasswordSchema = z
+    .object({
+        password: z.string().min(6, { message: 'Insira a senha atual!' }),
+        newPassword: z.string().min(6, { message: 'Insira a nova senha!' }),
+        confirmNewPassword: z
+            .string()
+            .min(6, { message: 'Confirme a nova senha!' }),
+    })
+    .refine((data) => data.newPassword === data.confirmNewPassword, {
+        message: 'Senhas não coincidem!',
+        path: ['confirmNewPassword'],
+    });

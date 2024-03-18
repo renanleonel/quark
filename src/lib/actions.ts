@@ -2,16 +2,16 @@
 
 import { Resend } from 'resend';
 import { AuthError } from 'next-auth';
-import { signIn, signOut } from '@/auth';
+import { auth, signIn, signOut } from '@/auth';
 
 import {
     authSchema,
     signUpForm,
     ticketSchema,
     recoverSchema,
-    createOrganizationSchema,
     validateOrganizationSchema,
     editProjectSchema,
+    changePasswordSchema,
 } from '@/types/schema';
 
 import {
@@ -19,12 +19,14 @@ import {
     defaultSignUpValues,
     defaultTicketValues,
     defaultRecoverValues,
-    defaultCreateOrganizationValues,
+    defaultChangePasswordValues,
     defaultValidateOrganizationValues,
     defaultEditProjectValues,
+    defaultDeactivateAccountValues,
 } from '@/content/default-values';
 import { Ticket } from '@/types';
 import { revalidatePath } from 'next/cache';
+import { redirect } from 'next/navigation';
 
 export async function signout() {
     await signOut();
@@ -84,6 +86,17 @@ export async function signup(_: any, formData: FormData) {
         const email = formData.get('email') as string;
         const password = formData.get('password') as string;
         const confirmPassword = formData.get('confirmPassword') as string;
+        const organizationName = formData.get('organizationName') as string;
+        const organizationCode = formData.get('organizationCode') as string;
+
+        if (!organizationName && !organizationCode) {
+            return {
+                message: 'missing organization',
+                errors: {
+                    ...defaultSignUpValues,
+                },
+            };
+        }
 
         const validatedFields = signUpForm.safeParse({
             name: name,
@@ -97,6 +110,15 @@ export async function signup(_: any, formData: FormData) {
                 message: 'validation error',
                 errors: validatedFields.error.flatten().fieldErrors,
             };
+        }
+
+        if (organizationCode) {
+            // link organization to user
+        }
+
+        if (organizationName) {
+            const organization = await createOrganization(organizationName);
+            // link organization to user
         }
 
         const body = {
@@ -122,8 +144,6 @@ export async function signup(_: any, formData: FormData) {
 }
 
 export async function recover(_: any, formData: FormData) {
-    let success = false;
-
     try {
         const email = formData.get('email') as string;
 
@@ -157,7 +177,7 @@ export async function sendConfirmationEmail(email: string) {
         from: 'onboarding@resend.dev',
         to: email,
         subject: 'oi',
-        html: '<h1>http://localhost:3000/sign-up/create-organization?id=12345</h1>',
+        html: '<h1>account created successfully!</h1>',
     });
 }
 
@@ -195,34 +215,11 @@ export async function getInvitationOrigin(id: string) {
     };
 }
 
-export async function createOrganization(_: any, formData: FormData) {
-    try {
-        const name = formData.get('name') as string;
-
-        const validatedFields = createOrganizationSchema.safeParse({
-            name: name,
-        });
-
-        if (!validatedFields.success) {
-            return {
-                message: 'validation error',
-                errors: validatedFields.error.flatten().fieldErrors,
-            };
-        }
-
-        return {
-            message: 'success',
-            errors: {},
-        };
-    } catch (error) {
-        return {
-            message: 'unknown error',
-            errors: {
-                ...defaultCreateOrganizationValues,
-                unknown: 'Erro desconhecido.',
-            },
-        };
-    }
+export async function createOrganization(name: string) {
+    return {
+        id: '12345',
+        name: name,
+    };
 }
 
 export async function validateOrganization(_: any, formData: FormData) {
@@ -423,4 +420,76 @@ export async function deleteMember(memberID: string) {
     revalidatePath('/organization/members');
 
     return true;
+}
+
+export async function changePassword(_: any, formData: FormData) {
+    try {
+        const password = formData.get('password');
+        const newPassword = formData.get('newPassword');
+        const confirmNewPassword = formData.get('confirmNewPassword');
+
+        const validatedFields = changePasswordSchema.safeParse({
+            password: password,
+            newPassword: newPassword,
+            confirmNewPassword: confirmNewPassword,
+        });
+
+        if (!validatedFields.success) {
+            return {
+                message: 'validation error',
+                errors: validatedFields.error.flatten().fieldErrors,
+            };
+        }
+
+        return {
+            message: 'success',
+            errors: {},
+        };
+    } catch (error) {
+        return {
+            message: 'unknown error',
+            errors: {
+                ...defaultChangePasswordValues,
+                unknown: 'Erro desconhecido.',
+            },
+        };
+    }
+}
+
+export async function deactivateAccount(_: any, formData: FormData) {
+    let success = false;
+
+    try {
+        const email = formData.get('email');
+        const session = await auth();
+
+        if (session?.user?.email !== email) {
+            return {
+                message: 'validation error',
+                errors: {
+                    email: 'Email incorreto.',
+                },
+            };
+        }
+        success = true;
+
+        // delete user
+    } catch (error) {
+        return {
+            message: 'unknown error',
+            errors: {
+                ...defaultDeactivateAccountValues,
+                unknown: 'Erro desconhecido.',
+            },
+        };
+    }
+
+    if (success) {
+        await signOut();
+
+        return {
+            message: 'success',
+            errors: {},
+        };
+    }
 }

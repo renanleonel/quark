@@ -60,7 +60,7 @@ const defaultValues: Partial<AccountFormValues> = {
     // dob: new Date("2023-01-23"),
 };
 
-export function AccountForm() {
+export function ProfileForm() {
     const form = useForm<AccountFormValues>({
         resolver: zodResolver(accountFormSchema),
         defaultValues,
