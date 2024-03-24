@@ -199,7 +199,7 @@ const EditTicketForm = ({ ticket }: EditFormProps) => {
                             defaultValue={ticket.link}
                         />
                         {errors.file && (
-                            <span className='text-xs text-red-500'>
+                            <span className='text-xs text-red-400'>
                                 {errors.file}
                             </span>
                         )}

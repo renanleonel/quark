@@ -62,7 +62,7 @@ export const validateOrganizationInitialState = {
     },
 };
 
-export const editProjectInitialState = {
+export const projectInitialState = {
     message: '',
     errors: {
         id: '',
@@ -85,6 +85,16 @@ export const deactivateAccountInitialState = {
     message: '',
     errors: {
         email: '',
+        unknown: '',
+    },
+};
+
+export const changeProfileInitialState = {
+    message: '',
+    errors: {
+        name: '',
+        language: '',
+        profilePic: '',
         unknown: '',
     },
 };

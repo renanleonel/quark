@@ -47,9 +47,9 @@ const SignUpForm = ({ className, ...props }: SignUpFormProps) => {
                             type='text'
                             name='name'
                             placeholder='John Doe'
-                            className={cn(errors.name && 'border-red-500')}
+                            className={cn(errors.name && 'border-red-400')}
                         />
-                        <p className='text-xs text-red-500'>{errors.name}</p>
+                        <p className='text-xs text-red-400'>{errors.name}</p>
                     </div>
                     <div className='grid gap-1 space-y-1'>
                         <Label htmlFor='email'>Email</Label>
@@ -59,9 +59,9 @@ const SignUpForm = ({ className, ...props }: SignUpFormProps) => {
                             type='email'
                             name='email'
                             placeholder='email@gmail.com'
-                            className={cn(errors.email && 'border-red-500')}
+                            className={cn(errors.email && 'border-red-400')}
                         />
-                        <p className='text-xs text-red-500'>{errors.email}</p>
+                        <p className='text-xs text-red-400'>{errors.email}</p>
                     </div>
                     <div className='flex flex-col gap-2 lg:flex-row'>
                         <div className='grid gap-1 space-y-1'>
@@ -73,10 +73,10 @@ const SignUpForm = ({ className, ...props }: SignUpFormProps) => {
                                 name='password'
                                 placeholder='********'
                                 className={cn(
-                                    errors.password && 'border-red-500'
+                                    errors.password && 'border-red-400'
                                 )}
                             />
-                            <p className='text-xs text-red-500'>
+                            <p className='text-xs text-red-400'>
                                 {errors.password}
                             </p>
                         </div>
@@ -92,10 +92,10 @@ const SignUpForm = ({ className, ...props }: SignUpFormProps) => {
                                 name='confirmPassword'
                                 placeholder='********'
                                 className={cn(
-                                    errors.confirmPassword && 'border-red-500'
+                                    errors.confirmPassword && 'border-red-400'
                                 )}
                             />
-                            <p className='text-xs text-red-500'>
+                            <p className='text-xs text-red-400'>
                                 {errors.confirmPassword}
                             </p>
                         </div>

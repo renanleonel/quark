@@ -3,7 +3,7 @@ import { Metadata } from 'next';
 import { Label } from '@/components/ui/label';
 import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
-import ChangePasswordForm from '@/components/form/change-password-form';
+import AccountForm from '@/components/form/account-form';
 import { DrawerDeactivateAcount } from '@/components/drawer/drawer-deactivate-account';
 
 export const metadata: Metadata = {
@@ -22,7 +22,7 @@ export default async function Account() {
                     </p>
                 </div>
                 <Separator />
-                <ChangePasswordForm />
+                <AccountForm />
             </section>
 
             <div className='space-y-4'>

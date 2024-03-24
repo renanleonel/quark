@@ -12,6 +12,7 @@ import {
     DrawerTrigger,
 } from '@/components/ui/drawer';
 import { ProjectsForm } from '../form/projects-form';
+import { Separator } from '../ui/separator';
 
 export function DrawerNewProjects() {
     return (
@@ -22,7 +23,7 @@ export function DrawerNewProjects() {
             <DrawerContent>
                 <div className='mx-auto w-full max-w-sm'>
                     <DrawerHeader>
-                        <DrawerTitle>Criar projetos</DrawerTitle>
+                        <DrawerTitle>Criar projeto</DrawerTitle>
                         <DrawerDescription>
                             Insira o nome do projeto que cuidamos do resto.
                         </DrawerDescription>
@@ -31,6 +32,8 @@ export function DrawerNewProjects() {
                     <section className='flex max-w-sm flex-col gap-4 p-4'>
                         <ProjectsForm />
                     </section>
+
+                    <Separator />
 
                     <DrawerFooter>
                         <DrawerClose asChild>

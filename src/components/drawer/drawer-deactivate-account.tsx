@@ -73,10 +73,10 @@ export function DrawerDeactivateAcount() {
                                         placeholder='Email'
                                         className={cn(
                                             formState?.errors.email &&
-                                                'border-red-500'
+                                                'border-red-400'
                                         )}
                                     />
-                                    <p className='text-xs text-red-500'>
+                                    <p className='text-xs text-red-400'>
                                         {formState?.errors.email}
                                     </p>
                                 </div>
@@ -135,10 +135,10 @@ export function DrawerDeactivateAcount() {
                                     placeholder='Email'
                                     className={cn(
                                         formState?.errors.email &&
-                                            'border-red-500'
+                                            'border-red-400'
                                     )}
                                 />
-                                <p className='text-xs text-red-500'>
+                                <p className='text-xs text-red-400'>
                                     {formState?.errors.email}
                                 </p>
                             </div>
