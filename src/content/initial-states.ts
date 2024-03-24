@@ -89,6 +89,14 @@ export const deactivateAccountInitialState = {
     },
 };
 
+export const deleteOrganizationInitialState = {
+    message: '',
+    errors: {
+        name: '',
+        unknown: '',
+    },
+};
+
 export const changeProfileInitialState = {
     message: '',
     errors: {

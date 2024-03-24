@@ -51,6 +51,10 @@ export const defaultDeactivateAccountValues = {
     email: '',
 };
 
+export const defaultDeleteOrganizationValues = {
+    name: '',
+};
+
 export const defaultChangeProfileValues = {
     name: '',
     language: '',

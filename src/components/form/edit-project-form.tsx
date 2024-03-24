@@ -28,7 +28,7 @@ const EditProjectForm = ({ id, setOpen }: EditProjectFormProps) => {
 
             setOpen(false);
         }
-    }, [message, formState]);
+    }, [message, formState]); // eslint-disable-line react-hooks/exhaustive-deps
 
     return (
         <form action={formAction} className='space-y-4'>

@@ -3,6 +3,8 @@ import { Metadata } from 'next';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Button } from '@/components/ui/button';
+import { DrawerDeactivateAccount } from '@/components/drawer/drawer-deactivate-account';
+import { DrawerDeleteOrganization } from '@/components/drawer/drawer-delete-organization';
 
 export const metadata: Metadata = {
     title: 'Configurações',
@@ -69,6 +71,15 @@ export default async function Settings() {
                     </div>
                 </div>
             </section>
+            <div className='space-y-4 pt-10'>
+                <div>
+                    <Label>Delete organization</Label>
+                    <p className='text-sm text-muted-foreground'>
+                        Click the button to delete this organization
+                    </p>
+                </div>
+                <DrawerDeleteOrganization />
+            </div>
         </main>
     );
 }

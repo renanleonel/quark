@@ -4,7 +4,7 @@ import { Label } from '@/components/ui/label';
 import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
 import AccountForm from '@/components/form/account-form';
-import { DrawerDeactivateAcount } from '@/components/drawer/drawer-deactivate-account';
+import { DrawerDeactivateAccount } from '@/components/drawer/drawer-deactivate-account';
 
 export const metadata: Metadata = {
     title: 'Configurações',
@@ -32,7 +32,7 @@ export default async function Account() {
                         Click the button to deactivate your account.
                     </p>
                 </div>
-                <DrawerDeactivateAcount />
+                <DrawerDeactivateAccount />
             </div>
         </main>
     );

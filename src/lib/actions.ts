@@ -25,6 +25,7 @@ import {
     defaultProjectValues,
     defaultDeactivateAccountValues,
     defaultChangeProfileValues,
+    defaultDeleteOrganizationValues,
 } from '@/content/default-values';
 import { Ticket } from '@/types';
 import { revalidatePath } from 'next/cache';
@@ -511,6 +512,37 @@ export async function deactivateAccount(_: any, formData: FormData) {
             message: 'unknown error',
             errors: {
                 ...defaultDeactivateAccountValues,
+                unknown: 'Erro desconhecido.',
+            },
+        };
+    }
+
+    if (success) {
+        await signOut();
+
+        return {
+            message: 'success',
+            errors: {},
+        };
+    }
+}
+
+export async function deleteOrganization(_: any, formData: FormData) {
+    let success = false;
+
+    try {
+        const name = formData.get('name');
+
+        //check if org name == name
+
+        success = true;
+
+        // delete org
+    } catch (error) {
+        return {
+            message: 'unknown error',
+            errors: {
+                ...defaultDeleteOrganizationValues,
                 unknown: 'Erro desconhecido.',
             },
         };
