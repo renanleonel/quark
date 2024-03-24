@@ -39,7 +39,7 @@ const AccountForm = () => {
                 <p className='text-xs text-red-400'>{errors.password}</p>
             </div>
 
-            <div className='flex gap-4 pt-2'>
+            <div className='flex flex-col gap-4 pt-2 md:flex-row'>
                 <div className='w-full space-y-1'>
                     <Label>New password</Label>
                     <Input
