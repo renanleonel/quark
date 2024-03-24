@@ -31,6 +31,8 @@ import { DeleteTicket } from './components/delete-ticket';
 
 import { getTickets } from '@/lib/api';
 import { ScrollArea } from '@/components/ui/scroll-area';
+import { Suspense } from 'react';
+import Loading from './loading';
 
 export const metadata: Metadata = {
     title: 'Tasks',
@@ -41,7 +43,7 @@ export default async function Tickets() {
     const tickets = await getTickets();
 
     return (
-        <>
+        <Suspense fallback={<Loading />}>
             <Card className='hidden lg:block'>
                 <CardHeader>
                     <CardTitle>Tickets</CardTitle>
@@ -173,6 +175,6 @@ export default async function Tickets() {
                     </main>
                 </Card>
             </div>
-        </>
+        </Suspense>
     );
 }

@@ -5,21 +5,22 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import Combobox from '@/components/ui/combobox';
 import { Label } from '@/components/ui/label';
-import { useSession } from 'next-auth/react';
 import { changeProfileInitialState } from '@/content/initial-states';
 import { changeProfile } from '@/lib/actions';
 import { useFormState } from 'react-dom';
 import { cn } from '@/lib/utils';
+import { Theme } from '../ui/theme';
 
 const languages = [
     { label: 'Português', value: 'ptbr' },
     { label: 'English', value: 'en' },
 ];
 
-export function ProfileForm() {
-    const session = useSession();
-    const name = session.data?.user?.name;
+interface ProfileFormProps {
+    name: string;
+}
 
+export function ProfileForm({ name }: ProfileFormProps) {
     const [formState, formAction] = useFormState(
         changeProfile,
         changeProfileInitialState
@@ -71,7 +72,10 @@ export function ProfileForm() {
 
             <p className='text-xs text-red-400'>{errors.profilePic}</p>
 
-            <Button type='submit'>Update</Button>
+            <div className='flex justify-between'>
+                <Button type='submit'>Update</Button>
+                <Theme />
+            </div>
         </form>
     );
 }

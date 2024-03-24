@@ -63,7 +63,9 @@ const AccountForm = () => {
                     </p>
                 </div>
             </div>
-            <SubmitButton text='Save' className='px-8' />
+            <div className='flex justify-end'>
+                <SubmitButton text='Save' className='px-8' />
+            </div>
         </form>
     );
 };
