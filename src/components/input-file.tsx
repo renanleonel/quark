@@ -7,11 +7,11 @@ interface InputFileProps extends React.InputHTMLAttributes<HTMLInputElement> {
 
 export function InputFile({ label, ...props }: InputFileProps) {
     return (
-        <div className='grid w-full items-center gap-1.5'>
+        <div className='grid w-full cursor-pointer items-center gap-1.5'>
             <Label htmlFor='screenshot'>{label}</Label>
             <Input
                 {...props}
-                className='file:text-white'
+                className='cursor-pointer file:text-white'
                 id='screenshot'
                 type='file'
             />

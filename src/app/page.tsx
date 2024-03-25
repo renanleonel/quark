@@ -38,6 +38,11 @@ export default function Auth() {
                     </Button>
                 </Link>
             </div>
+            <div className='absolute bottom-4 flex w-full max-w-xs justify-center'>
+                <Link href='/policy' className='text-sm hover:underline'>
+                    Policy and Terms
+                </Link>
+            </div>
         </main>
     );
 }
