@@ -63,11 +63,7 @@ const Navbar = async ({
             )}
 
             <div className='ml-auto flex items-center space-x-4'>
-                <User
-                    icon='https://github.com/aeduojioiujaejiolaejiolea.png'
-                    alt='@shadcn'
-                    fallback=' '
-                />
+                <User icon={session.user.image} alt='@shadcn' fallback=' ' />
             </div>
         </div>
     );

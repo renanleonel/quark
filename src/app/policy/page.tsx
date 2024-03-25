@@ -1,7 +1,13 @@
+import { ArrowLeft } from 'lucide-react';
+import Link from 'next/link';
+
 export default function Policy() {
     return (
-        <main className='flex min-h-screen flex-col items-center justify-center space-y-4 py-10'>
+        <main className='flex min-h-screen flex-col items-center justify-center space-y-4 px-4 py-10'>
             <div className='max-w-md space-y-2'>
+                <Link href='/' className='lg:hidden'>
+                    <ArrowLeft width={20} />
+                </Link>
                 <h1 className='text-xl font-semibold'>Privacy Policy</h1>
                 <p>
                     By accessing this website, you are agreeing to be bound by

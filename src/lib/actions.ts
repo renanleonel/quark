@@ -29,7 +29,6 @@ import {
 } from '@/content/default-values';
 import { Ticket } from '@/types';
 import { revalidatePath } from 'next/cache';
-import { redirect } from 'next/navigation';
 
 export async function signout() {
     await signOut();

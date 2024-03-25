@@ -5,6 +5,7 @@ import { Label } from '@/components/ui/label';
 import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
 import AuthForm from '@/components/form/auth-form';
+import GoogleLogin from '@/components/google-login';
 
 export const metadata: Metadata = {
     title: 'Entrar',
@@ -24,12 +25,14 @@ export default function Auth() {
 
                 <AuthForm />
 
-                <Separator className='bg-white/20' />
                 <Link href='/recover'>
                     <Button variant='outline' type='button' className='w-full'>
                         Recuperar senha
                     </Button>
                 </Link>
+                <Separator className='bg-white/20' />
+
+                <GoogleLogin />
 
                 <Label htmlFor='sign-in'>Não tem uma conta?</Label>
                 <Link href='/sign-up'>

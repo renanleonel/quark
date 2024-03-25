@@ -64,11 +64,11 @@ export function ProfileForm({ name }: ProfileFormProps) {
                 </p>
             </div>
 
-            <InputFile
+            {/* <InputFile
                 name='file'
                 label='Profile Pic'
                 className={cn(errors.profilePic && 'border-red-400')}
-            />
+            /> */}
 
             <p className='text-xs text-red-400'>{errors.profilePic}</p>
 
