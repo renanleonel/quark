@@ -36,7 +36,7 @@ export const defaultValidateOrganizationValues = {
     code: '',
 };
 
-export const defaultEditProjectValues = {
+export const defaultProjectValues = {
     id: '',
     name: '',
 };
@@ -49,4 +49,14 @@ export const defaultChangePasswordValues = {
 
 export const defaultDeactivateAccountValues = {
     email: '',
+};
+
+export const defaultDeleteOrganizationValues = {
+    name: '',
+};
+
+export const defaultChangeProfileValues = {
+    name: '',
+    language: '',
+    profilePic: '',
 };

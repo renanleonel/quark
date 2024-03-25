@@ -12,6 +12,7 @@ export async function getOrganization() {
 }
 
 export async function getTickets() {
+    await new Promise((resolve) => setTimeout(resolve, 1000));
     return tickets;
 }
 

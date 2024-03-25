@@ -10,8 +10,9 @@ import {
     ticketSchema,
     recoverSchema,
     validateOrganizationSchema,
-    editProjectSchema,
+    projectSchema,
     changePasswordSchema,
+    changeProfileSchema,
 } from '@/types/schema';
 
 import {
@@ -21,12 +22,13 @@ import {
     defaultRecoverValues,
     defaultChangePasswordValues,
     defaultValidateOrganizationValues,
-    defaultEditProjectValues,
+    defaultProjectValues,
     defaultDeactivateAccountValues,
+    defaultChangeProfileValues,
+    defaultDeleteOrganizationValues,
 } from '@/content/default-values';
 import { Ticket } from '@/types';
 import { revalidatePath } from 'next/cache';
-import { redirect } from 'next/navigation';
 
 export async function signout() {
     await signOut();
@@ -390,7 +392,7 @@ export async function editProject(id: string, _: any, formData: FormData) {
     try {
         const name = formData.get('name');
 
-        const validatedFields = editProjectSchema.safeParse({
+        const validatedFields = projectSchema.safeParse({
             name: name,
         });
 
@@ -409,7 +411,37 @@ export async function editProject(id: string, _: any, formData: FormData) {
         return {
             message: 'unknown error',
             errors: {
-                ...defaultEditProjectValues,
+                ...defaultProjectValues,
+                unknown: 'Erro desconhecido.',
+            },
+        };
+    }
+}
+
+export async function createProject(_: any, formData: FormData) {
+    try {
+        const name = formData.get('name');
+
+        const validatedFields = projectSchema.safeParse({
+            name: name,
+        });
+
+        if (!validatedFields.success) {
+            return {
+                message: 'validation error',
+                errors: validatedFields.error.flatten().fieldErrors,
+            };
+        }
+
+        return {
+            message: 'success',
+            errors: {},
+        };
+    } catch (error) {
+        return {
+            message: 'unknown error',
+            errors: {
+                ...defaultProjectValues,
                 unknown: 'Erro desconhecido.',
             },
         };
@@ -490,6 +522,83 @@ export async function deactivateAccount(_: any, formData: FormData) {
         return {
             message: 'success',
             errors: {},
+        };
+    }
+}
+
+export async function deleteOrganization(_: any, formData: FormData) {
+    let success = false;
+
+    try {
+        const name = formData.get('name');
+
+        //check if org name == name
+
+        success = true;
+
+        // delete org
+    } catch (error) {
+        return {
+            message: 'unknown error',
+            errors: {
+                ...defaultDeleteOrganizationValues,
+                unknown: 'Erro desconhecido.',
+            },
+        };
+    }
+
+    if (success) {
+        await signOut();
+
+        return {
+            message: 'success',
+            errors: {},
+        };
+    }
+}
+
+export async function changeProfile(_: any, formData: FormData) {
+    try {
+        const session = await auth();
+
+        const name = formData.get('name');
+        const language = formData.get('language');
+        const profilePic = formData.get('profilePic');
+
+        if (name === session?.user?.name) {
+            return {
+                message: 'validation error',
+                errors: {
+                    ...defaultChangeProfileValues,
+                    name: 'Nome não pode ser igual ao atual.',
+                },
+            };
+        }
+
+        const validatedFields = changeProfileSchema.safeParse({
+            name: name,
+            language: language,
+            profilePic: profilePic,
+        });
+
+        if (!validatedFields.success) {
+            return {
+                message: 'validation error',
+                errors: validatedFields.error.flatten().fieldErrors,
+            };
+        }
+
+        return {
+            message: 'success',
+            errors: {},
+        };
+    } catch (error) {
+        return {
+            message: 'unknown error',
+            errors: {
+                ...defaultChangeProfileValues,
+                unknown: 'Erro desconhecido.',
+            },
         };
     }
 }

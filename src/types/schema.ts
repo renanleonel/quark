@@ -64,7 +64,7 @@ export const validateOrganizationSchema = z.object({
     code: z.string().min(1, { message: 'Insira o código!' }),
 });
 
-export const editProjectSchema = z.object({
+export const projectSchema = z.object({
     name: z.string().min(1, { message: 'Insira o nome!' }),
 });
 
@@ -80,3 +80,16 @@ export const changePasswordSchema = z
         message: 'Senhas não coincidem!',
         path: ['confirmNewPassword'],
     });
+
+export const changeProfileSchema = z.object({
+    name: z.string().min(1, { message: 'Insira o nome!' }),
+    language: z.string().min(1, { message: 'Insira o idioma!' }),
+    profilePic: z
+        .object({
+            size: z.number(),
+            type: z.string(),
+            name: z.string(),
+            lastModified: z.number(),
+        })
+        .optional(),
+});

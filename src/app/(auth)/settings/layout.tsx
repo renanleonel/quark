@@ -44,7 +44,7 @@ export default async function Layout({
     }
 
     return (
-        <Card className='hidden lg:block'>
+        <Card>
             <CardHeader>
                 <CardTitle>Configurações</CardTitle>
                 <CardDescription>Ajustes</CardDescription>

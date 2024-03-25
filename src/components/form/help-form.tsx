@@ -13,7 +13,7 @@ const HelpForm = () => {
                 className='h-full min-h-[200px]'
                 placeholder='Descreva o problema encontrado aqui.'
             />
-            <div className='flex w-full justify-end'>
+            <div className='mt-4 flex w-full justify-end'>
                 <SubmitButton text='Enviar' className='w-28' />
             </div>
         </form>

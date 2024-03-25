@@ -1,104 +1,33 @@
 'use client';
 
-import { zodResolver } from '@hookform/resolvers/zod';
-import { useFieldArray, useForm } from 'react-hook-form';
-import * as z from 'zod';
-
-import { Button } from '@/components/ui/button';
-import {
-    Form,
-    FormControl,
-    FormDescription,
-    FormField,
-    FormItem,
-    FormLabel,
-    FormMessage,
-} from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
+import { projectInitialState } from '@/content/initial-states';
+import { createProject } from '@/lib/actions';
 import { cn } from '@/lib/utils';
-import { ScrollArea } from '@/components/ui/scroll-area';
-import { TrashIcon } from 'lucide-react';
-import { Separator } from '@/components/ui/separator';
-
-const profileFormSchema = z.object({
-    urls: z
-        .array(
-            z.object({
-                value: z.string().min(4, {
-                    message: 'URL must be at least 4 characters.',
-                }),
-            })
-        )
-        .optional(),
-});
-
-type ProfileFormValues = z.infer<typeof profileFormSchema>;
-
-// This can come from your database or API.
-const defaultValues: Partial<ProfileFormValues> = {
-    urls: [{ value: '' }],
-};
+import { useFormState } from 'react-dom';
+import SubmitButton from './submit-button';
 
 export function ProjectsForm() {
-    const form = useForm<ProfileFormValues>({
-        resolver: zodResolver(profileFormSchema),
-        defaultValues,
-        mode: 'onChange',
-    });
+    const [formState, formAction] = useFormState(
+        createProject,
+        projectInitialState
+    );
 
-    const { fields, append, remove } = useFieldArray({
-        name: 'urls',
-        control: form.control,
-    });
-
-    function onSubmit(data: ProfileFormValues) {}
+    const { message, errors } = formState;
 
     return (
-        <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} className='space-y-8'>
-                <ScrollArea
-                    className={cn(fields.length > 5 && 'h-72', 'w-full')}
-                >
-                    {fields.map((field, index) => (
-                        <FormField
-                            control={form.control}
-                            key={field.id}
-                            name={`urls.${index}.value`}
-                            render={({ field }) => (
-                                <FormItem className='mb-4'>
-                                    <FormControl>
-                                        <div className='flex items-center gap-2'>
-                                            <Input {...field} />
-                                            <TrashIcon
-                                                onClick={() =>
-                                                    fields.length > 1 &&
-                                                    remove(index)
-                                                }
-                                                className='h-4  w-4 cursor-pointer text-muted-foreground'
-                                            />
-                                        </div>
-                                    </FormControl>
-                                    <FormMessage />
-                                </FormItem>
-                            )}
-                        />
-                    ))}
-                </ScrollArea>
-                <footer className='mt-2 w-full space-y-4'>
-                    <Button
-                        type='button'
-                        className='w-full'
-                        onClick={() => append({ value: '' })}
-                    >
-                        Novo projeto
-                    </Button>
-                    <Separator className='bg-white/20' />
+        <form action={formAction} className='space-y-4'>
+            <div className='space-y-1'>
+                <Input
+                    name='name'
+                    placeholder='Name'
+                    className={cn(errors.name && 'border-red-400')}
+                />
 
-                    <Button type='submit' className='w-full'>
-                        Criar
-                    </Button>
-                </footer>
-            </form>
-        </Form>
+                <p className='text-xs text-red-400'>{errors.name}</p>
+            </div>
+
+            <SubmitButton className='w-full' text='Criar' />
+        </form>
     );
 }

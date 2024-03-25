@@ -11,10 +11,8 @@ export default function Loading() {
     return (
         <Card>
             <CardHeader>
-                <CardTitle>Novo Ticket</CardTitle>
-                <CardDescription>
-                    Crie um ticket para a nossa equipe
-                </CardDescription>
+                <CardTitle>Edit ticket</CardTitle>
+                <CardDescription>Edit an existing ticket</CardDescription>
             </CardHeader>
             <Separator />
             <div className='space-y-4 p-6 lg:hidden'>

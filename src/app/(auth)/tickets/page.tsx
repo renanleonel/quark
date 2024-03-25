@@ -30,6 +30,9 @@ import { Separator } from '@/components/ui/separator';
 import { DeleteTicket } from './components/delete-ticket';
 
 import { getTickets } from '@/lib/api';
+import { ScrollArea } from '@/components/ui/scroll-area';
+import { Suspense } from 'react';
+import Loading from './loading';
 
 export const metadata: Metadata = {
     title: 'Tasks',
@@ -40,7 +43,7 @@ export default async function Tickets() {
     const tickets = await getTickets();
 
     return (
-        <>
+        <Suspense fallback={<Loading />}>
             <Card className='hidden lg:block'>
                 <CardHeader>
                     <CardTitle>Tickets</CardTitle>
@@ -61,98 +64,117 @@ export default async function Tickets() {
                     </CardHeader>
                     <Separator />
                     <main className='space-y-4 p-6'>
-                        <Input placeholder='Filtrar ticket' className='h-8 ' />
-                        {tickets.map((ticket, key) => {
-                            return (
-                                <Drawer key={key}>
-                                    <DrawerTrigger asChild>
-                                        <Card
-                                            key={key}
-                                            className={cn(
-                                                'flex cursor-pointer items-center justify-between gap-8 p-4 hover:bg-muted/20',
-                                                ticket.status === 'concluído' &&
-                                                    'opacity-40'
-                                            )}
-                                        >
-                                            <div className='flex items-center gap-2 truncate'>
-                                                <div className='h-2 w-2 rounded-full bg-green-600' />
-                                                <h2 className='truncate text-sm font-semibold'>
-                                                    {ticket.title}
-                                                </h2>
-                                            </div>
-                                            <div>
-                                                <Expand size={16} />
-                                            </div>
-                                        </Card>
-                                    </DrawerTrigger>
-                                    <DrawerContent>
-                                        <div className='mx-auto w-full max-w-sm'>
-                                            <DrawerHeader>
-                                                <header className='flex w-full justify-end'>
-                                                    <div className='cursor-pointer rounded-lg p-2 hover:bg-muted/20'>
-                                                        <DrawerClose asChild>
-                                                            <X size={16} />
-                                                        </DrawerClose>
+                        <Input placeholder='Filtrar ticket' className='h-8' />
+                        <ScrollArea className='h-[450px]'>
+                            <div className='space-y-4'>
+                                {tickets.map((ticket, key) => {
+                                    return (
+                                        <Drawer key={key}>
+                                            <DrawerTrigger asChild>
+                                                <Card
+                                                    key={key}
+                                                    className={cn(
+                                                        'flex cursor-pointer items-center justify-between gap-8 p-4 hover:bg-muted/20',
+                                                        ticket.status ===
+                                                            'concluído' &&
+                                                            'opacity-40'
+                                                    )}
+                                                >
+                                                    <div className='flex items-center gap-2 truncate'>
+                                                        <div className='h-2 w-2 rounded-full bg-green-600' />
+                                                        <h2 className='truncate text-sm font-semibold'>
+                                                            {ticket.title}
+                                                        </h2>
                                                     </div>
-                                                </header>
-                                                <DrawerTitle className='text-start'>
-                                                    {ticket.title}
-                                                </DrawerTitle>
+                                                    <div>
+                                                        <Expand size={16} />
+                                                    </div>
+                                                </Card>
+                                            </DrawerTrigger>
+                                            <DrawerContent>
+                                                <div className='mx-auto w-full max-w-sm'>
+                                                    <DrawerHeader>
+                                                        <header className='flex w-full justify-end'>
+                                                            <div className='cursor-pointer rounded-lg p-2 hover:bg-muted/20'>
+                                                                <DrawerClose
+                                                                    asChild
+                                                                >
+                                                                    <X
+                                                                        size={
+                                                                            16
+                                                                        }
+                                                                    />
+                                                                </DrawerClose>
+                                                            </div>
+                                                        </header>
+                                                        <DrawerTitle className='text-start'>
+                                                            {ticket.title}
+                                                        </DrawerTitle>
 
-                                                <DrawerDescription className='space-y-2 pt-4'>
-                                                    <div className='flex justify-between'>
-                                                        <h1>
-                                                            {ticket.project}
-                                                        </h1>
-                                                        <Badge>
-                                                            {ticket.type}
-                                                        </Badge>
-                                                    </div>
-                                                    <div className='flex flex-col items-start gap-2'>
-                                                        <div>
-                                                            Priority:{' '}
-                                                            {ticket.priority}
+                                                        <DrawerDescription className='space-y-2 pt-4'>
+                                                            <div className='flex justify-between'>
+                                                                <h1>
+                                                                    {
+                                                                        ticket.project
+                                                                    }
+                                                                </h1>
+                                                                <Badge>
+                                                                    {
+                                                                        ticket.type
+                                                                    }
+                                                                </Badge>
+                                                            </div>
+                                                            <div className='flex flex-col items-start gap-2'>
+                                                                <div>
+                                                                    Priority:{' '}
+                                                                    {
+                                                                        ticket.priority
+                                                                    }
+                                                                </div>
+                                                                <div>
+                                                                    Status:{' '}
+                                                                    {
+                                                                        ticket.status
+                                                                    }
+                                                                </div>
+                                                            </div>
+                                                        </DrawerDescription>
+                                                    </DrawerHeader>
+
+                                                    <DrawerFooter>
+                                                        <div className='space-y-2'>
+                                                            <Link
+                                                                href={`/edit/${ticket.id}`}
+                                                                className='w-full'
+                                                            >
+                                                                <Button
+                                                                    variant='default'
+                                                                    className='w-full'
+                                                                >
+                                                                    Edit
+                                                                </Button>
+                                                            </Link>
+
+                                                            <DeleteTicket>
+                                                                <Button
+                                                                    variant='destructive'
+                                                                    className='w-full'
+                                                                >
+                                                                    Delete
+                                                                </Button>
+                                                            </DeleteTicket>
                                                         </div>
-                                                        <div>
-                                                            Status:{' '}
-                                                            {ticket.status}
-                                                        </div>
-                                                    </div>
-                                                </DrawerDescription>
-                                            </DrawerHeader>
-
-                                            <DrawerFooter>
-                                                <div className='space-y-2'>
-                                                    <Link
-                                                        href={`/edit/${ticket.id}`}
-                                                        className='w-full'
-                                                    >
-                                                        <Button
-                                                            variant='default'
-                                                            className='w-full'
-                                                        >
-                                                            Edit
-                                                        </Button>
-                                                    </Link>
-
-                                                    <DeleteTicket>
-                                                        <Button
-                                                            variant='destructive'
-                                                            className='w-full'
-                                                        >
-                                                            Delete
-                                                        </Button>
-                                                    </DeleteTicket>
+                                                    </DrawerFooter>
                                                 </div>
-                                            </DrawerFooter>
-                                        </div>
-                                    </DrawerContent>
-                                </Drawer>
-                            );
-                        })}
+                                            </DrawerContent>
+                                        </Drawer>
+                                    );
+                                })}
+                            </div>
+                        </ScrollArea>
                     </main>
                 </Card>
             </div>
-        </>
+        </Suspense>
     );
 }

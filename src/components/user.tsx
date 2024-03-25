@@ -40,7 +40,7 @@ const User = async ({ icon, alt, fallback }: UserProps) => {
                     <div className='flex flex-col space-y-1'>
                         <p className='text-sm font-medium leading-none'>Nome</p>
                         <p className='text-xs leading-none text-muted-foreground'>
-                            @{session?.user?.name}
+                            {session?.user?.name}
                         </p>
                     </div>
                 </DropdownMenuLabel>

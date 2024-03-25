@@ -9,6 +9,8 @@ import {
 import { Separator } from '@/components/ui/separator';
 
 import NewTicketForm from '@/components/form/new-ticket-form';
+import { Suspense } from 'react';
+import Loading from './loading';
 
 export const metadata: Metadata = {
     title: 'Novo ticket',
@@ -17,16 +19,18 @@ export const metadata: Metadata = {
 
 export default function NewTicket() {
     return (
-        <Card>
-            <CardHeader>
-                <CardTitle>Novo ticket</CardTitle>
-                <CardDescription>
-                    Crie um ticket para a nossa equipe
-                </CardDescription>
-            </CardHeader>
-            <Separator className='mb-6' />
+        <Suspense fallback={<Loading />}>
+            <Card>
+                <CardHeader>
+                    <CardTitle>Novo ticket</CardTitle>
+                    <CardDescription>
+                        Crie um ticket para a nossa equipe
+                    </CardDescription>
+                </CardHeader>
+                <Separator className='mb-6' />
 
-            <NewTicketForm />
-        </Card>
+                <NewTicketForm />
+            </Card>
+        </Suspense>
     );
 }

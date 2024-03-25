@@ -11,6 +11,8 @@ import {
 } from '@/components/ui/card';
 import { Separator } from '@/components/ui/separator';
 import EditTicketForm from '@/components/form/edit-ticket-form';
+import { Suspense } from 'react';
+import Loading from './loading';
 
 export const metadata: Metadata = {
     title: 'Edit',
@@ -26,13 +28,15 @@ export default async function Edit({ params }: { params: { id: string } }) {
     if (role !== 'admin' && ticket.createdBy !== id) redirect('/tickets');
 
     return (
-        <Card>
-            <CardHeader>
-                <CardTitle>Edit ticket</CardTitle>
-                <CardDescription>Edit an existing ticket</CardDescription>
-            </CardHeader>
-            <Separator className='mb-6' />
-            <EditTicketForm ticket={ticket} />
-        </Card>
+        <Suspense fallback={<Loading />}>
+            <Card>
+                <CardHeader>
+                    <CardTitle>Edit ticket</CardTitle>
+                    <CardDescription>Edit an existing ticket</CardDescription>
+                </CardHeader>
+                <Separator className='mb-6' />
+                <EditTicketForm ticket={ticket} />
+            </Card>
+        </Suspense>
     );
 }

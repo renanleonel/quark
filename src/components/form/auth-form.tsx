@@ -30,10 +30,10 @@ const AuthForm = () => {
                             name='email'
                             placeholder='email@gmail.com'
                             className={cn(
-                                formState.errors.email && 'border-red-500'
+                                formState.errors.email && 'border-red-400'
                             )}
                         />
-                        <p className='text-xs text-red-500'>
+                        <p className='text-xs text-red-400'>
                             {formState.errors.email}
                         </p>
                     </div>
@@ -49,10 +49,10 @@ const AuthForm = () => {
                             name='password'
                             placeholder='********'
                             className={cn(
-                                formState.errors.password && 'border-red-500'
+                                formState.errors.password && 'border-red-400'
                             )}
                         />
-                        <p className='text-xs text-red-500'>
+                        <p className='text-xs text-red-400'>
                             {formState.errors.password}
                         </p>
                     </div>
