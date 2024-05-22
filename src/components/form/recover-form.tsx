@@ -5,7 +5,7 @@ import { cn } from '@/lib/utils';
 import { recover } from '@/lib/actions';
 import { useEffect, useRef } from 'react';
 import { useFormState, useFormStatus } from 'react-dom';
-import { recoverInitialState } from '@/content/initial-states';
+import { recoverIS } from '@/content/initial-states';
 
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -13,7 +13,7 @@ import SubmitButton from '@/components/form/submit-button';
 
 const RecoverForm = () => {
     const formRef = useRef<HTMLFormElement>(null);
-    const [formState, formAction] = useFormState(recover, recoverInitialState);
+    const [formState, formAction] = useFormState(recover, recoverIS);
 
     useEffect(() => {
         if (formState?.message === 'success') {

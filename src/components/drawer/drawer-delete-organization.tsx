@@ -21,7 +21,7 @@ import {
     DialogTrigger,
 } from '@/components/ui/dialog';
 import { DrawerDescription } from '@/components/ui/drawer';
-import { deleteOrganizationInitialState } from '@/content/initial-states';
+import { deleteOrganizationIS } from '@/content/initial-states';
 import { useMediaQuery } from '@/hooks/use-media-query';
 import { deleteOrganization } from '@/lib/actions';
 import { cn } from '@/lib/utils';
@@ -36,7 +36,7 @@ export function DrawerDeleteOrganization() {
 
     const [formState, formAction] = useFormState(
         deleteOrganization,
-        deleteOrganizationInitialState
+        deleteOrganizationIS
     );
 
     if (isDesktop) {

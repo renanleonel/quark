@@ -26,7 +26,7 @@ import { useMediaQuery } from '@/hooks/use-media-query';
 import { Input } from '../ui/input';
 import { useFormState } from 'react-dom';
 import { deactivateAccount } from '@/lib/actions';
-import { deactivateAccountInitialState } from '@/content/initial-states';
+import { deactivateAccountIS } from '@/content/initial-states';
 import { cn } from '@/lib/utils';
 import { DialogClose } from '@radix-ui/react-dialog';
 import SubmitButton from '../form/submit-button';
@@ -37,7 +37,7 @@ export function DrawerDeactivateAccount() {
 
     const [formState, formAction] = useFormState(
         deactivateAccount,
-        deactivateAccountInitialState
+        deactivateAccountIS
     );
 
     if (isDesktop) {

@@ -7,13 +7,10 @@ import { authenticate } from '@/lib/actions';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import SubmitButton from '@/components/form/submit-button';
-import { authInitialState } from '@/content/initial-states';
+import { authIS } from '@/content/initial-states';
 
 const AuthForm = () => {
-    const [formState, formAction] = useFormState(
-        authenticate,
-        authInitialState
-    );
+    const [formState, formAction] = useFormState(authenticate, authIS);
 
     return (
         <main className='grid gap-6'>

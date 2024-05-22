@@ -5,7 +5,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import Combobox from '@/components/ui/combobox';
 import { Label } from '@/components/ui/label';
-import { changeProfileInitialState } from '@/content/initial-states';
+import { changeProfileIS } from '@/content/initial-states';
 import { changeProfile } from '@/lib/actions';
 import { useFormState } from 'react-dom';
 import { cn } from '@/lib/utils';
@@ -23,7 +23,7 @@ interface ProfileFormProps {
 export function ProfileForm({ name }: ProfileFormProps) {
     const [formState, formAction] = useFormState(
         changeProfile,
-        changeProfileInitialState
+        changeProfileIS
     );
 
     const { errors, message } = formState;

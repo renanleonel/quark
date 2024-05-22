@@ -11,13 +11,13 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Separator } from '@/components/ui/separator';
 import SubmitButton from '@/components/form/submit-button';
-import { signUpInitialState } from '@/content/initial-states';
+import { signupIS } from '@/content/initial-states';
 
 interface SignUpFormProps extends React.HTMLAttributes<HTMLDivElement> {}
 
 const SignUpForm = ({ className, ...props }: SignUpFormProps) => {
     const formRef = useRef<HTMLFormElement>(null);
-    const [formState, formAction] = useFormState(signup, signUpInitialState);
+    const [formState, formAction] = useFormState(signup, signupIS);
     const { errors, message } = formState;
 
     const router = useRouter();

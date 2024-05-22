@@ -3,7 +3,7 @@
 import { changePassword, recover } from '@/lib/actions';
 import { useEffect, useRef } from 'react';
 import { useFormState, useFormStatus } from 'react-dom';
-import { changePasswordInitialState } from '@/content/initial-states';
+import { changePasswordIS } from '@/content/initial-states';
 
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -15,7 +15,7 @@ const AccountForm = () => {
     const formRef = useRef<HTMLFormElement>(null);
     const [formState, formAction] = useFormState(
         changePassword,
-        changePasswordInitialState
+        changePasswordIS
     );
 
     useEffect(() => {

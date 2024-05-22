@@ -1,13 +1,13 @@
-export const defaultRecoverValues = {
+export const recoverDV = {
     email: '',
 };
 
-export const defaultAuthValues = {
+export const authDV = {
     email: '',
     password: '',
 };
 
-export const defaultSignUpValues = {
+export const signupDV = {
     name: '',
     email: '',
     password: '',
@@ -16,7 +16,7 @@ export const defaultSignUpValues = {
     organizationCode: '',
 };
 
-export const defaultTicketValues = {
+export const ticketDV = {
     title: '',
     description: '',
     type: '',
@@ -31,31 +31,31 @@ export const defaultCreateOrganizationValues = {
     id: '',
     name: '',
 };
-export const defaultValidateOrganizationValues = {
+export const validateOrganizationDV = {
     id: '',
     code: '',
 };
 
-export const defaultProjectValues = {
+export const projectDV = {
     id: '',
     name: '',
 };
 
-export const defaultChangePasswordValues = {
+export const changePasswordDV = {
     password: '',
     newPassword: '',
     confirmNewPassword: '',
 };
 
-export const defaultDeactivateAccountValues = {
+export const deactivateAccountDV = {
     email: '',
 };
 
-export const defaultDeleteOrganizationValues = {
+export const deleteOrganizationDV = {
     name: '',
 };
 
-export const defaultChangeProfileValues = {
+export const changeProfileDV = {
     name: '',
     language: '',
     profilePic: '',
