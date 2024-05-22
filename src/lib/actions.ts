@@ -2,6 +2,7 @@
 
 import { Resend } from 'resend';
 import { AuthError } from 'next-auth';
+import { revalidatePath } from 'next/cache';
 import { auth, signIn, signOut } from '@/auth';
 
 import {
@@ -9,24 +10,26 @@ import {
     signUpForm,
     ticketSchema,
     recoverSchema,
-    validateOrganizationSchema,
-    editProjectSchema,
+    projectSchema,
+    changeProfileSchema,
     changePasswordSchema,
+    validateOrganizationSchema,
 } from '@/types/schema';
 
 import {
-    defaultAuthValues,
-    defaultSignUpValues,
-    defaultTicketValues,
-    defaultRecoverValues,
-    defaultChangePasswordValues,
-    defaultValidateOrganizationValues,
-    defaultEditProjectValues,
-    defaultDeactivateAccountValues,
+    authDV,
+    signupDV,
+    ticketDV,
+    recoverDV,
+    projectDV,
+    changeProfileDV,
+    changePasswordDV,
+    deactivateAccountDV,
+    deleteOrganizationDV,
+    validateOrganizationDV,
 } from '@/content/default-values';
+
 import { Ticket } from '@/types';
-import { revalidatePath } from 'next/cache';
-import { redirect } from 'next/navigation';
 
 export async function signout() {
     await signOut();
@@ -62,7 +65,7 @@ export async function authenticate(_: any, formData: FormData) {
                     return {
                         message: 'credentials error',
                         errors: {
-                            ...defaultAuthValues,
+                            ...authDV,
                             credentials: 'Email ou senha incorretos.',
                         },
                     };
@@ -70,7 +73,7 @@ export async function authenticate(_: any, formData: FormData) {
                     return {
                         message: 'unknown error',
                         errors: {
-                            ...defaultAuthValues,
+                            ...authDV,
                             unknown: 'Erro desconhecido.',
                         },
                     };
@@ -93,7 +96,7 @@ export async function signup(_: any, formData: FormData) {
             return {
                 message: 'missing organization',
                 errors: {
-                    ...defaultSignUpValues,
+                    ...signupDV,
                 },
             };
         }
@@ -136,7 +139,7 @@ export async function signup(_: any, formData: FormData) {
         return {
             message: 'unknown error',
             errors: {
-                ...defaultSignUpValues,
+                ...signupDV,
                 unknown: 'Erro desconhecido.',
             },
         };
@@ -163,7 +166,7 @@ export async function recover(_: any, formData: FormData) {
         return {
             message: 'unknown error',
             errors: {
-                ...defaultRecoverValues,
+                ...recoverDV,
                 unknown: 'Erro desconhecido.',
             },
         };
@@ -196,7 +199,7 @@ export async function sendRecoverEmail(email: string) {
                 return {
                     message: 'unknown error',
                     errors: {
-                        ...defaultRecoverValues,
+                        ...recoverDV,
                         unknown: 'Erro desconhecido.',
                     },
                 };
@@ -245,7 +248,7 @@ export async function validateOrganization(_: any, formData: FormData) {
         return {
             message: 'unknown error',
             errors: {
-                ...defaultValidateOrganizationValues,
+                ...validateOrganizationDV,
                 unknown: 'Erro desconhecido.',
             },
         };
@@ -287,7 +290,7 @@ export async function newTicket(_: any, formData: FormData) {
             return {
                 message: 'unknown error',
                 errors: {
-                    ...defaultTicketValues,
+                    ...ticketDV,
                     unknown: 'Erro desconhecido.',
                 },
             };
@@ -301,7 +304,7 @@ export async function newTicket(_: any, formData: FormData) {
         return {
             message: 'unknown error',
             errors: {
-                ...defaultTicketValues,
+                ...ticketDV,
                 unknown: 'Erro desconhecido.',
             },
         };
@@ -343,7 +346,7 @@ export async function editTicket(_: any, formData: FormData) {
             return {
                 message: 'unknown error',
                 errors: {
-                    ...defaultTicketValues,
+                    ...ticketDV,
                     unknown: 'Erro desconhecido.',
                 },
             };
@@ -357,7 +360,7 @@ export async function editTicket(_: any, formData: FormData) {
         return {
             message: 'unknown error',
             errors: {
-                ...defaultTicketValues,
+                ...ticketDV,
                 unknown: 'Erro desconhecido.',
             },
         };
@@ -390,7 +393,7 @@ export async function editProject(id: string, _: any, formData: FormData) {
     try {
         const name = formData.get('name');
 
-        const validatedFields = editProjectSchema.safeParse({
+        const validatedFields = projectSchema.safeParse({
             name: name,
         });
 
@@ -409,7 +412,37 @@ export async function editProject(id: string, _: any, formData: FormData) {
         return {
             message: 'unknown error',
             errors: {
-                ...defaultEditProjectValues,
+                ...projectDV,
+                unknown: 'Erro desconhecido.',
+            },
+        };
+    }
+}
+
+export async function createProject(_: any, formData: FormData) {
+    try {
+        const name = formData.get('name');
+
+        const validatedFields = projectSchema.safeParse({
+            name: name,
+        });
+
+        if (!validatedFields.success) {
+            return {
+                message: 'validation error',
+                errors: validatedFields.error.flatten().fieldErrors,
+            };
+        }
+
+        return {
+            message: 'success',
+            errors: {},
+        };
+    } catch (error) {
+        return {
+            message: 'unknown error',
+            errors: {
+                ...projectDV,
                 unknown: 'Erro desconhecido.',
             },
         };
@@ -449,7 +482,7 @@ export async function changePassword(_: any, formData: FormData) {
         return {
             message: 'unknown error',
             errors: {
-                ...defaultChangePasswordValues,
+                ...changePasswordDV,
                 unknown: 'Erro desconhecido.',
             },
         };
@@ -478,7 +511,7 @@ export async function deactivateAccount(_: any, formData: FormData) {
         return {
             message: 'unknown error',
             errors: {
-                ...defaultDeactivateAccountValues,
+                ...deactivateAccountDV,
                 unknown: 'Erro desconhecido.',
             },
         };
@@ -490,6 +523,83 @@ export async function deactivateAccount(_: any, formData: FormData) {
         return {
             message: 'success',
             errors: {},
+        };
+    }
+}
+
+export async function deleteOrganization(_: any, formData: FormData) {
+    let success = false;
+
+    try {
+        const name = formData.get('name');
+
+        //check if org name == name
+
+        success = true;
+
+        // delete org
+    } catch (error) {
+        return {
+            message: 'unknown error',
+            errors: {
+                ...deleteOrganizationDV,
+                unknown: 'Erro desconhecido.',
+            },
+        };
+    }
+
+    if (success) {
+        await signOut();
+
+        return {
+            message: 'success',
+            errors: {},
+        };
+    }
+}
+
+export async function changeProfile(_: any, formData: FormData) {
+    try {
+        const session = await auth();
+
+        const name = formData.get('name');
+        const language = formData.get('language');
+        const profilePic = formData.get('profilePic');
+
+        if (name === session?.user?.name) {
+            return {
+                message: 'validation error',
+                errors: {
+                    ...changeProfileDV,
+                    name: 'Nome não pode ser igual ao atual.',
+                },
+            };
+        }
+
+        const validatedFields = changeProfileSchema.safeParse({
+            name: name,
+            language: language,
+            profilePic: profilePic,
+        });
+
+        if (!validatedFields.success) {
+            return {
+                message: 'validation error',
+                errors: validatedFields.error.flatten().fieldErrors,
+            };
+        }
+
+        return {
+            message: 'success',
+            errors: {},
+        };
+    } catch (error) {
+        return {
+            message: 'unknown error',
+            errors: {
+                ...changeProfileDV,
+                unknown: 'Erro desconhecido.',
+            },
         };
     }
 }

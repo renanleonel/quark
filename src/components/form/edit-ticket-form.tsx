@@ -28,7 +28,7 @@ import {
 
 import { InputFile } from '@/components/input-file';
 import SubmitButton from '@/components/form/submit-button';
-import { ticketInitialState } from '@/content/initial-states';
+import { ticketIS } from '@/content/initial-states';
 
 interface EditFormProps {
     ticket: Ticket;
@@ -36,10 +36,7 @@ interface EditFormProps {
 
 const EditTicketForm = ({ ticket }: EditFormProps) => {
     const router = useRouter();
-    const [formState, formAction] = useFormState(
-        editTicket,
-        ticketInitialState
-    );
+    const [formState, formAction] = useFormState(editTicket, ticketIS);
 
     const { errors, message } = formState;
     const ref = useRef<HTMLFormElement>(null);
@@ -199,7 +196,7 @@ const EditTicketForm = ({ ticket }: EditFormProps) => {
                             defaultValue={ticket.link}
                         />
                         {errors.file && (
-                            <span className='text-xs text-red-500'>
+                            <span className='text-xs text-red-400'>
                                 {errors.file}
                             </span>
                         )}

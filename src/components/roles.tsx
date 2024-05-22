@@ -50,7 +50,7 @@ const Roles = ({ role }: RolesProps) => {
                 <Button
                     variant='outline'
                     aria-expanded={open}
-                    className='w-full md:ml-auto md:w-fit'
+                    className='w-full justify-between md:ml-auto md:w-fit'
                 >
                     {value
                         ? roles.find((role) => role.value === value)?.name

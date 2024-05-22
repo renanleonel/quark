@@ -25,10 +25,10 @@ import {
 
 import { InputFile } from '@/components/input-file';
 import SubmitButton from '@/components/form/submit-button';
-import { ticketInitialState } from '@/content/initial-states';
+import { ticketIS } from '@/content/initial-states';
 
 const NewTicketForm = () => {
-    const [formState, formAction] = useFormState(newTicket, ticketInitialState);
+    const [formState, formAction] = useFormState(newTicket, ticketIS);
 
     const { errors, message } = formState;
     const ref = useRef<HTMLFormElement>(null);

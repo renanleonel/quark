@@ -1,4 +1,4 @@
-export const authInitialState = {
+export const authIS = {
     message: '',
     errors: {
         email: '',
@@ -8,7 +8,7 @@ export const authInitialState = {
     },
 };
 
-export const ticketInitialState = {
+export const ticketIS = {
     message: '',
     errors: {
         title: '',
@@ -23,7 +23,7 @@ export const ticketInitialState = {
     },
 };
 
-export const recoverInitialState = {
+export const recoverIS = {
     message: '',
     errors: {
         email: '',
@@ -31,7 +31,7 @@ export const recoverInitialState = {
     },
 };
 
-export const signUpInitialState = {
+export const signupIS = {
     message: '',
     errors: {
         name: '',
@@ -44,7 +44,7 @@ export const signUpInitialState = {
     },
 };
 
-export const createOrganizationInitialState = {
+export const createOrganizationIS = {
     message: '',
     errors: {
         id: '',
@@ -53,7 +53,7 @@ export const createOrganizationInitialState = {
     },
 };
 
-export const validateOrganizationInitialState = {
+export const validateOrganizationIS = {
     message: '',
     errors: {
         id: '',
@@ -62,7 +62,7 @@ export const validateOrganizationInitialState = {
     },
 };
 
-export const editProjectInitialState = {
+export const projectIS = {
     message: '',
     errors: {
         id: '',
@@ -71,7 +71,7 @@ export const editProjectInitialState = {
     },
 };
 
-export const changePasswordInitialState = {
+export const changePasswordIS = {
     message: '',
     errors: {
         password: '',
@@ -81,10 +81,28 @@ export const changePasswordInitialState = {
     },
 };
 
-export const deactivateAccountInitialState = {
+export const deactivateAccountIS = {
     message: '',
     errors: {
         email: '',
+        unknown: '',
+    },
+};
+
+export const deleteOrganizationIS = {
+    message: '',
+    errors: {
+        name: '',
+        unknown: '',
+    },
+};
+
+export const changeProfileIS = {
+    message: '',
+    errors: {
+        name: '',
+        language: '',
+        profilePic: '',
         unknown: '',
     },
 };

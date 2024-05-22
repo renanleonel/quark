@@ -2,165 +2,80 @@
 
 import { InputFile } from '@/components/input-file';
 import { Button } from '@/components/ui/button';
-import {
-    Command,
-    CommandEmpty,
-    CommandGroup,
-    CommandInput,
-    CommandItem,
-} from '@/components/ui/command';
-import {
-    Form,
-    FormControl,
-    FormDescription,
-    FormField,
-    FormItem,
-    FormLabel,
-    FormMessage,
-} from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
-import {
-    Popover,
-    PopoverContent,
-    PopoverTrigger,
-} from '@/components/ui/popover';
+import Combobox from '@/components/ui/combobox';
+import { Label } from '@/components/ui/label';
+import { changeProfileIS } from '@/content/initial-states';
+import { changeProfile } from '@/lib/actions';
+import { useFormState } from 'react-dom';
 import { cn } from '@/lib/utils';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { CalendarIcon, CaretSortIcon, CheckIcon } from '@radix-ui/react-icons';
-import { useForm } from 'react-hook-form';
-import * as z from 'zod';
+import { Theme } from '../ui/theme';
 
 const languages = [
-    { label: 'Português', value: 'pt-BR' },
+    { label: 'Português', value: 'ptbr' },
     { label: 'English', value: 'en' },
-] as const;
+];
 
-const accountFormSchema = z.object({
-    name: z
-        .string()
-        .min(2, {
-            message: 'Name must be at least 2 characters.',
-        })
-        .max(30, {
-            message: 'Name must not be longer than 30 characters.',
-        }),
-    dob: z.date({
-        required_error: 'A date of birth is required.',
-    }),
-    language: z.string({
-        required_error: 'Please select a language.',
-    }),
-});
+interface ProfileFormProps {
+    name: string;
+}
 
-type AccountFormValues = z.infer<typeof accountFormSchema>;
+export function ProfileForm({ name }: ProfileFormProps) {
+    const [formState, formAction] = useFormState(
+        changeProfile,
+        changeProfileIS
+    );
 
-// This can come from your database or API.
-const defaultValues: Partial<AccountFormValues> = {
-    // name: "Your name",
-    // dob: new Date("2023-01-23"),
-};
-
-export function ProfileForm() {
-    const form = useForm<AccountFormValues>({
-        resolver: zodResolver(accountFormSchema),
-        defaultValues,
-    });
+    const { errors, message } = formState;
 
     return (
-        <Form {...form}>
-            <form className='space-y-8'>
-                <FormField
-                    control={form.control}
+        <form action={formAction} className='space-y-8'>
+            <div className='space-y-2'>
+                <Label>Name</Label>
+                <Input
                     name='name'
-                    render={({ field }) => (
-                        <FormItem>
-                            <FormLabel>Name</FormLabel>
-                            <FormControl>
-                                <Input placeholder='Your name' {...field} />
-                            </FormControl>
-                            <FormDescription>
-                                This is the name that will be displayed on your
-                                profile and in emails.
-                            </FormDescription>
-                            <FormMessage />
-                        </FormItem>
-                    )}
+                    defaultValue={name}
+                    placeholder='Your name'
+                    className={cn(errors.name && 'border-red-400')}
                 />
-                <InputFile name='file' label='Profile Pic' />
+                <p className='text-xs text-red-400'>{errors.name}</p>
+                <p className='text-sm text-muted-foreground'>
+                    This is the name that will be displayed on your profile and
+                    in emails.
+                </p>
+            </div>
 
-                <FormField
-                    control={form.control}
+            <div className='flex flex-col space-y-2'>
+                <Label>Language</Label>
+                <Combobox
                     name='language'
-                    render={({ field }) => (
-                        <FormItem className='flex flex-col'>
-                            <FormLabel>Language</FormLabel>
-                            <Popover>
-                                <PopoverTrigger asChild>
-                                    <FormControl>
-                                        <Button
-                                            variant='outline'
-                                            role='combobox'
-                                            className={cn(
-                                                'w-[200px] justify-between',
-                                                !field.value &&
-                                                    'text-muted-foreground'
-                                            )}
-                                        >
-                                            {field.value
-                                                ? languages.find(
-                                                      (language) =>
-                                                          language.value ===
-                                                          field.value
-                                                  )?.label
-                                                : 'Select language'}
-                                            <CaretSortIcon className='ml-2 h-4 w-4 shrink-0 opacity-50' />
-                                        </Button>
-                                    </FormControl>
-                                </PopoverTrigger>
-                                <PopoverContent className='w-[200px] p-0'>
-                                    <Command>
-                                        <CommandInput placeholder='Search language...' />
-                                        <CommandEmpty>
-                                            No language found.
-                                        </CommandEmpty>
-                                        <CommandGroup>
-                                            {languages.map((language) => (
-                                                <CommandItem
-                                                    value={language.label}
-                                                    key={language.value}
-                                                    onSelect={() => {
-                                                        form.setValue(
-                                                            'language',
-                                                            language.value
-                                                        );
-                                                    }}
-                                                >
-                                                    <CheckIcon
-                                                        className={cn(
-                                                            'mr-2 h-4 w-4',
-                                                            language.value ===
-                                                                field.value
-                                                                ? 'opacity-100'
-                                                                : 'opacity-0'
-                                                        )}
-                                                    />
-                                                    {language.label}
-                                                </CommandItem>
-                                            ))}
-                                        </CommandGroup>
-                                    </Command>
-                                </PopoverContent>
-                            </Popover>
-                            <FormDescription>
-                                This is the language that will be used in the
-                                dashboard.
-                            </FormDescription>
-                            <FormMessage />
-                        </FormItem>
+                    defaultValue='ptbr'
+                    options={languages}
+                    placeholderText='Language'
+                    searchText='Select a language'
+                    className={cn(
+                        'lg:max-w-xs',
+                        errors.language && 'border-red-400'
                     )}
                 />
-                <Button type='submit'>Update account</Button>
-            </form>
-        </Form>
+                <p className='text-sm text-muted-foreground'>
+                    This is the name that will be displayed on your profile and
+                    in emails.
+                </p>
+            </div>
+
+            {/* <InputFile
+                name='file'
+                label='Profile Pic'
+                className={cn(errors.profilePic && 'border-red-400')}
+            /> */}
+
+            <p className='text-xs text-red-400'>{errors.profilePic}</p>
+
+            <div className='flex justify-between'>
+                <Button type='submit'>Update</Button>
+                <Theme />
+            </div>
+        </form>
     );
 }

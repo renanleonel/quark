@@ -5,7 +5,6 @@ import {
     Drawer,
     DrawerClose,
     DrawerContent,
-    DrawerFooter,
     DrawerHeader,
     DrawerTitle,
     DrawerTrigger,
@@ -22,22 +21,22 @@ import {
     DialogTrigger,
 } from '@/components/ui/dialog';
 import { DrawerDescription } from '@/components/ui/drawer';
+import { deleteOrganizationIS } from '@/content/initial-states';
 import { useMediaQuery } from '@/hooks/use-media-query';
-import { Input } from '../ui/input';
-import { useFormState } from 'react-dom';
-import { deactivateAccount } from '@/lib/actions';
-import { deactivateAccountIS } from '@/content/initial-states';
+import { deleteOrganization } from '@/lib/actions';
 import { cn } from '@/lib/utils';
 import { DialogClose } from '@radix-ui/react-dialog';
+import { useFormState } from 'react-dom';
 import SubmitButton from '../form/submit-button';
+import { Input } from '../ui/input';
 
-export function DrawerDeactivateAccount() {
+export function DrawerDeleteOrganization() {
     const [open, setOpen] = React.useState(false);
     const isDesktop = useMediaQuery('(min-width: 768px)');
 
     const [formState, formAction] = useFormState(
-        deactivateAccount,
-        deactivateAccountIS
+        deleteOrganization,
+        deleteOrganizationIS
     );
 
     if (isDesktop) {
@@ -48,36 +47,37 @@ export function DrawerDeactivateAccount() {
                         variant='ghost'
                         className='w-full text-red-800 hover:bg-red-800 hover:text-white'
                     >
-                        Deactivate account
+                        Delete organization
                     </Button>
                 </DialogTrigger>
                 <DialogContent className='sm:max-w-[525px]'>
                     <DialogHeader>
-                        <DialogTitle>Deactivate account</DialogTitle>
+                        <DialogTitle>Delete organization</DialogTitle>
                         <DialogDescription className='space-y-4 pt-4'>
                             <div>
-                                You’re about to start the process of
-                                deactivating your Quark account.
+                                You’re about to delete your organization. This
+                                will remove all your projects and data.
                             </div>
                             <div>
-                                To confirm this action, type the email
-                                associated with your account and click the
-                                confirm button.
+                                To confirm this action, type the organization
+                                name and click the confirm button.
                             </div>
-                            <div>This action is irreversible.</div>
+                            <div>
+                                You will be logged out after deleting. This
+                                action is irreversible.
+                            </div>
                             <form action={formAction} className='space-y-4'>
                                 <div className='space-y-2'>
                                     <Input
-                                        type='email'
-                                        name='email'
-                                        placeholder='Email'
+                                        name='name'
+                                        placeholder='Organização'
                                         className={cn(
-                                            formState?.errors.email &&
+                                            formState?.errors.name &&
                                                 'border-red-400'
                                         )}
                                     />
                                     <p className='text-xs text-red-400'>
-                                        {formState?.errors.email}
+                                        {formState?.errors.name}
                                     </p>
                                 </div>
                                 <div className='flex w-full gap-4 pt-4'>
@@ -111,39 +111,41 @@ export function DrawerDeactivateAccount() {
                     variant='ghost'
                     className='w-full text-red-800 hover:bg-red-800 hover:text-white'
                 >
-                    Deactivate account
+                    Delete organization
                 </Button>
             </DrawerTrigger>
             <DrawerContent>
                 <DrawerHeader className='text-left'>
-                    <DrawerTitle>Deactivate account</DrawerTitle>
+                    <DrawerTitle>Delete organization</DrawerTitle>
                     <DrawerDescription className='space-y-4 pt-4'>
                         <div>
-                            You’re about to start the process of deactivating
-                            your Quark account.
+                            You’re about to delete your organization. This will
+                            remove all your projects and data.
                         </div>
                         <div>
-                            To confirm this action, type the email associated
-                            with your account and click the confirm button.
+                            To confirm this action, type the organization name
+                            and click the confirm button.
                         </div>
-                        <div>This action is irreversible.</div>
+                        <div>
+                            You will be logged out after deleting. This action
+                            is irreversible.
+                        </div>
                         <form action={formAction} className='space-y-4'>
                             <div className='space-y-2'>
                                 <Input
-                                    type='email'
-                                    name='email'
-                                    placeholder='Email'
+                                    name='name'
+                                    placeholder='Organização'
                                     className={cn(
-                                        formState?.errors.email &&
+                                        formState?.errors.name &&
                                             'border-red-400'
                                     )}
                                 />
                                 <p className='text-xs text-red-400'>
-                                    {formState?.errors.email}
+                                    {formState?.errors.name}
                                 </p>
                             </div>
                             <div className='flex w-full gap-4 pt-4'>
-                                <DrawerClose asChild>
+                                <DialogClose asChild>
                                     <Button
                                         variant='outline'
                                         className='w-full'
@@ -151,7 +153,7 @@ export function DrawerDeactivateAccount() {
                                     >
                                         Cancel
                                     </Button>
-                                </DrawerClose>
+                                </DialogClose>
                                 <SubmitButton
                                     text='Confirm'
                                     variant='destructive'

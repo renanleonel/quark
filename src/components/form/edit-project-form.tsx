@@ -3,7 +3,7 @@
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { editProjectInitialState } from '@/content/initial-states';
+import { projectIS } from '@/content/initial-states';
 import { editProject } from '@/lib/actions';
 import { cn } from '@/lib/utils';
 import { useEffect } from 'react';
@@ -18,10 +18,7 @@ interface EditProjectFormProps {
 const EditProjectForm = ({ id, setOpen }: EditProjectFormProps) => {
     const action = editProject.bind(null, id);
 
-    const [formState, formAction] = useFormState(
-        action,
-        editProjectInitialState
-    );
+    const [formState, formAction] = useFormState(action, projectIS);
 
     const { message, errors } = formState;
 
@@ -31,7 +28,7 @@ const EditProjectForm = ({ id, setOpen }: EditProjectFormProps) => {
 
             setOpen(false);
         }
-    }, [message, formState]);
+    }, [message, formState]); // eslint-disable-line react-hooks/exhaustive-deps
 
     return (
         <form action={formAction} className='space-y-4'>
