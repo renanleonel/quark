@@ -1,8 +1,8 @@
 'use client';
 
-import { changePassword, recover } from '@/lib/actions';
+import { changePassword } from '@/lib/actions';
 import { useEffect, useRef } from 'react';
-import { useFormState, useFormStatus } from 'react-dom';
+import { useFormState } from 'react-dom';
 import { changePasswordIS } from '@/content/initial-states';
 
 import { Input } from '@/components/ui/input';
@@ -25,7 +25,7 @@ const AccountForm = () => {
         }
     }, [formState]);
 
-    const { errors, message } = formState;
+    const { errors } = formState;
 
     return (
         <form action={formAction} ref={formRef} className='space-y-4'>

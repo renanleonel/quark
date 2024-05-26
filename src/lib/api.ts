@@ -1,6 +1,5 @@
 import { projects } from '@/content/constants';
 import { members, tickets } from '@/content/mock';
-import { revalidatePath } from 'next/cache';
 
 export async function getOrganization() {
     return {

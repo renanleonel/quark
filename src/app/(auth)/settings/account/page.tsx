@@ -1,12 +1,11 @@
 import { Metadata } from 'next';
+import { Suspense } from 'react';
 
+import Loading from './loading';
 import { Label } from '@/components/ui/label';
-import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
 import AccountForm from '@/components/form/account-form';
 import { DrawerDeactivateAccount } from '@/components/drawer/drawer-deactivate-account';
-import { Suspense } from 'react';
-import Loading from './loading';
 
 export const metadata: Metadata = {
     title: 'Configurações',

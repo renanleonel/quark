@@ -120,15 +120,15 @@ export async function signup(_: any, formData: FormData) {
         }
 
         if (organizationName) {
-            const organization = await createOrganization(organizationName);
+            // const organization = await createOrganization(organizationName);
             // link organization to user
         }
 
-        const body = {
-            name,
-            email,
-            password,
-        };
+        // const body = {
+        //     name,
+        //     email,
+        //     password,
+        // };
         await sendConfirmationEmail(email);
 
         return {
@@ -531,7 +531,7 @@ export async function deleteOrganization(_: any, formData: FormData) {
     let success = false;
 
     try {
-        const name = formData.get('name');
+        // const name = formData.get('name');
 
         //check if org name == name
 

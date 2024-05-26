@@ -1,6 +1,5 @@
 'use client';
 
-import { InputFile } from '@/components/input-file';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import Combobox from '@/components/ui/combobox';
@@ -26,7 +25,7 @@ export function ProfileForm({ name }: ProfileFormProps) {
         changeProfileIS
     );
 
-    const { errors, message } = formState;
+    const { errors } = formState;
 
     return (
         <form action={formAction} className='space-y-8'>

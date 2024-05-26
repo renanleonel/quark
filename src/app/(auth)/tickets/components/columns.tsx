@@ -1,39 +1,13 @@
 'use client';
 
-import { ColumnDef } from '@tanstack/react-table';
-
-import { Badge } from '@/components/ui/badge';
-import { Checkbox } from '@/components/ui/checkbox';
-
 import { Ticket } from '@/types';
-import { types, priorities, projects, statuses } from '@/content/constants';
-import { DataTableColumnHeader } from './data-table-column-header';
+import { Badge } from '@/components/ui/badge';
+import { ColumnDef } from '@tanstack/react-table';
 import { DataTableRowActions } from './data-table-row-actions';
+import { DataTableColumnHeader } from './data-table-column-header';
+import { types, priorities, projects, statuses } from '@/content/constants';
 
 export const columns: ColumnDef<Ticket>[] = [
-    // {
-    //     id: 'select',
-    //     enableSorting: false,
-    //     enableHiding: false,
-    //     header: ({ table }) => (
-    //         <Checkbox
-    //             checked={table.getIsAllPageRowsSelected()}
-    //             onCheckedChange={(value) =>
-    //                 table.toggleAllPageRowsSelected(!!value)
-    //             }
-    //             aria-label='Select all'
-    //             className='translate-y-[2px]'
-    //         />
-    //     ),
-    //     cell: ({ row }) => (
-    //         <Checkbox
-    //             checked={row.getIsSelected()}
-    //             onCheckedChange={(value) => row.toggleSelected(!!value)}
-    //             aria-label='Select row'
-    //             className='translate-y-[2px]'
-    //         />
-    //     ),
-    // },
     {
         accessorKey: 'title',
         enableSorting: false,

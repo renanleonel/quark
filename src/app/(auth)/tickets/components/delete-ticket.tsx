@@ -2,9 +2,8 @@
 
 import * as React from 'react';
 
-import { cn } from '@/lib/utils';
-import { useMediaQuery } from '@/hooks/use-media-query';
 import { Button } from '@/components/ui/button';
+import { useMediaQuery } from '@/hooks/use-media-query';
 import {
     Dialog,
     DialogContent,
@@ -43,16 +42,7 @@ export function DeleteTicket({ children }: DeleteTicketProps) {
     if (isDesktop) {
         return (
             <Dialog open={open} onOpenChange={setOpen}>
-                <DialogTrigger asChild>
-                    {/* <h1
-                        className={cn(
-                            'hover:bg-accent relative flex cursor-pointer select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none transition-colors focus:bg-accent focus:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50'
-                        )}
-                    >
-                        Delete
-                    </h1> */}
-                    {children}
-                </DialogTrigger>
+                <DialogTrigger asChild>{children}</DialogTrigger>
                 <DialogContent className='sm:max-w-[425px]'>
                     <DialogHeader>
                         <DialogTitle>Delete ticket</DialogTitle>
@@ -74,16 +64,7 @@ export function DeleteTicket({ children }: DeleteTicketProps) {
 
     return (
         <Drawer open={open} onOpenChange={setOpen}>
-            <DrawerTrigger asChild>
-                {/* <h1
-                    className={cn(
-                        'hover:bg-accent relative flex cursor-pointer select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none transition-colors focus:bg-accent focus:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50'
-                    )}
-                >
-                    Delete
-                </h1> */}
-                {children}
-            </DrawerTrigger>
+            <DrawerTrigger asChild>{children}</DrawerTrigger>
             <DrawerContent>
                 <DrawerHeader className='text-left'>
                     <DrawerTitle>Delete ticket</DrawerTitle>

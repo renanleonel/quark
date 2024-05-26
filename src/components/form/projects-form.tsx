@@ -10,7 +10,7 @@ import SubmitButton from './submit-button';
 export function ProjectsForm() {
     const [formState, formAction] = useFormState(createProject, projectIS);
 
-    const { message, errors } = formState;
+    const { errors } = formState;
 
     return (
         <form action={formAction} className='space-y-4'>
