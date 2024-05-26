@@ -1,16 +1,17 @@
 'use client';
 
+import { cn } from '@/lib/utils';
 import { usePathname } from 'next/navigation';
 import { SuperLink } from '@/components/super-link';
+import { buttonVariants } from '@/components/ui/button';
 
-import { cn } from '@/lib/utils';
-import { buttonVariants } from './ui/button';
+interface SidebarNavItem {
+    href: string;
+    title: string;
+}
 
-interface SidebarNavProps extends React.HTMLAttributes<HTMLElement> {
-    items: {
-        href: string;
-        title: string;
-    }[];
+interface SidebarNavProps extends React.ComponentPropsWithoutRef<'nav'> {
+    items: SidebarNavItem[];
 }
 
 export function SidebarNav({ className, items, ...props }: SidebarNavProps) {

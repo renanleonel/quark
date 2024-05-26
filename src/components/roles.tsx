@@ -5,11 +5,11 @@ import { ChevronDownIcon } from '@radix-ui/react-icons';
 
 import {
     Command,
+    CommandItem,
+    CommandList,
     CommandEmpty,
     CommandGroup,
     CommandInput,
-    CommandItem,
-    CommandList,
 } from '@/components/ui/command';
 
 import {
@@ -20,17 +20,18 @@ import {
 
 import {
     AlertDialog,
+    AlertDialogTitle,
     AlertDialogAction,
     AlertDialogCancel,
-    AlertDialogContent,
-    AlertDialogDescription,
     AlertDialogFooter,
     AlertDialogHeader,
-    AlertDialogTitle,
+    AlertDialogContent,
     AlertDialogTrigger,
+    AlertDialogDescription,
 } from '@/components/ui/alert-dialog';
-import { Button } from '@/components/ui/button';
+
 import { roles } from '@/content/constants';
+import { Button } from '@/components/ui/button';
 
 interface RolesProps {
     role: string;
@@ -40,9 +41,9 @@ export const Roles = ({ role }: RolesProps) => {
     const [open, setOpen] = useState(false);
     const [value, setValue] = useState(role);
 
-    const handleChangeRole = (role: string) => {
+    function handleChangeRole(role: string) {
         setValue(role);
-    };
+    }
 
     return (
         <Popover open={open} onOpenChange={setOpen}>

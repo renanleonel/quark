@@ -78,7 +78,7 @@ export const NewTicketForm = () => {
                                 <SelectTrigger
                                     id='type'
                                     className={cn(
-                                        'line-clamp-1 truncate lg:w-full',
+                                        'truncate lg:w-full',
                                         errors.type && 'border-red-400'
                                     )}
                                 >
@@ -105,7 +105,7 @@ export const NewTicketForm = () => {
                                 <SelectTrigger
                                     id='priority'
                                     className={cn(
-                                        'line-clamp-1 truncate lg:w-full',
+                                        'truncate lg:w-full',
                                         errors.priority && 'border-red-400'
                                     )}
                                 >
@@ -149,7 +149,7 @@ export const NewTicketForm = () => {
                                 <SelectTrigger
                                     id='status'
                                     className={cn(
-                                        'line-clamp-1 truncate lg:w-full',
+                                        'truncate lg:w-full',
                                         errors.priority && 'border-red-400'
                                     )}
                                 >

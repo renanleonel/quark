@@ -7,10 +7,10 @@ import {
     CardTitle,
 } from '@/components/ui/card';
 import { Separator } from '@/components/ui/separator';
-
 import { NewTicketForm } from '@/components/form/new-ticket-form';
-import { Suspense } from 'react';
+
 import Loading from './loading';
+import { Suspense } from 'react';
 
 export const metadata: Metadata = {
     title: 'Novo ticket',
