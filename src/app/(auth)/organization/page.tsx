@@ -65,7 +65,7 @@ export default async function Organization() {
                                         Analytics
                                     </TabsTrigger>
                                 </TabsList>
-                                {role === 'admin' && (
+                                {role === 'ADMIN' && (
                                     <div className='flex flex-col gap-4 sm:flex-row md:gap-2'>
                                         <Link
                                             href='/organization/projects'

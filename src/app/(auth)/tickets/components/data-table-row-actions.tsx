@@ -29,7 +29,7 @@ export function DataTableRowActions({ row }: DataTableRowActionsProps) {
     const role = session.data?.user.role;
 
     const hasPermissions =
-        role === 'admin' || ticket.createdBy === session.data?.user.id;
+        role === 'ADMIN' || ticket.createdBy === session.data?.user.id;
 
     return (
         <DropdownMenu>

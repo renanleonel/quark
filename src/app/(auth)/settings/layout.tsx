@@ -36,7 +36,7 @@ export default async function Layout({
 
     const { role } = session.user;
 
-    if (role === 'admin' && sidebarNavItems.length === 3) {
+    if (role === 'ADMIN' && sidebarNavItems.length === 3) {
         sidebarNavItems.splice(1, 0, {
             title: 'Organização',
             href: '/settings/organization',

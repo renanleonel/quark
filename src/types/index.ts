@@ -7,3 +7,5 @@ export type Ticket = z.infer<typeof ticketSchema> & {
     createdAt: string;
     updatedAt: string;
 };
+
+export type Role = 'ADMIN' | 'USER';

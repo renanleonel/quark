@@ -1,6 +1,7 @@
 /* eslint-disable no-unused-vars */
 
 import NextAuth from 'next-auth';
+import { Role } from '@/types/index';
 
 declare module 'next-auth' {
     interface Session {
@@ -10,7 +11,7 @@ declare module 'next-auth' {
             email: string;
             image: string;
             password: string;
-            role: string;
+            role: Role;
             organization: string;
         };
     }

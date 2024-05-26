@@ -25,7 +25,7 @@ export default async function Edit({ params }: { params: { id: string } }) {
 
     const ticket = await getTicket(params.id);
 
-    if (role !== 'admin' && ticket.createdBy !== id) redirect('/tickets');
+    if (role !== 'ADMIN' && ticket.createdBy !== id) redirect('/tickets');
 
     return (
         <Suspense fallback={<Loading />}>

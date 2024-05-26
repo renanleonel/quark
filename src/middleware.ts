@@ -21,7 +21,7 @@ export default auth((req) => {
         return Response.redirect(new URL('/', nextUrl));
     }
 
-    if (isAdminRoute && role !== 'admin') {
+    if (isAdminRoute && role !== 'ADMIN') {
         return Response.redirect(new URL(DEFAULT_REDIRECT, nextUrl));
     }
 });
