@@ -22,13 +22,13 @@ import {
 } from '@/components/ui/dialog';
 import { DrawerDescription } from '@/components/ui/drawer';
 import { useMediaQuery } from '@/hooks/use-media-query';
-import { Input } from '../ui/input';
+import { Input } from '@/components/ui/input';
 import { useFormState } from 'react-dom';
 import { deactivateAccount } from '@/lib/actions';
 import { deactivateAccountIS } from '@/content/initial-states';
 import { cn } from '@/lib/utils';
 import { DialogClose } from '@radix-ui/react-dialog';
-import SubmitButton from '../form/submit-button';
+import { SubmitButton } from '@/components/form/submit-button';
 
 export function DrawerDeactivateAccount() {
     const [open, setOpen] = React.useState(false);

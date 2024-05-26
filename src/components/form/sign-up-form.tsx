@@ -10,17 +10,15 @@ import { useEffect, useRef } from 'react';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Separator } from '@/components/ui/separator';
-import SubmitButton from '@/components/form/submit-button';
+import { SubmitButton } from '@/components/form/submit-button';
 import { signupIS } from '@/content/initial-states';
 
-interface SignUpFormProps extends React.HTMLAttributes<HTMLDivElement> {}
-
-const SignUpForm = ({ className, ...props }: SignUpFormProps) => {
-    const formRef = useRef<HTMLFormElement>(null);
-    const [formState, formAction] = useFormState(signup, signupIS);
-    const { errors, message } = formState;
-
+export const SignUpForm = () => {
     const router = useRouter();
+    const ref = useRef<HTMLFormElement>(null);
+    const [formState, formAction] = useFormState(signup, signupIS);
+
+    const { errors, message } = formState;
 
     useEffect(() => {
         if (message === 'missing organization') {
@@ -29,15 +27,15 @@ const SignUpForm = ({ className, ...props }: SignUpFormProps) => {
 
         if (message === 'success') {
             toast.success('Cadastro realizado com sucesso!');
-            formRef.current?.reset();
+            ref.current?.reset();
 
             router.replace('/');
         }
     }, [formState, message, router]);
 
     return (
-        <main className={cn('grid gap-6', className)} {...props}>
-            <form ref={formRef} action={formAction}>
+        <main className='grid gap-6'>
+            <form ref={ref} action={formAction}>
                 <section className='grid gap-4'>
                     <div className='grid gap-1 space-y-1'>
                         <Label htmlFor='name'>Nome</Label>
@@ -130,5 +128,3 @@ const SignUpForm = ({ className, ...props }: SignUpFormProps) => {
         </main>
     );
 };
-
-export default SignUpForm;

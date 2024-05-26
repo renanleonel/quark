@@ -3,35 +3,37 @@
 import { toast } from 'sonner';
 import { useState } from 'react';
 import { TrashIcon } from 'lucide-react';
-import { Button } from '@/components/ui/button';
+import { deleteMember } from '@/lib/actions';
 import { useMediaQuery } from '@/hooks/use-media-query';
 
 import {
     Dialog,
+    DialogClose,
+    DialogTitle,
+    DialogHeader,
+    DialogTrigger,
     DialogContent,
     DialogDescription,
-    DialogHeader,
-    DialogTitle,
-    DialogTrigger,
-    DialogClose,
 } from '@/components/ui/dialog';
+
 import {
     Drawer,
     DrawerClose,
-    DrawerContent,
-    DrawerDescription,
+    DrawerTitle,
     DrawerFooter,
     DrawerHeader,
-    DrawerTitle,
     DrawerTrigger,
+    DrawerContent,
+    DrawerDescription,
 } from '@/components/ui/drawer';
-import { deleteMember } from '@/lib/actions';
 
-export function DeleteMember() {
+import { Button } from '@/components/ui/button';
+
+export const DeleteMember = () => {
     const [open, setOpen] = useState(false);
     const isDesktop = useMediaQuery('(min-width: 768px)');
 
-    const handleDeleteMember = async () => {
+    async function handleDeleteMember() {
         const req = await deleteMember('memberID');
 
         setOpen(false);
@@ -41,7 +43,7 @@ export function DeleteMember() {
         }
 
         return toast.success('Membro deletado com sucesso!');
-    };
+    }
 
     if (isDesktop) {
         return (
@@ -102,4 +104,4 @@ export function DeleteMember() {
             </DrawerContent>
         </Drawer>
     );
-}
+};

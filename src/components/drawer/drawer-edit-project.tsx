@@ -11,7 +11,7 @@ import {
     DrawerTrigger,
 } from '@/components/ui/drawer';
 import { Pencil } from 'lucide-react';
-import EditProjectForm from '../form/edit-project-form';
+import { EditProjectForm } from '@/components/form/edit-project-form';
 import { useState } from 'react';
 
 interface DrawerEditProjectProps {

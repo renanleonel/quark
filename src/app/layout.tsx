@@ -1,7 +1,8 @@
 import '@/styles/globals.css';
-import Providers from './providers';
 import type { Metadata } from 'next';
 import { GeistSans } from 'geist/font/sans';
+
+import { Providers } from './providers';
 
 export const metadata: Metadata = {
     title: 'Quark',

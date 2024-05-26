@@ -1,34 +1,34 @@
 'use client';
 
-import { changePassword } from '@/lib/actions';
-import { useEffect, useRef } from 'react';
+import { toast } from 'sonner';
+import { cn } from '@/lib/utils';
 import { useFormState } from 'react-dom';
+import { useEffect, useRef } from 'react';
+import { changePassword } from '@/lib/actions';
 import { changePasswordIS } from '@/content/initial-states';
 
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import SubmitButton from '@/components/form/submit-button';
-import { toast } from 'sonner';
-import { cn } from '@/lib/utils';
+import { SubmitButton } from '@/components/form/submit-button';
 
-const AccountForm = () => {
-    const formRef = useRef<HTMLFormElement>(null);
+export const AccountForm = () => {
+    const ref = useRef<HTMLFormElement>(null);
     const [formState, formAction] = useFormState(
         changePassword,
         changePasswordIS
     );
 
-    useEffect(() => {
-        if (formState?.message === 'success') {
-            toast.success('Password updated successfully!');
-            formRef.current?.reset();
-        }
-    }, [formState]);
+    const { errors, message } = formState;
 
-    const { errors } = formState;
+    useEffect(() => {
+        if (message === 'success') {
+            toast.success('Password updated successfully!');
+            ref.current?.reset();
+        }
+    }, [formState, message]);
 
     return (
-        <form action={formAction} ref={formRef} className='space-y-4'>
+        <form action={formAction} ref={ref} className='space-y-4'>
             <div className='space-y-1'>
                 <Label>Password</Label>
                 <Input
@@ -69,5 +69,3 @@ const AccountForm = () => {
         </form>
     );
 };
-
-export default AccountForm;

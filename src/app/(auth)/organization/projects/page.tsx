@@ -1,4 +1,4 @@
-import DeleteProject from './delete-project';
+import { DeleteProject } from './delete-project';
 import { Card } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 

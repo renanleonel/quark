@@ -3,9 +3,9 @@ import { Metadata } from 'next';
 
 import { Label } from '@/components/ui/label';
 import { Button } from '@/components/ui/button';
+import { AuthForm } from '@/components/form/auth-form';
 import { Separator } from '@/components/ui/separator';
-import AuthForm from '@/components/form/auth-form';
-import GoogleLogin from '@/components/google-login';
+import { GoogleLogin } from '@/components/google-login';
 
 export const metadata: Metadata = {
     title: 'Entrar',

@@ -26,8 +26,8 @@ import { deleteOrganization } from '@/lib/actions';
 import { cn } from '@/lib/utils';
 import { DialogClose } from '@radix-ui/react-dialog';
 import { useFormState } from 'react-dom';
-import SubmitButton from '../form/submit-button';
-import { Input } from '../ui/input';
+import { SubmitButton } from '@/components/form/submit-button';
+import { Input } from '@/components/ui/input';
 
 export function DrawerDeleteOrganization() {
     const [open, setOpen] = React.useState(false);

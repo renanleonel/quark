@@ -162,6 +162,11 @@ export async function recover(_: any, formData: FormData) {
         }
 
         await sendRecoverEmail(email);
+
+        return {
+            message: 'success',
+            errors: {},
+        };
     } catch (error) {
         return {
             message: 'unknown error',

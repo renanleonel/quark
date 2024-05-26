@@ -1,13 +1,14 @@
 'use client';
 
-import { Input } from '@/components/ui/input';
-import { projectIS } from '@/content/initial-states';
-import { createProject } from '@/lib/actions';
 import { cn } from '@/lib/utils';
 import { useFormState } from 'react-dom';
-import SubmitButton from './submit-button';
+import { createProject } from '@/lib/actions';
+import { projectIS } from '@/content/initial-states';
 
-export function ProjectsForm() {
+import { Input } from '@/components/ui/input';
+import { SubmitButton } from '@/components/form/submit-button';
+
+export const ProjectsForm = () => {
     const [formState, formAction] = useFormState(createProject, projectIS);
 
     const { errors } = formState;
@@ -27,4 +28,4 @@ export function ProjectsForm() {
             <SubmitButton className='w-full' text='Criar' />
         </form>
     );
-}
+};

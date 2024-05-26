@@ -4,10 +4,10 @@ import Link from 'next/link';
 
 import { cn } from '@/lib/utils';
 // import { usePathname } from 'next/navigation';
-import User from './user';
 import { auth } from '@/auth';
+import { User } from './user';
 
-const Navbar = async ({
+export const Navbar = async ({
     className,
     ...props
 }: React.HTMLAttributes<HTMLElement>) => {
@@ -68,5 +68,3 @@ const Navbar = async ({
         </div>
     );
 };
-
-export default Navbar;

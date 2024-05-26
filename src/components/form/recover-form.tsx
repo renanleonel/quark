@@ -9,22 +9,24 @@ import { recoverIS } from '@/content/initial-states';
 
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import SubmitButton from '@/components/form/submit-button';
+import { SubmitButton } from '@/components/form/submit-button';
 
-const RecoverForm = () => {
-    const formRef = useRef<HTMLFormElement>(null);
+export const RecoverForm = () => {
+    const ref = useRef<HTMLFormElement>(null);
     const [formState, formAction] = useFormState(recover, recoverIS);
 
+    const { errors, message } = formState;
+
     useEffect(() => {
-        if (formState?.message === 'success') {
+        if (message === 'success') {
             toast.success('Verifique seu e-mail.');
-            formRef.current?.reset();
+            ref.current?.reset();
         }
-    }, [formState]);
+    }, [formState, message]);
 
     return (
         <main className='grid gap-6'>
-            <form action={formAction} ref={formRef}>
+            <form action={formAction} ref={ref}>
                 <section className='grid gap-4'>
                     <div className='grid gap-1'>
                         <Label className='sr-only' htmlFor='email'>
@@ -36,13 +38,9 @@ const RecoverForm = () => {
                             type='email'
                             name='email'
                             placeholder='email@gmail.com'
-                            className={cn(
-                                formState?.errors?.email && 'border-red-400'
-                            )}
+                            className={cn(errors?.email && 'border-red-400')}
                         />
-                        <p className='text-xs text-red-400'>
-                            {formState?.errors?.email}
-                        </p>
+                        <p className='text-xs text-red-400'>{errors?.email}</p>
                     </div>
 
                     <SubmitButton text='Recuperar' />
@@ -51,5 +49,3 @@ const RecoverForm = () => {
         </main>
     );
 };
-
-export default RecoverForm;

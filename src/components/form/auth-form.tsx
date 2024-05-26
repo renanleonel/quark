@@ -3,14 +3,16 @@
 import { cn } from '@/lib/utils';
 import { useFormState } from 'react-dom';
 import { authenticate } from '@/lib/actions';
+import { authIS } from '@/content/initial-states';
 
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import SubmitButton from '@/components/form/submit-button';
-import { authIS } from '@/content/initial-states';
+import { SubmitButton } from '@/components/form/submit-button';
 
-const AuthForm = () => {
+export const AuthForm = () => {
     const [formState, formAction] = useFormState(authenticate, authIS);
+
+    const { errors } = formState;
 
     return (
         <main className='grid gap-6'>
@@ -26,13 +28,9 @@ const AuthForm = () => {
                             type='email'
                             name='email'
                             placeholder='email@gmail.com'
-                            className={cn(
-                                formState.errors.email && 'border-red-400'
-                            )}
+                            className={cn(errors.email && 'border-red-400')}
                         />
-                        <p className='text-xs text-red-400'>
-                            {formState.errors.email}
-                        </p>
+                        <p className='text-xs text-red-400'>{errors.email}</p>
                     </div>
 
                     <div className='grid gap-1'>
@@ -45,12 +43,10 @@ const AuthForm = () => {
                             type='password'
                             name='password'
                             placeholder='********'
-                            className={cn(
-                                formState.errors.password && 'border-red-400'
-                            )}
+                            className={cn(errors.password && 'border-red-400')}
                         />
                         <p className='text-xs text-red-400'>
-                            {formState.errors.password}
+                            {errors.password}
                         </p>
                     </div>
 
@@ -60,5 +56,3 @@ const AuthForm = () => {
         </main>
     );
 };
-
-export default AuthForm;

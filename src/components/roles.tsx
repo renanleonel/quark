@@ -36,7 +36,7 @@ interface RolesProps {
     role: string;
 }
 
-const Roles = ({ role }: RolesProps) => {
+export const Roles = ({ role }: RolesProps) => {
     const [open, setOpen] = useState(false);
     const [value, setValue] = useState(role);
 
@@ -114,5 +114,3 @@ const Roles = ({ role }: RolesProps) => {
         </Popover>
     );
 };
-
-export default Roles;

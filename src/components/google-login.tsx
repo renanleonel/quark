@@ -5,7 +5,7 @@ import { Button } from '@/components/ui/button';
 import Image from 'next/image';
 import google from '../../public/google.svg';
 
-const GoogleLogin = () => {
+export const GoogleLogin = () => {
     async function handleGoogleLogin() {
         await signIn('google', {
             callbackUrl: '/tickets',
@@ -25,5 +25,3 @@ const GoogleLogin = () => {
         </Button>
     );
 };
-
-export default GoogleLogin;

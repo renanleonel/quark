@@ -12,7 +12,7 @@ import {
     DrawerTrigger,
 } from '@/components/ui/drawer';
 import { ProjectsForm } from '../form/projects-form';
-import { Separator } from '../ui/separator';
+import { Separator } from '@/components/ui/separator';
 
 export function DrawerNewProjects() {
     return (

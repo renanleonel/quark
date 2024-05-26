@@ -8,7 +8,7 @@ import {
 } from '@/components/ui/card';
 import { Separator } from '@/components/ui/separator';
 
-import NewTicketForm from '@/components/form/new-ticket-form';
+import { NewTicketForm } from '@/components/form/new-ticket-form';
 import { Suspense } from 'react';
 import Loading from './loading';
 

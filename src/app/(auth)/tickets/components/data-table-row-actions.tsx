@@ -15,7 +15,7 @@ import {
 import Link from 'next/link';
 import { DeleteTicket } from '@/app/(auth)/tickets/components/delete-ticket';
 import { useSession } from 'next-auth/react';
-import ChangeTicketStatus from './change-ticket-status';
+import { ChangeTicketStatus } from './change-ticket-status';
 import { Ticket } from '@/types';
 
 interface DataTableRowActionsProps {

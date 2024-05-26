@@ -10,7 +10,7 @@ import {
     CardTitle,
 } from '@/components/ui/card';
 import { Separator } from '@/components/ui/separator';
-import EditTicketForm from '@/components/form/edit-ticket-form';
+import { EditTicketForm } from '@/components/form/edit-ticket-form';
 import { Suspense } from 'react';
 import Loading from './loading';
 

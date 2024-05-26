@@ -1,8 +1,8 @@
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
-import SubmitButton from '@/components/form/submit-button';
+import { SubmitButton } from '@/components/form/submit-button';
 
-const HelpForm = () => {
+export const HelpForm = () => {
     return (
         <form className='mt-4 flex h-full flex-col gap-2'>
             <Input id='email' placeholder='Como podemos ajudar?' name='name' />
@@ -19,5 +19,3 @@ const HelpForm = () => {
         </form>
     );
 };
-
-export default HelpForm;

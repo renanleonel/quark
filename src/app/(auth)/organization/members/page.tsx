@@ -1,4 +1,4 @@
-import Roles from '@/components/roles';
+import { Roles } from '@/components/roles';
 import { Input } from '@/components/ui/input';
 import { DeleteMember } from '@/components/delete-member';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';

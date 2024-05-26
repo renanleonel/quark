@@ -9,7 +9,7 @@ import {
     DropdownMenuSeparator,
     DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-import SignOut from './sign-out';
+import { SignOut } from './sign-out';
 import { auth } from '@/auth';
 import Link from 'next/link';
 
@@ -19,7 +19,7 @@ interface UserProps {
     fallback: string;
 }
 
-const User = async ({ icon, alt, fallback }: UserProps) => {
+export const User = async ({ icon, alt, fallback }: UserProps) => {
     const session = await auth();
 
     return (
@@ -58,5 +58,3 @@ const User = async ({ icon, alt, fallback }: UserProps) => {
         </DropdownMenu>
     );
 };
-
-export default User;

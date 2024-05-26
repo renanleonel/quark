@@ -10,40 +10,39 @@ import { priorities, projects, statuses, types } from '@/content/constants';
 
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import Combobox from '@/components/ui/combobox';
+import { Combobox } from '@/components/ui/combobox';
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
 import { CardContent, CardFooter } from '@/components/ui/card';
 
 import {
     Select,
-    SelectContent,
     SelectItem,
-    SelectTrigger,
     SelectValue,
+    SelectTrigger,
+    SelectContent,
 } from '@/components/ui/select';
 
 import { InputFile } from '@/components/input-file';
-import SubmitButton from '@/components/form/submit-button';
 import { ticketIS } from '@/content/initial-states';
+import { SubmitButton } from '@/components/form/submit-button';
 
-const NewTicketForm = () => {
+export const NewTicketForm = () => {
+    const ref = useRef<HTMLFormElement>(null);
     const [formState, formAction] = useFormState(newTicket, ticketIS);
 
     const { errors, message } = formState;
-    const ref = useRef<HTMLFormElement>(null);
 
     useEffect(() => {
         if (message === 'success') {
             toast.success('Created!');
-
             ref.current?.reset();
         }
 
         if (message === 'unknown error') {
             toast.error('Error!');
         }
-    }, [message, formState]);
+    }, [formState, message]);
 
     return (
         <form action={formAction} ref={ref}>
@@ -190,5 +189,3 @@ const NewTicketForm = () => {
         </form>
     );
 };
-
-export default NewTicketForm;

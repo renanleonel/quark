@@ -1,5 +1,5 @@
 import { Metadata } from 'next';
-import HelpForm from '@/components/form/help-form';
+import { HelpForm } from '@/components/form/help-form';
 import { Suspense } from 'react';
 import Loading from './loading';
 

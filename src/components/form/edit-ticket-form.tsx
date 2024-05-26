@@ -9,37 +9,37 @@ import { useEffect, useRef } from 'react';
 import { editTicket } from '@/lib/actions';
 import { useRouter } from 'next/navigation';
 import { Link as LinkIcon } from 'lucide-react';
+import { ticketIS } from '@/content/initial-states';
 import { priorities, projects, statuses, types } from '@/content/constants';
 
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import Combobox from '@/components/ui/combobox';
+import { Combobox } from '@/components/ui/combobox';
 import { Button } from '@/components/ui/button';
+import { InputFile } from '@/components/input-file';
 import { Textarea } from '@/components/ui/textarea';
 import { CardContent, CardFooter } from '@/components/ui/card';
 
 import {
     Select,
-    SelectContent,
     SelectItem,
-    SelectTrigger,
     SelectValue,
+    SelectTrigger,
+    SelectContent,
 } from '@/components/ui/select';
 
-import { InputFile } from '@/components/input-file';
-import SubmitButton from '@/components/form/submit-button';
-import { ticketIS } from '@/content/initial-states';
+import { SubmitButton } from '@/components/form/submit-button';
 
 interface EditFormProps {
     ticket: Ticket;
 }
 
-const EditTicketForm = ({ ticket }: EditFormProps) => {
+export const EditTicketForm = ({ ticket }: EditFormProps) => {
     const router = useRouter();
+    const ref = useRef<HTMLFormElement>(null);
     const [formState, formAction] = useFormState(editTicket, ticketIS);
 
     const { errors, message } = formState;
-    const ref = useRef<HTMLFormElement>(null);
 
     useEffect(() => {
         if (message === 'success') {
@@ -212,5 +212,3 @@ const EditTicketForm = ({ ticket }: EditFormProps) => {
         </form>
     );
 };
-
-export default EditTicketForm;

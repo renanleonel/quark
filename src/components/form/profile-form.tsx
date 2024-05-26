@@ -1,14 +1,15 @@
 'use client';
 
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import Combobox from '@/components/ui/combobox';
-import { Label } from '@/components/ui/label';
-import { changeProfileIS } from '@/content/initial-states';
-import { changeProfile } from '@/lib/actions';
-import { useFormState } from 'react-dom';
 import { cn } from '@/lib/utils';
-import { Theme } from '../ui/theme';
+import { useFormState } from 'react-dom';
+import { changeProfile } from '@/lib/actions';
+import { changeProfileIS } from '@/content/initial-states';
+
+import { Theme } from '@/components/ui/theme';
+import { Label } from '@/components/ui/label';
+import { Input } from '@/components/ui/input';
+import { Button } from '@/components/ui/button';
+import { Combobox } from '@/components/ui/combobox';
 
 const languages = [
     { label: 'Português', value: 'ptbr' },

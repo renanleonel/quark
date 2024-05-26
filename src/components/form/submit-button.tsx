@@ -1,7 +1,7 @@
 'use client';
 
-import { Icons } from '../ui/icons';
-import { Button } from '../ui/button';
+import { Icons } from '@/components/ui/icons';
+import { Button } from '@/components/ui/button';
 import { useFormStatus } from 'react-dom';
 
 interface SubmitButtonProps
@@ -12,7 +12,7 @@ interface SubmitButtonProps
     disabled?: boolean;
 }
 
-const SubmitButton = ({
+export const SubmitButton = ({
     text,
     className,
     variant,
@@ -32,5 +32,3 @@ const SubmitButton = ({
         </Button>
     );
 };
-
-export default SubmitButton;

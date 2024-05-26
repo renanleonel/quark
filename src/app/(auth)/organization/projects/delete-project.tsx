@@ -21,7 +21,7 @@ interface DeleteProjectProps {
     };
 }
 
-const DeleteProject = ({ project }: DeleteProjectProps) => {
+export const DeleteProject = ({ project }: DeleteProjectProps) => {
     const [open, setOpen] = useState(false);
 
     return (
@@ -48,5 +48,3 @@ const DeleteProject = ({ project }: DeleteProjectProps) => {
         </Dialog>
     );
 };
-
-export default DeleteProject;
