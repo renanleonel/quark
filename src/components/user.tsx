@@ -11,7 +11,7 @@ import {
 } from '@/components/ui/dropdown-menu';
 import { SignOut } from './sign-out';
 import { auth } from '@/auth';
-import Link from 'next/link';
+import { SuperLink } from '@/components/super-link';
 
 interface UserProps {
     icon: string;
@@ -47,7 +47,7 @@ export const User = async ({ icon, alt, fallback }: UserProps) => {
                 <DropdownMenuSeparator />
                 <DropdownMenuGroup>
                     <DropdownMenuItem>
-                        <Link href='/settings'>Configurações</Link>
+                        <SuperLink href='/settings'>Configurações</SuperLink>
                     </DropdownMenuItem>
                 </DropdownMenuGroup>
                 <DropdownMenuSeparator />

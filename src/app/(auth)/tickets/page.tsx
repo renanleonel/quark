@@ -1,7 +1,7 @@
-import Link from 'next/link';
 import { Metadata } from 'next';
 import { cn } from '@/lib/utils';
 import { Expand, X } from 'lucide-react';
+import { SuperLink } from '@/components/super-link';
 
 import {
     Card,
@@ -143,7 +143,7 @@ export default async function Tickets() {
 
                                                     <DrawerFooter>
                                                         <div className='space-y-2'>
-                                                            <Link
+                                                            <SuperLink
                                                                 href={`/edit/${ticket.id}`}
                                                                 className='w-full'
                                                             >
@@ -153,7 +153,7 @@ export default async function Tickets() {
                                                                 >
                                                                     Edit
                                                                 </Button>
-                                                            </Link>
+                                                            </SuperLink>
 
                                                             <DeleteTicket>
                                                                 <Button

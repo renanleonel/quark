@@ -1,7 +1,7 @@
-import Link from 'next/link';
 import { auth } from '@/auth';
 import { Metadata } from 'next';
 import { redirect } from 'next/navigation';
+import { SuperLink } from '@/components/super-link';
 
 import {
     Card,
@@ -67,7 +67,7 @@ export default async function Organization() {
                                 </TabsList>
                                 {role === 'ADMIN' && (
                                     <div className='flex flex-col gap-4 sm:flex-row md:gap-2'>
-                                        <Link
+                                        <SuperLink
                                             href='/organization/projects'
                                             className='w-full'
                                         >
@@ -77,8 +77,8 @@ export default async function Organization() {
                                             >
                                                 Projetos
                                             </Button>
-                                        </Link>
-                                        <Link
+                                        </SuperLink>
+                                        <SuperLink
                                             href='/organization/members'
                                             className='w-full'
                                         >
@@ -88,7 +88,7 @@ export default async function Organization() {
                                             >
                                                 Membros
                                             </Button>
-                                        </Link>
+                                        </SuperLink>
                                     </div>
                                 )}
                             </div>

@@ -3,7 +3,7 @@ import { ChevronLeft, ChevronRight, MoreHorizontal } from 'lucide-react';
 
 import { cn } from '@/lib/utils';
 import { ButtonProps, buttonVariants } from '@/components/ui/button';
-import Link from 'next/link';
+import { SuperLink } from '@/components/super-link';
 
 const Pagination = ({ className, ...props }: React.ComponentProps<'nav'>) => (
     <nav
@@ -37,7 +37,7 @@ PaginationItem.displayName = 'PaginationItem';
 type PaginationLinkProps = {
     isActive?: boolean;
 } & Pick<ButtonProps, 'size'> &
-    React.ComponentProps<typeof Link>;
+    React.ComponentProps<typeof SuperLink>;
 
 const PaginationLink = ({
     className,
@@ -46,7 +46,7 @@ const PaginationLink = ({
     ...props
 }: PaginationLinkProps) => (
     <PaginationItem>
-        <Link
+        <SuperLink
             aria-current={isActive ? 'page' : undefined}
             className={cn(
                 buttonVariants({

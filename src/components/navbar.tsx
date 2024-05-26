@@ -1,6 +1,6 @@
 // 'use client';
 
-import Link from 'next/link';
+import { SuperLink } from '@/components/super-link';
 
 import { cn } from '@/lib/utils';
 // import { usePathname } from 'next/navigation';
@@ -32,7 +32,7 @@ export const Navbar = async ({
                     )}
                     {...props}
                 >
-                    <Link
+                    <SuperLink
                         href='/tickets'
                         className={cn(
                             'text-sm font-medium text-muted-foreground transition-colors hover:text-primary hover:underline'
@@ -40,8 +40,8 @@ export const Navbar = async ({
                         )}
                     >
                         Tickets
-                    </Link>
-                    <Link
+                    </SuperLink>
+                    <SuperLink
                         href='/new-ticket'
                         className={cn(
                             'text-sm font-medium text-muted-foreground transition-colors hover:text-primary hover:underline'
@@ -49,8 +49,8 @@ export const Navbar = async ({
                         )}
                     >
                         New ticket
-                    </Link>
-                    <Link
+                    </SuperLink>
+                    <SuperLink
                         href='/organization'
                         className={cn(
                             'text-sm font-medium text-muted-foreground transition-colors hover:text-primary hover:underline'
@@ -58,7 +58,7 @@ export const Navbar = async ({
                         )}
                     >
                         Organização
-                    </Link>
+                    </SuperLink>
                 </nav>
             )}
 

@@ -1,6 +1,5 @@
 'use client';
 
-import Link from 'next/link';
 import { toast } from 'sonner';
 import { Ticket } from '@/types';
 import { cn } from '@/lib/utils';
@@ -14,8 +13,9 @@ import { priorities, projects, statuses, types } from '@/content/constants';
 
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Combobox } from '@/components/ui/combobox';
 import { Button } from '@/components/ui/button';
+import { Combobox } from '@/components/ui/combobox';
+import { SuperLink } from '@/components/super-link';
 import { InputFile } from '@/components/input-file';
 import { Textarea } from '@/components/ui/textarea';
 import { CardContent, CardFooter } from '@/components/ui/card';
@@ -204,9 +204,9 @@ export const EditTicketForm = ({ ticket }: EditFormProps) => {
                 </section>
             </CardContent>
             <CardFooter className='justify-between space-x-2'>
-                <Link href='/tickets'>
+                <SuperLink href='/tickets'>
                     <Button variant='ghost'>Cancelar</Button>
-                </Link>
+                </SuperLink>
                 <SubmitButton text='Enviar' className='w-24' />
             </CardFooter>
         </form>

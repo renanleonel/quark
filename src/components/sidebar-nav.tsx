@@ -1,7 +1,7 @@
 'use client';
 
-import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import { SuperLink } from '@/components/super-link';
 
 import { cn } from '@/lib/utils';
 import { buttonVariants } from './ui/button';
@@ -25,7 +25,7 @@ export function SidebarNav({ className, items, ...props }: SidebarNavProps) {
             {...props}
         >
             {items.map((item) => (
-                <Link
+                <SuperLink
                     key={item.href}
                     href={item.href}
                     className={cn(
@@ -37,7 +37,7 @@ export function SidebarNav({ className, items, ...props }: SidebarNavProps) {
                     )}
                 >
                     {item.title}
-                </Link>
+                </SuperLink>
             ))}
         </nav>
     );

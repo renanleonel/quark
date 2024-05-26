@@ -1,6 +1,6 @@
-import Link from 'next/link';
 import { Label } from '@/components/ui/label';
 import { Button } from '@/components/ui/button';
+import { SuperLink } from '@/components/super-link';
 
 export default function NotFound() {
     return (
@@ -8,11 +8,11 @@ export default function NotFound() {
             <Label className='' htmlFor='password'>
                 não encontrado.
             </Label>
-            <Link href='/'>
+            <SuperLink href='/'>
                 <Button variant='outline' type='button'>
                     voltar para home
                 </Button>
-            </Link>
+            </SuperLink>
         </main>
     );
 }

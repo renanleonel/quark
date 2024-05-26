@@ -1,5 +1,5 @@
-import Link from 'next/link';
 import { Metadata } from 'next';
+import { SuperLink } from '@/components/super-link';
 
 import { Label } from '@/components/ui/label';
 import { Button } from '@/components/ui/button';
@@ -26,11 +26,11 @@ export default function Recover() {
                 <Label className='sr-only' htmlFor='back'>
                     Voltar
                 </Label>
-                <Link href='/'>
+                <SuperLink href='/'>
                     <Button variant='outline' type='button' className='w-full'>
                         Voltar
                     </Button>
-                </Link>
+                </SuperLink>
             </div>
         </main>
     );

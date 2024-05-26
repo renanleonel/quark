@@ -12,7 +12,7 @@ import {
     DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 
-import Link from 'next/link';
+import { SuperLink } from '@/components/super-link';
 import { DeleteTicket } from '@/app/(auth)/tickets/components/delete-ticket';
 import { useSession } from 'next-auth/react';
 import { ChangeTicketStatus } from './change-ticket-status';
@@ -45,9 +45,9 @@ export function DataTableRowActions({ row }: DataTableRowActionsProps) {
             <DropdownMenuContent align='end' className='w-[160px]'>
                 {hasPermissions && (
                     <div>
-                        <Link href={`/edit/${ticket.id}`}>
+                        <SuperLink href={`/edit/${ticket.id}`}>
                             <DropdownMenuItem>Edit</DropdownMenuItem>
-                        </Link>
+                        </SuperLink>
 
                         <ChangeTicketStatus selected={ticket.status}>
                             <DropdownMenuItem>Change status</DropdownMenuItem>
