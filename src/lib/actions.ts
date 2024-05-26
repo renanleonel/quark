@@ -2,7 +2,7 @@
 
 import { Resend } from 'resend';
 import { AuthError } from 'next-auth';
-import { revalidatePath } from 'next/cache';
+import { revalidatePath, revalidateTag } from 'next/cache';
 import { auth, signIn, signOut } from '@/auth';
 
 import {
@@ -30,6 +30,7 @@ import {
 } from '@/content/default-values';
 
 import { Ticket } from '@/types';
+import { getTickets, postTicket } from '@/lib/api';
 
 export async function signout() {
     await signOut();
@@ -262,24 +263,10 @@ export async function validateOrganization(_: any, formData: FormData) {
 
 export async function newTicket(_: any, formData: FormData) {
     try {
-        const title = formData.get('title');
-        const description = formData.get('description');
-        const project = formData.get('project');
-        const status = 'na fila';
-        const type = formData.get('type');
-        const priority = formData.get('priority');
-        const file = formData.get('file');
-        const link = formData.get('link');
-
+        const form = Object.fromEntries(formData.entries());
         const validatedFields = ticketSchema.safeParse({
-            title: title,
-            description: description,
-            project: project,
-            type: type,
-            status: status,
-            priority: priority,
-            file: file,
-            link: link,
+            ...form,
+            status: 'na fila',
         });
 
         if (!validatedFields.success) {
@@ -289,17 +276,23 @@ export async function newTicket(_: any, formData: FormData) {
             };
         }
 
-        const request = false;
+        const body = {
+            ...validatedFields.data,
+        };
 
-        if (!request) {
+        const { error, statusCode, message } = await postTicket(body);
+
+        if (error) {
             return {
-                message: 'unknown error',
+                message: 'api error',
                 errors: {
                     ...ticketDV,
-                    unknown: 'Erro desconhecido.',
+                    unknown: `statusCode: ${statusCode}, message: ${message}`,
                 },
             };
         }
+
+        revalidateTag('@tickets');
 
         return {
             message: 'success',
@@ -310,7 +303,7 @@ export async function newTicket(_: any, formData: FormData) {
             message: 'unknown error',
             errors: {
                 ...ticketDV,
-                unknown: 'Erro desconhecido.',
+                unknown: `unknown error: ${error}`,
             },
         };
     }
@@ -606,5 +599,15 @@ export async function changeProfile(_: any, formData: FormData) {
                 unknown: 'Erro desconhecido.',
             },
         };
+    }
+}
+
+export async function fetchTickets() {
+    try {
+        const tickets = await getTickets();
+
+        return tickets;
+    } catch (error) {
+        //sentry
     }
 }
