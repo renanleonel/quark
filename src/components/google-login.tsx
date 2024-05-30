@@ -2,10 +2,8 @@
 
 import { signIn } from 'next-auth/react';
 import { Button } from '@/components/ui/button';
-import Image from 'next/image';
-import google from '../../public/google.svg';
 
-const GoogleLogin = () => {
+export const GoogleLogin = () => {
     async function handleGoogleLogin() {
         await signIn('google', {
             callbackUrl: '/tickets',
@@ -14,16 +12,14 @@ const GoogleLogin = () => {
 
     return (
         <Button className='flex w-full gap-2' onClick={handleGoogleLogin}>
-            <Image
+            {/* <Image
                 src={google}
                 alt='Google'
                 width={16}
                 height={16}
                 className='dark:invert'
-            />
+            /> */}
             Entrar com Google
         </Button>
     );
 };
-
-export default GoogleLogin;

@@ -7,7 +7,7 @@ interface ProvidersProps {
     children: React.ReactNode;
 }
 
-export default function Providers({ children }: ProvidersProps) {
+export function Providers({ children }: ProvidersProps) {
     return (
         <>
             <ThemeProvider
@@ -16,9 +16,7 @@ export default function Providers({ children }: ProvidersProps) {
                 enableSystem
                 disableTransitionOnChange
             >
-                <SessionProvider>
-                    <main>{children}</main>
-                </SessionProvider>
+                <SessionProvider>{children}</SessionProvider>
             </ThemeProvider>
             <Toaster />
         </>

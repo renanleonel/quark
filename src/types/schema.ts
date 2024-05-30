@@ -20,7 +20,8 @@ export const signUpForm = z
         name: z
             .string()
             .min(1, { message: 'Insira o nome!' })
-            .min(3, { message: 'Nome deve ter no mínimo 3 caracteres!' }),
+            .min(3, { message: 'Nome deve ter no mínimo 3 caracteres!' })
+            .trim(),
         email: z
             .string()
             .min(1, { message: 'Insira o email!' })
@@ -30,8 +31,8 @@ export const signUpForm = z
             .min(1, { message: 'Insira a senha!' })
             .min(6, { message: 'Senha deve ter no mínimo 6 caracteres!' }),
         confirmPassword: z.string().min(1, { message: 'Confirme a senha!' }),
-        organizationName: z.string().optional(),
-        organizationCode: z.string().optional(),
+        organizationName: z.string().trim().optional(),
+        organizationCode: z.string().trim().optional(),
     })
     .refine((data) => data.password === data.confirmPassword, {
         message: 'Senhas não coincidem!',
@@ -39,8 +40,8 @@ export const signUpForm = z
     });
 
 export const ticketSchema = z.object({
-    title: z.string().min(1, { message: 'Insira o título!' }),
-    description: z.string().min(1, { message: 'Insira a descrição!' }),
+    title: z.string().min(1, { message: 'Insira o título!' }).trim(),
+    description: z.string().min(1, { message: 'Insira a descrição!' }).trim(),
     project: z.string().min(1, { message: 'Insira o projeto!' }),
     type: z.string().min(1, { message: 'Insira o tipo!' }),
     priority: z.string().min(1, { message: 'Insira a prioridade!' }),
@@ -53,19 +54,15 @@ export const ticketSchema = z.object({
             lastModified: z.number(),
         })
         .optional(),
-    link: z.string().optional(),
-});
-
-export const createOrganizationSchema = z.object({
-    name: z.string().min(1, { message: 'Insira o nome!' }),
+    link: z.string().trim().optional(),
 });
 
 export const validateOrganizationSchema = z.object({
-    code: z.string().min(1, { message: 'Insira o código!' }),
+    code: z.string().min(1, { message: 'Insira o código!' }).trim(),
 });
 
 export const projectSchema = z.object({
-    name: z.string().min(1, { message: 'Insira o nome!' }),
+    name: z.string().min(1, { message: 'Insira o nome!' }).trim(),
 });
 
 export const changePasswordSchema = z
@@ -82,7 +79,7 @@ export const changePasswordSchema = z
     });
 
 export const changeProfileSchema = z.object({
-    name: z.string().min(1, { message: 'Insira o nome!' }),
+    name: z.string().min(1, { message: 'Insira o nome!' }).trim(),
     language: z.string().min(1, { message: 'Insira o idioma!' }),
     profilePic: z
         .object({
@@ -92,4 +89,17 @@ export const changeProfileSchema = z.object({
             lastModified: z.number(),
         })
         .optional(),
+});
+
+export const helpSchema = z.object({
+    title: z.string().min(1, { message: 'Insira o título!' }).trim(),
+    message: z
+        .string()
+        .min(1, { message: 'Insira a mensagem!' })
+        .max(500, 'Mensagem muito longa!')
+        .trim(),
+});
+
+export const organizationSchema = z.object({
+    name: z.string().min(1, { message: 'Insira o nome!' }).trim(),
 });

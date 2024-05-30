@@ -4,9 +4,9 @@ import { ReactNode, useState } from 'react';
 
 import {
     DropdownMenu,
-    DropdownMenuCheckboxItem,
     DropdownMenuContent,
     DropdownMenuTrigger,
+    DropdownMenuCheckboxItem,
 } from '@/components/ui/dropdown-menu';
 
 interface ChangeTicketStatusProps {
@@ -14,17 +14,19 @@ interface ChangeTicketStatusProps {
     selected: string;
 }
 
-const ChangeTicketStatus = ({
+export const ChangeTicketStatus = ({
     children,
     selected,
 }: ChangeTicketStatusProps) => {
-    const [checks, setChecks] = useState({
+    const checksIS = {
         queue: selected === 'na fila',
         analysis: selected === 'em análise',
         progress: selected === 'em progresso',
         done: selected === 'concluído',
         canceled: selected === 'cancelado',
-    });
+    };
+
+    const [checks, setChecks] = useState(checksIS);
 
     const handleCheckChange = (checkName: string, newCheckValue: boolean) => {
         setChecks({
@@ -85,5 +87,3 @@ const ChangeTicketStatus = ({
         </DropdownMenu>
     );
 };
-
-export default ChangeTicketStatus;

@@ -28,7 +28,7 @@ interface ComboboxProps {
     defaultValue?: string;
 }
 
-const Combobox = ({
+export const Combobox = ({
     options,
     placeholderText,
     searchText,
@@ -102,5 +102,3 @@ const Combobox = ({
         </Popover>
     );
 };
-
-export default Combobox;

@@ -1,9 +1,10 @@
+import Loading from './loading';
 import { Metadata } from 'next';
+import { Suspense } from 'react';
+import { verifyAuth } from '@/lib/actions';
+
 import { Separator } from '@/components/ui/separator';
 import { ProfileForm } from '@/components/form/profile-form';
-import { Suspense } from 'react';
-import { auth } from '@/auth';
-import Loading from './loading';
 
 export const metadata: Metadata = {
     title: 'Configurações',
@@ -11,10 +12,7 @@ export const metadata: Metadata = {
 };
 
 export default async function Settings() {
-    const session = await auth();
-    if (!session) return null;
-
-    const name = session.user.name;
+    const { name } = await verifyAuth();
 
     return (
         <Suspense fallback={<Loading />}>

@@ -1,22 +1,23 @@
 'use client';
 
-import { DotsHorizontalIcon } from '@radix-ui/react-icons';
+import { Ticket } from '@/types';
 import { Row } from '@tanstack/react-table';
+import { useSession } from 'next-auth/react';
+import { DotsHorizontalIcon } from '@radix-ui/react-icons';
 
-import { Button } from '@/components/ui/button';
 import {
     DropdownMenu,
-    DropdownMenuContent,
     DropdownMenuItem,
-    DropdownMenuSeparator,
     DropdownMenuTrigger,
+    DropdownMenuContent,
+    DropdownMenuSeparator,
 } from '@/components/ui/dropdown-menu';
 
-import Link from 'next/link';
-import { DeleteTicket } from '@/app/(auth)/tickets/components/delete-ticket';
-import { useSession } from 'next-auth/react';
-import ChangeTicketStatus from './change-ticket-status';
-import { Ticket } from '@/types';
+import { Button } from '@/components/ui/button';
+import { SuperLink } from '@/components/super-link';
+
+import { DeleteTicket } from './delete-ticket';
+import { ChangeTicketStatus } from './change-ticket-status';
 
 interface DataTableRowActionsProps {
     row: Row<Ticket>;
@@ -29,7 +30,7 @@ export function DataTableRowActions({ row }: DataTableRowActionsProps) {
     const role = session.data?.user.role;
 
     const hasPermissions =
-        role === 'admin' || ticket.createdBy === session.data?.user.id;
+        role === 'ADMIN' || ticket.createdBy === session.data?.user.id;
 
     return (
         <DropdownMenu>
@@ -45,15 +46,15 @@ export function DataTableRowActions({ row }: DataTableRowActionsProps) {
             <DropdownMenuContent align='end' className='w-[160px]'>
                 {hasPermissions && (
                     <div>
-                        <Link href={`/edit/${ticket.id}`}>
+                        <SuperLink href={`/edit/${ticket.id}`}>
                             <DropdownMenuItem>Edit</DropdownMenuItem>
-                        </Link>
+                        </SuperLink>
 
                         <ChangeTicketStatus selected={ticket.status}>
                             <DropdownMenuItem>Change status</DropdownMenuItem>
                         </ChangeTicketStatus>
                         <DropdownMenuSeparator />
-                        <DeleteTicket>
+                        <DeleteTicket ticket={ticket}>
                             <h1 className='relative flex cursor-pointer select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none transition-colors hover:bg-accent focus:bg-accent focus:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50'>
                                 Delete
                             </h1>

@@ -1,31 +1,38 @@
-import { auth } from '@/auth';
 import { Metadata } from 'next';
-import { getTicket } from '@/lib/actions';
+import Loading from './loading';
+import { Suspense } from 'react';
 import { redirect } from 'next/navigation';
+import { getProjects, getTicketByID, verifyAuth } from '@/lib/actions';
 
 import {
     Card,
-    CardDescription,
-    CardHeader,
     CardTitle,
+    CardHeader,
+    CardDescription,
 } from '@/components/ui/card';
+
 import { Separator } from '@/components/ui/separator';
-import EditTicketForm from '@/components/form/edit-ticket-form';
-import { Suspense } from 'react';
-import Loading from './loading';
+import { EditTicketForm } from '@/components/form/edit-ticket-form';
 
 export const metadata: Metadata = {
     title: 'Edit',
     description: 'Edit ticket',
 };
 export default async function Edit({ params }: { params: { id: string } }) {
-    const session = await auth();
-    if (!session) redirect('/');
-    const { id, role } = session.user;
+    const { id: userID, role } = await verifyAuth();
 
-    const ticket = await getTicket(params.id);
+    const { id: ticketID } = params;
 
-    if (role !== 'admin' && ticket.createdBy !== id) redirect('/tickets');
+    const [ticket, projects] = await Promise.all([
+        getTicketByID(ticketID),
+        getProjects(),
+    ]);
+
+    const isAllowedToEdit = ticket.createdBy === userID || role === 'ADMIN';
+
+    if (!projects || !isAllowedToEdit) {
+        redirect('/tickets');
+    }
 
     return (
         <Suspense fallback={<Loading />}>
@@ -35,7 +42,7 @@ export default async function Edit({ params }: { params: { id: string } }) {
                     <CardDescription>Edit an existing ticket</CardDescription>
                 </CardHeader>
                 <Separator className='mb-6' />
-                <EditTicketForm ticket={ticket} />
+                <EditTicketForm ticket={ticket} projects={projects} />
             </Card>
         </Suspense>
     );

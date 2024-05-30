@@ -3,32 +3,34 @@
 import { cn } from '@/lib/utils';
 import { useEffect, useState } from 'react';
 import { useSearchParams } from 'next/navigation';
+
 import {
     ColumnDef,
-    ColumnFiltersState,
-    SortingState,
-    VisibilityState,
     flexRender,
+    SortingState,
+    useReactTable,
+    VisibilityState,
     getCoreRowModel,
+    getSortedRowModel,
     getFacetedRowModel,
-    getFacetedUniqueValues,
+    ColumnFiltersState,
     getFilteredRowModel,
     getPaginationRowModel,
-    getSortedRowModel,
-    useReactTable,
+    getFacetedUniqueValues,
 } from '@tanstack/react-table';
 
 import {
     Table,
+    TableRow,
     TableBody,
     TableCell,
     TableHead,
     TableHeader,
-    TableRow,
 } from '@/components/ui/table';
 
-import { DataTableToolbar } from '../components/data-table-toolbar';
-import { DataTablePagination } from '../components/data-table-pagination';
+import { DataTableToolbar } from './data-table-toolbar';
+import { DataTablePagination } from './data-table-pagination';
+
 interface DataTableProps<TData, TValue> {
     columns: ColumnDef<TData, TValue>[];
     data: TData[];

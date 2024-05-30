@@ -1,42 +1,50 @@
 import Link from 'next/link';
-import { auth } from '@/auth';
+import Loading from './loading';
 import { Metadata } from 'next';
+import { Suspense } from 'react';
 import { redirect } from 'next/navigation';
+import { getOrganization, getTickets, verifyAuth } from '@/lib/actions';
 
 import {
     Card,
+    CardTitle,
+    CardHeader,
     CardContent,
     CardDescription,
-    CardHeader,
-    CardTitle,
 } from '@/components/ui/card';
 
-import { Chart } from './components/chart';
 import { Button } from '@/components/ui/button';
-import { CardData } from './components/card-data';
+import { SuperLink } from '@/components/super-link';
 import { Separator } from '@/components/ui/separator';
-import { ProjectRanking } from './components/project-ranking';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 
-import { getOrganization, getTickets } from '@/lib/api';
-import { Suspense } from 'react';
-import Loading from './loading';
+import { Chart } from './components/chart';
+import { CardData } from './components/card-data';
+import { ProjectRanking } from './components/project-ranking';
 
 export const metadata: Metadata = {
     title: 'Organização',
     description: 'Organização',
 };
 
-export default async function Organization() {
-    const session = await auth();
-    if (!session) redirect('/');
+export default async function Organization({
+    searchParams,
+}: {
+    searchParams: { tab: string };
+}) {
+    const { role } = await verifyAuth();
 
-    const { role } = session.user;
-    const tickets = await getTickets();
-    const organization = await getOrganization();
+    const [tickets, organization] = await Promise.all([
+        getTickets(),
+        getOrganization(),
+    ]);
 
-    const features = tickets.filter((ticket) => ticket.type === 'feature');
+    if (!tickets || !organization) redirect('/');
+
     const { members, projects } = organization;
+    const features = tickets.filter((ticket) => ticket.type === 'feature');
+
+    const tab = searchParams.tab || 'overview';
 
     return (
         <Suspense fallback={<Loading />}>
@@ -49,25 +57,29 @@ export default async function Organization() {
 
                 <main className='flex flex-col'>
                     <div className='flex-1 space-y-4 px-8 pb-8'>
-                        <Tabs defaultValue='overview' className='space-y-4'>
+                        <Tabs defaultValue={tab} className='space-y-4'>
                             <div className='flex flex-col-reverse justify-between gap-4 md:flex-row'>
                                 <TabsList className='w-full md:w-fit'>
-                                    <TabsTrigger
-                                        value='overview'
-                                        className='w-full'
-                                    >
-                                        Overview
-                                    </TabsTrigger>
-                                    <TabsTrigger
-                                        value='analytics'
-                                        className='w-full'
-                                    >
-                                        Analytics
-                                    </TabsTrigger>
+                                    <Link href='?tab=overview'>
+                                        <TabsTrigger
+                                            value='overview'
+                                            className='w-full'
+                                        >
+                                            Overview
+                                        </TabsTrigger>
+                                    </Link>
+                                    <Link href='?tab=analytics'>
+                                        <TabsTrigger
+                                            value='analytics'
+                                            className='w-full'
+                                        >
+                                            Analytics
+                                        </TabsTrigger>
+                                    </Link>
                                 </TabsList>
-                                {role === 'admin' && (
+                                {role === 'ADMIN' && (
                                     <div className='flex flex-col gap-4 sm:flex-row md:gap-2'>
-                                        <Link
+                                        <SuperLink
                                             href='/organization/projects'
                                             className='w-full'
                                         >
@@ -77,8 +89,8 @@ export default async function Organization() {
                                             >
                                                 Projetos
                                             </Button>
-                                        </Link>
-                                        <Link
+                                        </SuperLink>
+                                        <SuperLink
                                             href='/organization/members'
                                             className='w-full'
                                         >
@@ -88,7 +100,7 @@ export default async function Organization() {
                                             >
                                                 Membros
                                             </Button>
-                                        </Link>
+                                        </SuperLink>
                                     </div>
                                 )}
                             </div>

@@ -1,49 +1,64 @@
 'use server';
 
-import { Resend } from 'resend';
-import { AuthError } from 'next-auth';
-import { revalidatePath } from 'next/cache';
 import { auth, signIn, signOut } from '@/auth';
+import { AuthError } from 'next-auth';
+import { revalidateTag } from 'next/cache';
+import { Resend } from 'resend';
 
 import {
     authSchema,
+    changePasswordSchema,
+    changeProfileSchema,
+    helpSchema,
+    organizationSchema,
+    projectSchema,
+    recoverSchema,
     signUpForm,
     ticketSchema,
-    recoverSchema,
-    projectSchema,
-    changeProfileSchema,
-    changePasswordSchema,
     validateOrganizationSchema,
 } from '@/types/schema';
 
 import {
     authDV,
+    changePasswordDV,
+    changeProfileDV,
+    deactivateAccountDV,
+    helpDV,
+    organizationDV,
+    projectDV,
+    recoverDV,
     signupDV,
     ticketDV,
-    recoverDV,
-    projectDV,
-    changeProfileDV,
-    changePasswordDV,
-    deactivateAccountDV,
-    deleteOrganizationDV,
     validateOrganizationDV,
 } from '@/content/default-values';
 
-import { Ticket } from '@/types';
+import {
+    fetchMembers,
+    fetchOrganization,
+    fetchProjects,
+    fetchTicketByID,
+    fetchTickets,
+    fetchUser,
+    patchMember,
+    patchOrganization,
+    patchProject,
+    patchTicket,
+    postHelp,
+    postProject,
+    postTicket,
+    removeMember,
+    removeOrganization,
+    removeProject,
+    removeTicket,
+} from '@/lib/api';
+import { Member, Ticket } from '@/types';
+import { redirect } from 'next/navigation';
 
-export async function signout() {
-    await signOut();
-}
-
-export async function authenticate(_: any, formData: FormData) {
+export async function signin(_: any, formData: FormData) {
     try {
-        const email = formData.get('email');
-        const password = formData.get('password');
+        const form = Object.fromEntries(formData.entries());
 
-        const validatedFields = authSchema.safeParse({
-            email: email,
-            password: password,
-        });
+        const validatedFields = authSchema.safeParse(form);
 
         if (!validatedFields.success) {
             return {
@@ -52,7 +67,11 @@ export async function authenticate(_: any, formData: FormData) {
             };
         }
 
-        await signIn('credentials', formData);
+        const payload = {
+            ...validatedFields.data,
+        };
+
+        await signIn('credentials', payload);
 
         return {
             message: 'success',
@@ -85,12 +104,8 @@ export async function authenticate(_: any, formData: FormData) {
 
 export async function signup(_: any, formData: FormData) {
     try {
-        const name = formData.get('name') as string;
-        const email = formData.get('email') as string;
-        const password = formData.get('password') as string;
-        const confirmPassword = formData.get('confirmPassword') as string;
-        const organizationName = formData.get('organizationName') as string;
-        const organizationCode = formData.get('organizationCode') as string;
+        const form = Object.fromEntries(formData.entries());
+        const { organizationName, organizationCode } = form;
 
         if (!organizationName && !organizationCode) {
             return {
@@ -101,12 +116,7 @@ export async function signup(_: any, formData: FormData) {
             };
         }
 
-        const validatedFields = signUpForm.safeParse({
-            name: name,
-            email: email,
-            password: password,
-            confirmPassword: confirmPassword,
-        });
+        const validatedFields = signUpForm.safeParse(form);
 
         if (!validatedFields.success) {
             return {
@@ -117,19 +127,12 @@ export async function signup(_: any, formData: FormData) {
 
         if (organizationCode) {
             // link organization to user
-        }
-
-        if (organizationName) {
-            const organization = await createOrganization(organizationName);
+        } else {
+            // const organization = await createOrganization(organizationName);
             // link organization to user
         }
 
-        const body = {
-            name,
-            email,
-            password,
-        };
-        await sendConfirmationEmail(email);
+        // await sendConfirmationEmail(email);
 
         return {
             message: 'success',
@@ -146,13 +149,40 @@ export async function signup(_: any, formData: FormData) {
     }
 }
 
-export async function recover(_: any, formData: FormData) {
-    try {
-        const email = formData.get('email') as string;
+export async function signout() {
+    await signOut();
+}
 
-        const validatedFields = recoverSchema.safeParse({
-            email: email,
-        });
+export async function verifyAuth() {
+    const session = await auth();
+
+    if (!session) {
+        redirect('/');
+    }
+
+    return session.user;
+}
+
+export async function sendConfirmationEmail(email: string) {
+    await verifyAuth();
+
+    const resend = new Resend(process.env.RESEND_API_KEY);
+
+    await resend.emails.send({
+        from: 'onboarding@resend.dev',
+        to: email,
+        subject: 'oi',
+        html: '<h1>account created successfully!</h1>',
+    });
+}
+
+export async function recover(_: any, formData: FormData) {
+    await verifyAuth();
+
+    try {
+        const form = Object.fromEntries(formData.entries());
+
+        const validatedFields = recoverSchema.safeParse(form);
 
         if (!validatedFields.success) {
             return {
@@ -161,7 +191,40 @@ export async function recover(_: any, formData: FormData) {
             };
         }
 
-        await sendRecoverEmail(email);
+        const { email } = validatedFields.data;
+
+        // verify if email exists in database
+
+        const emailExists = false;
+
+        if (!emailExists) {
+            return {
+                message: 'email not found',
+                errors: {
+                    ...recoverDV,
+                    email: 'Email não encontrado.',
+                },
+            };
+        }
+
+        const request = await sendRecoverEmail(email);
+
+        const { error, message } = request;
+
+        if (error) {
+            return {
+                message: 'email error',
+                errors: {
+                    ...recoverDV,
+                    unknown: message,
+                },
+            };
+        }
+
+        return {
+            message: 'success',
+            errors: {},
+        };
     } catch (error) {
         return {
             message: 'unknown error',
@@ -173,21 +236,12 @@ export async function recover(_: any, formData: FormData) {
     }
 }
 
-export async function sendConfirmationEmail(email: string) {
-    const resend = new Resend(process.env.RESEND_API_KEY);
-
-    await resend.emails.send({
-        from: 'onboarding@resend.dev',
-        to: email,
-        subject: 'oi',
-        html: '<h1>account created successfully!</h1>',
-    });
-}
-
 export async function sendRecoverEmail(email: string) {
+    await verifyAuth();
+
     const resend = new Resend(process.env.RESEND_API_KEY);
 
-    await resend.emails
+    const request = await resend.emails
         .send({
             from: 'onboarding@resend.dev',
             to: email,
@@ -197,28 +251,37 @@ export async function sendRecoverEmail(email: string) {
         .then((res) => {
             if (res.error) {
                 return {
-                    message: 'unknown error',
-                    errors: {
-                        ...recoverDV,
-                        unknown: 'Erro desconhecido.',
-                    },
+                    error: true,
+                    message: res.error.message,
                 };
             }
 
             return {
+                error: false,
                 message: 'success',
-                errors: {},
+            };
+        })
+        .catch((error) => {
+            return {
+                error: true,
+                message: error.message,
             };
         });
+
+    return request;
 }
 
 export async function getInvitationOrigin(id: string) {
+    await verifyAuth();
+
     return {
         email: 'test@quark.com',
     };
 }
 
 export async function createOrganization(name: string) {
+    await verifyAuth();
+
     return {
         id: '12345',
         name: name,
@@ -226,12 +289,12 @@ export async function createOrganization(name: string) {
 }
 
 export async function validateOrganization(_: any, formData: FormData) {
-    try {
-        const code = formData.get('code') as string;
+    await verifyAuth();
 
-        const validatedFields = validateOrganizationSchema.safeParse({
-            code: code,
-        });
+    try {
+        const form = Object.fromEntries(formData.entries());
+
+        const validatedFields = validateOrganizationSchema.safeParse(form);
 
         if (!validatedFields.success) {
             return {
@@ -255,26 +318,44 @@ export async function validateOrganization(_: any, formData: FormData) {
     }
 }
 
-export async function newTicket(_: any, formData: FormData) {
-    try {
-        const title = formData.get('title');
-        const description = formData.get('description');
-        const project = formData.get('project');
-        const status = 'na fila';
-        const type = formData.get('type');
-        const priority = formData.get('priority');
-        const file = formData.get('file');
-        const link = formData.get('link');
+export async function getUser(email: string, password: string): Promise<any> {
+    const request = await fetchUser(email, password);
 
+    return request;
+}
+
+export async function getTickets() {
+    await verifyAuth();
+
+    try {
+        const tickets = await fetchTickets();
+
+        return tickets;
+    } catch (error) {
+        //sentry
+    }
+}
+
+export async function getTicketByID(id: string): Promise<Ticket> {
+    await verifyAuth();
+
+    try {
+        const ticket = await fetchTicketByID(id);
+
+        return ticket;
+    } catch (error) {
+        throw new Error('Ticket not found');
+    }
+}
+
+export async function createTicket(_: any, formData: FormData) {
+    await verifyAuth();
+
+    try {
+        const form = Object.fromEntries(formData.entries());
         const validatedFields = ticketSchema.safeParse({
-            title: title,
-            description: description,
-            project: project,
-            type: type,
-            status: status,
-            priority: priority,
-            file: file,
-            link: link,
+            ...form,
+            status: 'na fila',
         });
 
         if (!validatedFields.success) {
@@ -284,9 +365,62 @@ export async function newTicket(_: any, formData: FormData) {
             };
         }
 
-        const request = false;
+        const body = {
+            ...validatedFields.data,
+        };
 
-        if (!request) {
+        const { error, statusCode, message } = await postTicket(body);
+
+        if (error) {
+            return {
+                message: 'api error',
+                errors: {
+                    ...ticketDV,
+                    unknown: `statusCode: ${statusCode}, message: ${message}`,
+                },
+            };
+        }
+
+        revalidateTag('@tickets');
+
+        return {
+            message: 'success',
+            errors: {},
+        };
+    } catch (error) {
+        return {
+            message: 'unknown error',
+            errors: {
+                ...ticketDV,
+                unknown: `unknown error: ${error}`,
+            },
+        };
+    }
+}
+
+export async function editTicket(id: string, _: any, formData: FormData) {
+    await verifyAuth();
+
+    try {
+        const form = Object.fromEntries(formData.entries());
+
+        const validatedFields = ticketSchema.safeParse(form);
+
+        if (!validatedFields.success) {
+            return {
+                message: 'validation error',
+                errors: validatedFields.error.flatten().fieldErrors,
+            };
+        }
+
+        const payload = {
+            id: id,
+            ...validatedFields.data,
+        };
+
+        const { error } = await patchTicket(payload);
+
+        if (error) {
             return {
                 message: 'unknown error',
                 errors: {
@@ -295,6 +429,8 @@ export async function newTicket(_: any, formData: FormData) {
                 },
             };
         }
+
+        revalidateTag('@tickets');
 
         return {
             message: 'success',
@@ -311,121 +447,57 @@ export async function newTicket(_: any, formData: FormData) {
     }
 }
 
-export async function editTicket(_: any, formData: FormData) {
+export async function deleteTicket(id: string) {
+    await verifyAuth();
+
     try {
-        const title = formData.get('title');
-        const description = formData.get('description');
-        const project = formData.get('project');
-        const status = formData.get('status');
-        const type = formData.get('type');
-        const priority = formData.get('priority');
-        const file = formData.get('file');
-        const link = formData.get('link');
+        const { statusCode } = await removeTicket(id);
 
-        const validatedFields = ticketSchema.safeParse({
-            title: title,
-            description: description,
-            project: project,
-            type: type,
-            status: status,
-            priority: priority,
-            file: file,
-            link: link,
-        });
-
-        if (!validatedFields.success) {
-            return {
-                message: 'validation error',
-                errors: validatedFields.error.flatten().fieldErrors,
-            };
-        }
-
-        const request = false;
-
-        if (!request) {
-            return {
-                message: 'unknown error',
-                errors: {
-                    ...ticketDV,
-                    unknown: 'Erro desconhecido.',
-                },
-            };
-        }
-
-        return {
-            message: 'success',
-            errors: {},
-        };
-    } catch (error) {
-        return {
-            message: 'unknown error',
-            errors: {
-                ...ticketDV,
-                unknown: 'Erro desconhecido.',
-            },
-        };
+        return statusCode;
+    } catch {
+        //sentry
     }
 }
 
-export async function getTicket(id: string): Promise<Ticket> {
-    return {
-        id: id,
-        title: 'Título do ticket',
-        description: 'Descrição do ticket.',
-        type: 'bug',
-        priority: 'alta',
-        status: 'concluído',
-        project: 'projeto 1',
-        link: 'https://www.google.com',
-        file: {
-            size: 123,
-            type: 'Tipo',
-            name: 'Nome do arquivo',
-            lastModified: 123,
-        },
-        createdBy: 'eYuuioaeoujiarei987kolpçasdpo',
-        createdAt: '2021-09-22',
-        updatedAt: '2021-09-22',
-    };
-}
-
-export async function editProject(id: string, _: any, formData: FormData) {
+export async function getProjects() {
     try {
-        const name = formData.get('name');
+        const user = await verifyAuth();
+        const organizationID = user.organization;
 
-        const validatedFields = projectSchema.safeParse({
-            name: name,
-        });
-
-        if (!validatedFields.success) {
-            return {
-                message: 'validation error',
-                errors: validatedFields.error.flatten().fieldErrors,
-            };
+        if (!organizationID) {
+            throw new Error('Organization not found');
         }
 
-        return {
-            message: 'success',
-            errors: {},
-        };
+        const {
+            error,
+            statusCode,
+            message,
+            data: projects,
+        } = await fetchProjects(organizationID);
+
+        if (error) {
+            throw new Error(
+                `Projects not found! Status: ${statusCode}, Message: ${message}`
+            );
+        }
+
+        return projects;
     } catch (error) {
-        return {
-            message: 'unknown error',
-            errors: {
-                ...projectDV,
-                unknown: 'Erro desconhecido.',
-            },
-        };
+        //sentry
     }
+}
+
+export async function getProjectByID(id: string) {
+    await verifyAuth();
 }
 
 export async function createProject(_: any, formData: FormData) {
-    try {
-        const name = formData.get('name');
+    await verifyAuth();
 
-        const validatedFields = projectSchema.safeParse({
-            name: name,
-        });
+    try {
+        const form = Object.fromEntries(formData.entries());
+
+        const validatedFields = projectSchema.safeParse(form);
 
         if (!validatedFields.success) {
             return {
@@ -433,6 +505,35 @@ export async function createProject(_: any, formData: FormData) {
                 errors: validatedFields.error.flatten().fieldErrors,
             };
         }
+
+        const payload = {
+            ...validatedFields.data,
+        };
+
+        const { error, statusCode, message } = await postProject(payload);
+
+        if (error) {
+            switch (statusCode) {
+                case 409:
+                    return {
+                        message: 'unique constraint',
+                        errors: {
+                            ...projectDV,
+                            name: 'Já existe um projeto com este nome',
+                        },
+                    };
+                default:
+                    return {
+                        message: 'unknown error',
+                        errors: {
+                            ...projectDV,
+                            unknown: `statusCode: ${statusCode}, message: ${message}`,
+                        },
+                    };
+            }
+        }
+
+        revalidateTag('@projects');
 
         return {
             message: 'success',
@@ -446,25 +547,178 @@ export async function createProject(_: any, formData: FormData) {
                 unknown: 'Erro desconhecido.',
             },
         };
+    }
+}
+
+export async function editProject(id: string, _: any, formData: FormData) {
+    await verifyAuth();
+
+    try {
+        const form = Object.fromEntries(formData.entries());
+
+        const validatedFields = projectSchema.safeParse(form);
+
+        if (!validatedFields.success) {
+            return {
+                message: 'validation error',
+                errors: validatedFields.error.flatten().fieldErrors,
+            };
+        }
+
+        const payload = {
+            ...validatedFields.data,
+        };
+
+        const { error, statusCode, message } = await patchProject(id, payload);
+
+        if (error) {
+            switch (statusCode) {
+                case 409:
+                    return {
+                        message: 'unique constraint',
+                        errors: {
+                            ...projectDV,
+                            name: 'Já existe um projeto com este nome',
+                        },
+                    };
+                default:
+                    return {
+                        message: 'unknown error',
+                        errors: {
+                            ...projectDV,
+                            unknown: `statusCode: ${statusCode}, message: ${message}`,
+                        },
+                    };
+            }
+        }
+
+        revalidateTag('@projects');
+
+        return {
+            message: 'success',
+            errors: {},
+        };
+    } catch (error) {
+        return {
+            message: 'unknown error',
+            errors: {
+                ...projectDV,
+                unknown: 'Erro desconhecido.',
+            },
+        };
+    }
+}
+
+export async function deleteProject(id: string) {
+    await verifyAuth();
+
+    try {
+        // delete project
+        const { error } = await removeProject(id);
+
+        if (error) {
+            return {
+                error: true,
+                message: 'Erro ao deletar projeto',
+            };
+        }
+
+        revalidateTag('@tickets');
+        revalidateTag('@projects');
+
+        return {
+            error: false,
+            message: 'Projeto deletado com sucesso',
+        };
+    } catch (error) {
+        return {
+            error: true,
+            message: 'Erro desconhecido',
+        };
+        //sentry
+    }
+}
+
+export async function getMembers(organizationID: string) {
+    await verifyAuth();
+
+    try {
+        const {
+            error,
+            message,
+            statusCode,
+            data: members,
+        } = await fetchMembers(organizationID);
+
+        if (error) {
+            throw new Error(
+                `Members not found! Status: ${statusCode}, Message: ${message}`
+            );
+        }
+
+        return members;
+    } catch (error) {
+        //sentry
+    }
+}
+
+export async function getMemberByID(memberID: string) {
+    await verifyAuth();
+}
+
+export async function updateMember(memberID: string, body: Member) {
+    await verifyAuth();
+
+    try {
+        const { statusCode, error } = await patchMember(memberID, body);
+
+        if (!error) {
+            revalidateTag('@members');
+        }
+        return statusCode;
+    } catch {
+        //sentry
     }
 }
 
 export async function deleteMember(memberID: string) {
-    revalidatePath('/organization/members');
+    await verifyAuth();
 
-    return true;
+    try {
+        const { statusCode, error } = await removeMember(memberID);
+
+        if (!error) {
+            revalidateTag('@members');
+        }
+
+        return statusCode;
+    } catch {
+        //sentry
+    }
 }
 
-export async function changePassword(_: any, formData: FormData) {
+export async function changeProfile(_: any, formData: FormData) {
     try {
-        const password = formData.get('password');
-        const newPassword = formData.get('newPassword');
-        const confirmNewPassword = formData.get('confirmNewPassword');
+        const user = await verifyAuth();
 
-        const validatedFields = changePasswordSchema.safeParse({
-            password: password,
-            newPassword: newPassword,
-            confirmNewPassword: confirmNewPassword,
+        const name = formData.get('name');
+        const language = formData.get('language');
+        const profilePic = formData.get('profilePic');
+
+        if (name === user.name) {
+            return {
+                message: 'validation error',
+                errors: {
+                    ...changeProfileDV,
+                    name: 'Nome não pode ser igual ao atual.',
+                },
+            };
+        }
+
+        const validatedFields = changeProfileSchema.safeParse({
+            name: name,
+            language: language,
+            profilePic: profilePic,
         });
 
         if (!validatedFields.success) {
@@ -473,6 +727,205 @@ export async function changePassword(_: any, formData: FormData) {
                 errors: validatedFields.error.flatten().fieldErrors,
             };
         }
+
+        return {
+            message: 'success',
+            errors: {},
+        };
+    } catch (error) {
+        return {
+            message: 'unknown error',
+            errors: {
+                ...changeProfileDV,
+                unknown: 'Erro desconhecido.',
+            },
+        };
+    }
+}
+
+export async function getOrganization() {
+    await verifyAuth();
+
+    try {
+        const organization = await fetchOrganization();
+        return organization;
+    } catch (error) {
+        //sentry
+    }
+}
+
+export async function getOrganizationByID(id: string) {
+    await verifyAuth();
+
+    return '';
+}
+
+export async function getOrganizationStatistics() {
+    await verifyAuth();
+}
+
+export async function updateUserName(name: string) {
+    await verifyAuth();
+
+    try {
+    } catch (error) {}
+}
+
+export async function updateOrganizationName(
+    currentName: string,
+    _: any,
+    formData: FormData
+) {
+    try {
+        const user = await verifyAuth();
+        const organizationID = user.organization;
+
+        const form = Object.fromEntries(formData.entries());
+
+        if (form.name === currentName) {
+            return {
+                message: 'same name',
+                errors: {
+                    ...organizationDV,
+                    name: 'Nome não pode ser igual ao atual.',
+                },
+            };
+        }
+
+        const validatedFields = organizationSchema.safeParse(form);
+
+        if (!validatedFields.success) {
+            return {
+                message: 'validation error',
+                errors: validatedFields.error.flatten().fieldErrors,
+            };
+        }
+
+        const name = validatedFields.data.name;
+
+        const { error, message, statusCode } = await patchOrganization(
+            organizationID,
+            name
+        );
+
+        if (error) {
+            return {
+                message: 'unknown error',
+                errors: {
+                    ...organizationDV,
+                    unknown: `statusCode: ${statusCode}, message: ${message}`,
+                },
+            };
+        }
+
+        return {
+            message: 'success',
+            errors: {},
+        };
+    } catch (error) {
+        return {
+            message: 'unknown error',
+            errors: {
+                ...organizationDV,
+                unknown: 'Erro desconhecido.',
+            },
+        };
+    }
+}
+
+export async function deleteOrganization(_: any, formData: FormData) {
+    let success = false;
+
+    try {
+        const user = await verifyAuth();
+
+        const organizationID = user.organization;
+
+        const form = Object.fromEntries(formData.entries());
+
+        const validatedFields = organizationSchema.safeParse(form);
+
+        if (!validatedFields.success) {
+            return {
+                message: 'validation error',
+                errors: validatedFields.error.flatten().fieldErrors,
+            };
+        }
+
+        const { name } = validatedFields.data;
+
+        const organizationName = await getOrganizationByID(organizationID);
+
+        if (name !== organizationName) {
+            return {
+                message: 'wrong name',
+                errors: {
+                    ...organizationDV,
+                    name: 'Nome incorreto.',
+                },
+            };
+        }
+
+        const { error, message, statusCode } =
+            await removeOrganization(organizationID);
+
+        if (error) {
+            return {
+                message: 'unknown error',
+                errors: {
+                    ...organizationDV,
+                    unknown: `statusCode: ${statusCode}, message: ${message}`,
+                },
+            };
+        }
+
+        success = true;
+    } catch (error) {
+        return {
+            message: 'unknown error',
+            errors: {
+                ...organizationDV,
+                unknown: 'Erro desconhecido.',
+            },
+        };
+    }
+
+    if (success) {
+        await signOut();
+
+        return {
+            message: 'success',
+            errors: {},
+        };
+    }
+
+    return {
+        message: 'unknown error',
+        errors: {
+            ...organizationDV,
+            unknown: 'Erro desconhecido.',
+        },
+    };
+}
+
+export async function changePassword(_: any, formData: FormData) {
+    await verifyAuth();
+
+    try {
+        const form = Object.fromEntries(formData.entries());
+
+        const validatedFields = changePasswordSchema.safeParse(form);
+
+        if (!validatedFields.success) {
+            return {
+                message: 'validation error',
+                errors: validatedFields.error.flatten().fieldErrors,
+            };
+        }
+
+        // const payload = {
+        // ...validatedFields.data,
+        // }
 
         return {
             message: 'success',
@@ -490,6 +943,8 @@ export async function changePassword(_: any, formData: FormData) {
 }
 
 export async function deactivateAccount(_: any, formData: FormData) {
+    await verifyAuth();
+
     let success = false;
 
     try {
@@ -527,60 +982,13 @@ export async function deactivateAccount(_: any, formData: FormData) {
     }
 }
 
-export async function deleteOrganization(_: any, formData: FormData) {
-    let success = false;
+export async function help(_: any, formData: FormData) {
+    await verifyAuth();
 
     try {
-        const name = formData.get('name');
+        const form = Object.fromEntries(formData.entries());
 
-        //check if org name == name
-
-        success = true;
-
-        // delete org
-    } catch (error) {
-        return {
-            message: 'unknown error',
-            errors: {
-                ...deleteOrganizationDV,
-                unknown: 'Erro desconhecido.',
-            },
-        };
-    }
-
-    if (success) {
-        await signOut();
-
-        return {
-            message: 'success',
-            errors: {},
-        };
-    }
-}
-
-export async function changeProfile(_: any, formData: FormData) {
-    try {
-        const session = await auth();
-
-        const name = formData.get('name');
-        const language = formData.get('language');
-        const profilePic = formData.get('profilePic');
-
-        if (name === session?.user?.name) {
-            return {
-                message: 'validation error',
-                errors: {
-                    ...changeProfileDV,
-                    name: 'Nome não pode ser igual ao atual.',
-                },
-            };
-        }
-
-        const validatedFields = changeProfileSchema.safeParse({
-            name: name,
-            language: language,
-            profilePic: profilePic,
-        });
+        const validatedFields = helpSchema.safeParse(form);
 
         if (!validatedFields.success) {
             return {
@@ -589,6 +997,22 @@ export async function changeProfile(_: any, formData: FormData) {
             };
         }
 
+        const payload = {
+            ...validatedFields.data,
+        };
+
+        const { error, message, statusCode } = await postHelp(payload);
+
+        if (error) {
+            return {
+                message: 'unknown error',
+                errors: {
+                    ...helpDV,
+                    unknown: `statusCode: ${statusCode}, message: ${message}`,
+                },
+            };
+        }
+
         return {
             message: 'success',
             errors: {},
@@ -597,7 +1021,7 @@ export async function changeProfile(_: any, formData: FormData) {
         return {
             message: 'unknown error',
             errors: {
-                ...changeProfileDV,
+                ...helpDV,
                 unknown: 'Erro desconhecido.',
             },
         };

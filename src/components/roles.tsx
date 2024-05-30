@@ -1,15 +1,18 @@
 'use client';
 
+import { toast } from 'sonner';
 import { useState } from 'react';
+import { Member, Role } from '@/types';
+import { updateMember } from '@/lib/actions';
 import { ChevronDownIcon } from '@radix-ui/react-icons';
 
 import {
     Command,
+    CommandItem,
+    CommandList,
     CommandEmpty,
     CommandGroup,
     CommandInput,
-    CommandItem,
-    CommandList,
 } from '@/components/ui/command';
 
 import {
@@ -20,29 +23,44 @@ import {
 
 import {
     AlertDialog,
+    AlertDialogTitle,
     AlertDialogAction,
     AlertDialogCancel,
-    AlertDialogContent,
-    AlertDialogDescription,
     AlertDialogFooter,
     AlertDialogHeader,
-    AlertDialogTitle,
+    AlertDialogContent,
     AlertDialogTrigger,
+    AlertDialogDescription,
 } from '@/components/ui/alert-dialog';
-import { Button } from '@/components/ui/button';
+
 import { roles } from '@/content/constants';
+import { Button } from '@/components/ui/button';
 
 interface RolesProps {
-    role: string;
+    member: Member;
 }
 
-const Roles = ({ role }: RolesProps) => {
-    const [open, setOpen] = useState(false);
-    const [value, setValue] = useState(role);
+export const Roles = ({ member }: RolesProps) => {
+    const { role } = member;
 
-    const handleChangeRole = (role: string) => {
-        setValue(role);
-    };
+    const [open, setOpen] = useState(false);
+
+    async function handleChangeRole(role: Role) {
+        const payload = {
+            ...member,
+            role,
+        };
+
+        const status = await updateMember(member.id, payload);
+
+        if (status === 200) {
+            toast.success('Role updated successfully!');
+        }
+
+        if (status === 500) {
+            toast.error('Error updating role.');
+        }
+    }
 
     return (
         <Popover open={open} onOpenChange={setOpen}>
@@ -52,9 +70,8 @@ const Roles = ({ role }: RolesProps) => {
                     aria-expanded={open}
                     className='w-full justify-between md:ml-auto md:w-fit'
                 >
-                    {value
-                        ? roles.find((role) => role.value === value)?.name
-                        : 'Select framework...'}
+                    {roles.find((r) => r.value === role)?.name || 'Select role'}
+
                     <ChevronDownIcon className='ml-2 h-4 w-4 text-muted-foreground' />
                 </Button>
             </PopoverTrigger>
@@ -95,7 +112,7 @@ const Roles = ({ role }: RolesProps) => {
                                                 <AlertDialogAction
                                                     onClick={() => {
                                                         handleChangeRole(
-                                                            role.value
+                                                            role.value as Role
                                                         );
                                                         setOpen(false);
                                                     }}
@@ -114,5 +131,3 @@ const Roles = ({ role }: RolesProps) => {
         </Popover>
     );
 };
-
-export default Roles;

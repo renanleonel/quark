@@ -1,14 +1,14 @@
 'use client';
 
-import { Cross2Icon } from '@radix-ui/react-icons';
 import { Table } from '@tanstack/react-table';
-
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-
+import { Cross2Icon } from '@radix-ui/react-icons';
 import { priorities, projects, statuses } from '@/content/constants';
-import { DataTableFacetedFilter } from './data-table-faceted-filter';
+
+import { Input } from '@/components/ui/input';
+import { Button } from '@/components/ui/button';
+
 import { DataTableViewOptions } from './data-table-view-options';
+import { DataTableFacetedFilter } from './data-table-faceted-filter';
 
 interface DataTableToolbarProps<TData> {
     table: Table<TData>;

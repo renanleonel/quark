@@ -1,27 +1,27 @@
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { Button } from '@/components/ui/button';
+import { SignOut } from './sign-out';
+
 import {
     DropdownMenu,
-    DropdownMenuContent,
-    DropdownMenuGroup,
     DropdownMenuItem,
     DropdownMenuLabel,
-    DropdownMenuSeparator,
+    DropdownMenuGroup,
     DropdownMenuTrigger,
+    DropdownMenuContent,
+    DropdownMenuSeparator,
 } from '@/components/ui/dropdown-menu';
-import SignOut from './sign-out';
-import { auth } from '@/auth';
-import Link from 'next/link';
+
+import { Button } from '@/components/ui/button';
+import { SuperLink } from '@/components/super-link';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 
 interface UserProps {
     icon: string;
     alt: string;
     fallback: string;
+    username: string;
 }
 
-const User = async ({ icon, alt, fallback }: UserProps) => {
-    const session = await auth();
-
+export const User = ({ icon, alt, fallback, username }: UserProps) => {
     return (
         <DropdownMenu>
             <DropdownMenuTrigger asChild>
@@ -40,14 +40,14 @@ const User = async ({ icon, alt, fallback }: UserProps) => {
                     <div className='flex flex-col space-y-1'>
                         <p className='text-sm font-medium leading-none'>Nome</p>
                         <p className='text-xs leading-none text-muted-foreground'>
-                            {session?.user?.name}
+                            {username}
                         </p>
                     </div>
                 </DropdownMenuLabel>
                 <DropdownMenuSeparator />
                 <DropdownMenuGroup>
                     <DropdownMenuItem>
-                        <Link href='/settings'>Configurações</Link>
+                        <SuperLink href='/settings'>Configurações</SuperLink>
                     </DropdownMenuItem>
                 </DropdownMenuGroup>
                 <DropdownMenuSeparator />
@@ -58,5 +58,3 @@ const User = async ({ icon, alt, fallback }: UserProps) => {
         </DropdownMenu>
     );
 };
-
-export default User;

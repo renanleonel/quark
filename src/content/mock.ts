@@ -1,3 +1,5 @@
+import { Member } from '@/types';
+
 export const tickets = [
     {
         id: 'TICKET-8782',
@@ -229,40 +231,40 @@ export const tickets = [
     },
 ];
 
-export const members = [
+export const members: Member[] = [
     {
         id: '1',
         name: 'Renan Leonel',
         email: 'r@example.com',
-        role: 'admin',
+        role: 'ADMIN',
         icon: '/avatars/01.png',
     },
     {
         id: '2',
         name: 'Renan Leonel',
         email: 'r@example.com',
-        role: 'developer',
+        role: 'DEVELOPER',
         icon: '/avatars/01.png',
     },
     {
         id: '3',
         name: 'Renan Leonel',
         email: 'r@example.com',
-        role: 'member',
+        role: 'MEMBER',
         icon: '/avatars/01.png',
     },
     {
         id: '4',
         name: 'Renan Leonel',
         email: 'r@example.com',
-        role: 'developer',
+        role: 'DEVELOPER',
         icon: '/avatars/01.png',
     },
     {
         id: '5',
         name: 'Renan Leonel',
         email: 'r@example.com',
-        role: 'member',
+        role: 'MEMBER',
         icon: '/avatars/01.png',
     },
 ];

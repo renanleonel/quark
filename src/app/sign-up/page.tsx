@@ -1,8 +1,8 @@
-import Link from 'next/link';
 import { Metadata } from 'next';
 
 import { Button } from '@/components/ui/button';
-import SignUpForm from '@/components/form/sign-up-form';
+import { SuperLink } from '@/components/super-link';
+import { SignUpForm } from '@/components/form/sign-up-form';
 
 export const metadata: Metadata = {
     title: 'Cadastro',
@@ -22,11 +22,11 @@ export default function SignUp() {
 
                 <SignUpForm />
 
-                <Link href='/'>
+                <SuperLink href='/'>
                     <Button variant='outline' type='button' className='w-full'>
                         Voltar
                     </Button>
-                </Link>
+                </SuperLink>
             </div>
         </main>
     );

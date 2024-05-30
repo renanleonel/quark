@@ -1,6 +1,5 @@
 'use client';
 
-import Link from 'next/link';
 import { toast } from 'sonner';
 import { Ticket } from '@/types';
 import { cn } from '@/lib/utils';
@@ -9,48 +8,54 @@ import { useEffect, useRef } from 'react';
 import { editTicket } from '@/lib/actions';
 import { useRouter } from 'next/navigation';
 import { Link as LinkIcon } from 'lucide-react';
-import { priorities, projects, statuses, types } from '@/content/constants';
+import { ticketIS } from '@/content/initial-states';
+import { priorities, statuses, types } from '@/content/constants';
 
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import Combobox from '@/components/ui/combobox';
 import { Button } from '@/components/ui/button';
+import { Combobox } from '@/components/ui/combobox';
+import { SuperLink } from '@/components/super-link';
+import { InputFile } from '@/components/input-file';
 import { Textarea } from '@/components/ui/textarea';
 import { CardContent, CardFooter } from '@/components/ui/card';
 
 import {
     Select,
-    SelectContent,
     SelectItem,
-    SelectTrigger,
     SelectValue,
+    SelectTrigger,
+    SelectContent,
 } from '@/components/ui/select';
 
-import { InputFile } from '@/components/input-file';
-import SubmitButton from '@/components/form/submit-button';
-import { ticketIS } from '@/content/initial-states';
+import { SubmitButton } from '@/components/form/submit-button';
 
 interface EditFormProps {
     ticket: Ticket;
+    projects: {
+        value: string;
+        label: string;
+    }[];
 }
 
-const EditTicketForm = ({ ticket }: EditFormProps) => {
+export const EditTicketForm = ({ ticket, projects }: EditFormProps) => {
     const router = useRouter();
-    const [formState, formAction] = useFormState(editTicket, ticketIS);
+    const ref = useRef<HTMLFormElement>(null);
+
+    const action = editTicket.bind(null, ticket.id as string);
+    const [formState, formAction] = useFormState(action, ticketIS);
 
     const { errors, message } = formState;
-    const ref = useRef<HTMLFormElement>(null);
 
     useEffect(() => {
         if (message === 'success') {
-            toast.success('Successfully updated');
-
+            toast.success('Ticket updated successfully!');
             ref.current?.reset();
             router.replace('/tickets');
         }
 
         if (message === 'unknown error') {
-            toast.error('Error!');
+            toast.error('Error updating ticket, please try again.');
         }
     }, [message, formState, router]);
 
@@ -91,7 +96,7 @@ const EditTicketForm = ({ ticket }: EditFormProps) => {
                                 <SelectTrigger
                                     id='type'
                                     className={cn(
-                                        'line-clamp-1 truncate lg:w-full',
+                                        'truncate lg:w-full',
                                         errors.type && 'border-red-400'
                                     )}
                                 >
@@ -121,7 +126,7 @@ const EditTicketForm = ({ ticket }: EditFormProps) => {
                                 <SelectTrigger
                                     id='priority'
                                     className={cn(
-                                        'line-clamp-1 truncate lg:w-full',
+                                        'truncate lg:w-full',
                                         errors.priority && 'border-red-400'
                                     )}
                                 >
@@ -158,15 +163,24 @@ const EditTicketForm = ({ ticket }: EditFormProps) => {
                         </div>
                         <div className='grid gap-2'>
                             <Label htmlFor='status'>Status</Label>
-                            <Select name='status' defaultValue={ticket.status}>
+                            <Select
+                                name='status'
+                                value={ticket.status}
+                                disabled
+                            >
                                 <SelectTrigger
                                     id='status'
                                     className={cn(
-                                        'line-clamp-1 truncate lg:w-full',
+                                        'truncate lg:w-full',
                                         errors.status && 'border-red-400'
                                     )}
                                 >
                                     <SelectValue placeholder='Prioridade' />
+                                    <input
+                                        type='hidden'
+                                        name='status'
+                                        value={ticket.status}
+                                    />
                                 </SelectTrigger>
                                 <SelectContent>
                                     {statuses.map((status, key) => {
@@ -204,13 +218,11 @@ const EditTicketForm = ({ ticket }: EditFormProps) => {
                 </section>
             </CardContent>
             <CardFooter className='justify-between space-x-2'>
-                <Link href='/tickets'>
+                <SuperLink href='/tickets'>
                     <Button variant='ghost'>Cancelar</Button>
-                </Link>
+                </SuperLink>
                 <SubmitButton text='Enviar' className='w-24' />
             </CardFooter>
         </form>
     );
 };
-
-export default EditTicketForm;

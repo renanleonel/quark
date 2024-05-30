@@ -1,38 +1,39 @@
 'use client';
 
-import { Button } from '@/components/ui/button';
+import { cn } from '@/lib/utils';
+import { useState } from 'react';
+import { useFormState } from 'react-dom';
+import { deactivateAccount } from '@/lib/actions';
+
 import {
     Drawer,
-    DrawerClose,
-    DrawerContent,
-    DrawerFooter,
-    DrawerHeader,
     DrawerTitle,
+    DrawerClose,
+    DrawerHeader,
+    DrawerContent,
     DrawerTrigger,
 } from '@/components/ui/drawer';
 
-import * as React from 'react';
-
 import {
     Dialog,
-    DialogContent,
-    DialogDescription,
-    DialogHeader,
     DialogTitle,
+    DialogClose,
+    DialogHeader,
+    DialogContent,
     DialogTrigger,
+    DialogDescription,
 } from '@/components/ui/dialog';
+
+import { Input } from '@/components/ui/input';
+import { Button } from '@/components/ui/button';
 import { DrawerDescription } from '@/components/ui/drawer';
+
 import { useMediaQuery } from '@/hooks/use-media-query';
-import { Input } from '../ui/input';
-import { useFormState } from 'react-dom';
-import { deactivateAccount } from '@/lib/actions';
+import { SubmitButton } from '@/components/form/submit-button';
 import { deactivateAccountIS } from '@/content/initial-states';
-import { cn } from '@/lib/utils';
-import { DialogClose } from '@radix-ui/react-dialog';
-import SubmitButton from '../form/submit-button';
 
 export function DrawerDeactivateAccount() {
-    const [open, setOpen] = React.useState(false);
+    const [open, setOpen] = useState(false);
     const isDesktop = useMediaQuery('(min-width: 768px)');
 
     const [formState, formAction] = useFormState(

@@ -3,55 +3,63 @@
 import { toast } from 'sonner';
 import { useState } from 'react';
 import { TrashIcon } from 'lucide-react';
-import { Button } from '@/components/ui/button';
+import { deleteMember } from '@/lib/actions';
 import { useMediaQuery } from '@/hooks/use-media-query';
 
 import {
     Dialog,
+    DialogClose,
+    DialogTitle,
+    DialogHeader,
+    DialogTrigger,
     DialogContent,
     DialogDescription,
-    DialogHeader,
-    DialogTitle,
-    DialogTrigger,
-    DialogClose,
 } from '@/components/ui/dialog';
+
 import {
     Drawer,
     DrawerClose,
-    DrawerContent,
-    DrawerDescription,
+    DrawerTitle,
     DrawerFooter,
     DrawerHeader,
-    DrawerTitle,
     DrawerTrigger,
+    DrawerContent,
+    DrawerDescription,
 } from '@/components/ui/drawer';
-import { deleteMember } from '@/lib/actions';
 
-export function DeleteMember() {
+import { Button } from '@/components/ui/button';
+
+export const DeleteMember = () => {
     const [open, setOpen] = useState(false);
     const isDesktop = useMediaQuery('(min-width: 768px)');
 
-    const handleDeleteMember = async () => {
-        const req = await deleteMember('memberID');
+    async function handleDeleteMember() {
+        const status = await deleteMember('memberID');
 
-        setOpen(false);
+        if (status === 200) {
+            toast.success('Membro deletado com sucesso!');
 
-        if (!req) {
-            return toast.error('Erro ao deletar membro');
+            setOpen(false);
         }
 
-        return toast.success('Membro deletado com sucesso!');
-    };
+        if (status === 404) {
+            toast.error('Membro não encontrado.');
+        }
+
+        if (status === 500) {
+            toast.error('Erro ao deletar membro.');
+        }
+    }
 
     if (isDesktop) {
         return (
             <Dialog open={open} onOpenChange={setOpen}>
                 <DialogTrigger asChild>
-                    <Button
-                        variant='ghost'
-                        className='p- flex h-8 w-8 hover:bg-muted'
-                    >
-                        <TrashIcon className='h-4 w-4 text-muted-foreground' />
+                    <Button variant='ghost' className='flex p-2 hover:bg-muted'>
+                        <TrashIcon
+                            className='h-4 w-4 text-muted-foreground'
+                            color='#fff'
+                        />
                     </Button>
                 </DialogTrigger>
                 <DialogContent className='sm:max-w-[425px]'>
@@ -102,4 +110,4 @@ export function DeleteMember() {
             </DrawerContent>
         </Drawer>
     );
-}
+};

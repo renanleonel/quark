@@ -1,11 +1,14 @@
+import Loading from './loading';
 import { Metadata } from 'next';
+import { Suspense } from 'react';
+import { verifyAuth } from '@/lib/actions';
 
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Button } from '@/components/ui/button';
+
+import { UpdateOrganizationForm } from '@/components/form/update-organization-form';
 import { DrawerDeleteOrganization } from '@/components/drawer/drawer-delete-organization';
-import { Suspense } from 'react';
-import Loading from './loading';
 
 export const metadata: Metadata = {
     title: 'Configurações',
@@ -13,6 +16,8 @@ export const metadata: Metadata = {
 };
 
 export default async function Settings() {
+    await verifyAuth();
+
     return (
         <Suspense fallback={<Loading />}>
             <main className='space-y-4'>
@@ -20,15 +25,7 @@ export default async function Settings() {
                     <h3 className='text-lg font-medium'>Nome</h3>
                     <section className='space-y-4'>
                         <div className='grid gap-2'>
-                            <div className='flex gap-2'>
-                                <Input
-                                    id='name'
-                                    value='Organization'
-                                    name='name'
-                                    placeholder='Organization'
-                                />
-                                <Button className='w-40'>Alterar</Button>
-                            </div>
+                            <UpdateOrganizationForm />
                         </div>
                     </section>
                 </section>

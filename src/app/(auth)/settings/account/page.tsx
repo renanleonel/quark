@@ -1,12 +1,13 @@
-import { Metadata } from 'next';
-
-import { Label } from '@/components/ui/label';
-import { Button } from '@/components/ui/button';
-import { Separator } from '@/components/ui/separator';
-import AccountForm from '@/components/form/account-form';
-import { DrawerDeactivateAccount } from '@/components/drawer/drawer-deactivate-account';
-import { Suspense } from 'react';
 import Loading from './loading';
+import { Metadata } from 'next';
+import { Suspense } from 'react';
+
+import { verifyAuth } from '@/lib/actions';
+import { Label } from '@/components/ui/label';
+import { Separator } from '@/components/ui/separator';
+
+import { AccountForm } from '@/components/form/account-form';
+import { DrawerDeactivateAccount } from '@/components/drawer/drawer-deactivate-account';
 
 export const metadata: Metadata = {
     title: 'Configurações',
@@ -14,6 +15,8 @@ export const metadata: Metadata = {
 };
 
 export default async function Account() {
+    await verifyAuth();
+
     return (
         <Suspense fallback={<Loading />}>
             <main className='space-y-20'>

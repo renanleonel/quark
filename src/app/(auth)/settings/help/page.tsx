@@ -1,14 +1,18 @@
-import { Metadata } from 'next';
-import HelpForm from '@/components/form/help-form';
-import { Suspense } from 'react';
 import Loading from './loading';
+import { Metadata } from 'next';
+import { Suspense } from 'react';
+
+import { verifyAuth } from '@/lib/actions';
+import { HelpForm } from '@/components/form/help-form';
 
 export const metadata: Metadata = {
     title: 'Help',
     description: 'Help',
 };
 
-export default function Help() {
+export default async function Help() {
+    await verifyAuth();
+
     return (
         <Suspense fallback={<Loading />}>
             <main>

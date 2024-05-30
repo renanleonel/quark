@@ -4,46 +4,60 @@ import { toast } from 'sonner';
 import { cn } from '@/lib/utils';
 import { useFormState } from 'react-dom';
 import { useEffect, useRef } from 'react';
-import { newTicket } from '@/lib/actions';
+import { useRouter } from 'next/navigation';
+import { createTicket } from '@/lib/actions';
 import { Link as LinkIcon } from 'lucide-react';
-import { priorities, projects, statuses, types } from '@/content/constants';
-
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import Combobox from '@/components/ui/combobox';
-import { Button } from '@/components/ui/button';
-import { Textarea } from '@/components/ui/textarea';
-import { CardContent, CardFooter } from '@/components/ui/card';
+import { priorities, statuses, types } from '@/content/constants';
 
 import {
     Select,
-    SelectContent,
     SelectItem,
-    SelectTrigger,
     SelectValue,
+    SelectTrigger,
+    SelectContent,
 } from '@/components/ui/select';
 
-import { InputFile } from '@/components/input-file';
-import SubmitButton from '@/components/form/submit-button';
-import { ticketIS } from '@/content/initial-states';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { Button } from '@/components/ui/button';
+import { Combobox } from '@/components/ui/combobox';
+import { Textarea } from '@/components/ui/textarea';
+import { CardContent, CardFooter } from '@/components/ui/card';
 
-const NewTicketForm = () => {
-    const [formState, formAction] = useFormState(newTicket, ticketIS);
+import { InputFile } from '@/components/input-file';
+import { ticketIS } from '@/content/initial-states';
+import { SubmitButton } from '@/components/form/submit-button';
+
+interface NewTicketFormProps {
+    projects: {
+        value: string;
+        label: string;
+    }[];
+}
+
+export const NewTicketForm = ({ projects }: NewTicketFormProps) => {
+    const router = useRouter();
+    const ref = useRef<HTMLFormElement>(null);
+    const [formState, formAction] = useFormState(createTicket, ticketIS);
 
     const { errors, message } = formState;
-    const ref = useRef<HTMLFormElement>(null);
 
     useEffect(() => {
         if (message === 'success') {
-            toast.success('Created!');
-
+            toast.success('Ticket created successfully!');
             ref.current?.reset();
+
+            router.replace('/tickets');
+        }
+
+        if (message === 'api error') {
+            toast.error('Error while creating ticket!');
         }
 
         if (message === 'unknown error') {
-            toast.error('Error!');
+            toast.error('Unknown error!');
         }
-    }, [message, formState]);
+    }, [formState, message, router]);
 
     return (
         <form action={formAction} ref={ref}>
@@ -75,15 +89,15 @@ const NewTicketForm = () => {
                     <div className='grid grid-cols-2 gap-4'>
                         <div className='grid gap-2'>
                             <Label htmlFor='type'>Tipo</Label>
-                            <Select defaultValue='outro' name='type'>
+                            <Select name='type'>
                                 <SelectTrigger
                                     id='type'
                                     className={cn(
-                                        'line-clamp-1 truncate lg:w-full',
+                                        'truncate lg:w-full',
                                         errors.type && 'border-red-400'
                                     )}
                                 >
-                                    <SelectValue placeholder='Tipo' />
+                                    <SelectValue placeholder='Select the type' />
                                 </SelectTrigger>
                                 <SelectContent>
                                     {types.map((type, key) => {
@@ -102,15 +116,15 @@ const NewTicketForm = () => {
 
                         <div className='grid gap-2'>
                             <Label htmlFor='priority'>Prioridade</Label>
-                            <Select name='priority' defaultValue='baixa'>
+                            <Select name='priority'>
                                 <SelectTrigger
                                     id='priority'
                                     className={cn(
-                                        'line-clamp-1 truncate lg:w-full',
+                                        'truncate lg:w-full',
                                         errors.priority && 'border-red-400'
                                     )}
                                 >
-                                    <SelectValue placeholder='Prioridade' />
+                                    <SelectValue placeholder='Select the priority' />
                                 </SelectTrigger>
                                 <SelectContent>
                                     {priorities.map((priority, key) => {
@@ -135,7 +149,7 @@ const NewTicketForm = () => {
                                 className={cn(
                                     errors.project && 'border-red-400'
                                 )}
-                                placeholderText='Selecione'
+                                placeholderText='Select the project'
                                 searchText='Pesquise'
                                 name='project'
                             />
@@ -150,8 +164,8 @@ const NewTicketForm = () => {
                                 <SelectTrigger
                                     id='status'
                                     className={cn(
-                                        'line-clamp-1 truncate lg:w-full',
-                                        errors.priority && 'border-red-400'
+                                        'truncate lg:w-full',
+                                        errors.status && 'border-red-400'
                                     )}
                                 >
                                     <SelectValue placeholder='Prioridade' />
@@ -177,18 +191,20 @@ const NewTicketForm = () => {
                             <Label htmlFor='link'>Link</Label>
                             <LinkIcon className='h-3 w-3' />
                         </div>
-                        <Input id='link' name='link' placeholder='Link' />
+                        <Input
+                            id='link'
+                            name='link'
+                            placeholder='Insert a reproducible link'
+                        />
                     </div>
                 </section>
             </CardContent>
             <CardFooter className='justify-between space-x-2'>
                 <Button type='reset' variant='ghost'>
-                    Cancelar
+                    Cancel
                 </Button>
-                <SubmitButton text='Enviar' className='w-24' />
+                <SubmitButton text='Submit' className='w-24' />
             </CardFooter>
         </form>
     );
 };
-
-export default NewTicketForm;

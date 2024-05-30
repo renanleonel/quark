@@ -1,58 +1,67 @@
 'use client';
 
-import * as React from 'react';
-
-import { cn } from '@/lib/utils';
+import { toast } from 'sonner';
+import { useState } from 'react';
+import { Ticket } from '@/types';
+import { deleteTicket } from '@/lib/actions';
 import { useMediaQuery } from '@/hooks/use-media-query';
-import { Button } from '@/components/ui/button';
+
 import {
     Dialog,
+    DialogTitle,
+    DialogClose,
+    DialogHeader,
+    DialogTrigger,
     DialogContent,
     DialogDescription,
-    DialogHeader,
-    DialogTitle,
-    DialogTrigger,
-    DialogClose,
 } from '@/components/ui/dialog';
+
 import {
     Drawer,
+    DrawerTitle,
     DrawerClose,
-    DrawerContent,
-    DrawerDescription,
     DrawerFooter,
     DrawerHeader,
-    DrawerTitle,
+    DrawerContent,
     DrawerTrigger,
+    DrawerDescription,
 } from '@/components/ui/drawer';
 
-import { toast } from 'sonner';
+import { Icons } from '@/components/ui/icons';
+import { Button } from '@/components/ui/button';
 
 interface DeleteTicketProps {
+    ticket: Ticket;
     children: React.ReactNode;
 }
 
-export function DeleteTicket({ children }: DeleteTicketProps) {
-    const [open, setOpen] = React.useState(false);
+export function DeleteTicket({ ticket, children }: DeleteTicketProps) {
+    const [open, setOpen] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
+
     const isDesktop = useMediaQuery('(min-width: 768px)');
 
-    const handleDeleteTicket = () => {
-        setOpen(false);
+    async function handleDeleteTicket() {
+        if (!ticket.id) return;
+
+        setIsLoading(true);
+        const status = await deleteTicket(ticket.id);
+
+        if (status !== 200) {
+            toast.error('Erro ao deletar ticket!');
+            setIsLoading(false);
+            return;
+        }
+
         toast.success('Ticket deletado com sucesso!');
-    };
+        setOpen(false);
+        setIsLoading(false);
+    }
 
     if (isDesktop) {
         return (
             <Dialog open={open} onOpenChange={setOpen}>
-                <DialogTrigger asChild>
-                    {/* <h1
-                        className={cn(
-                            'hover:bg-accent relative flex cursor-pointer select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none transition-colors focus:bg-accent focus:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50'
-                        )}
-                    >
-                        Delete
-                    </h1> */}
-                    {children}
-                </DialogTrigger>
+                <DialogTrigger asChild>{children}</DialogTrigger>
                 <DialogContent className='sm:max-w-[425px]'>
                     <DialogHeader>
                         <DialogTitle>Delete ticket</DialogTitle>
@@ -64,7 +73,14 @@ export function DeleteTicket({ children }: DeleteTicketProps) {
                     <DialogClose asChild>
                         <Button variant='outline'>Cancel</Button>
                     </DialogClose>
-                    <Button onClick={handleDeleteTicket} variant='destructive'>
+                    <Button
+                        disabled={isLoading}
+                        variant='destructive'
+                        onClick={handleDeleteTicket}
+                    >
+                        {isLoading && (
+                            <Icons.spinner className='mr-2 h-4 w-4 animate-spin' />
+                        )}
                         Delete
                     </Button>
                 </DialogContent>
@@ -74,16 +90,7 @@ export function DeleteTicket({ children }: DeleteTicketProps) {
 
     return (
         <Drawer open={open} onOpenChange={setOpen}>
-            <DrawerTrigger asChild>
-                {/* <h1
-                    className={cn(
-                        'hover:bg-accent relative flex cursor-pointer select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none transition-colors focus:bg-accent focus:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50'
-                    )}
-                >
-                    Delete
-                </h1> */}
-                {children}
-            </DrawerTrigger>
+            <DrawerTrigger asChild>{children}</DrawerTrigger>
             <DrawerContent>
                 <DrawerHeader className='text-left'>
                     <DrawerTitle>Delete ticket</DrawerTitle>
@@ -96,7 +103,14 @@ export function DeleteTicket({ children }: DeleteTicketProps) {
                     <DrawerClose asChild>
                         <Button variant='outline'>Cancel</Button>
                     </DrawerClose>
-                    <Button onClick={handleDeleteTicket} variant='destructive'>
+                    <Button
+                        disabled={isLoading}
+                        variant='destructive'
+                        onClick={handleDeleteTicket}
+                    >
+                        {isLoading && (
+                            <Icons.spinner className='mr-2 h-4 w-4 animate-spin' />
+                        )}
                         Delete
                     </Button>
                 </DrawerFooter>

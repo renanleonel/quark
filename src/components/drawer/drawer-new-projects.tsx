@@ -1,22 +1,27 @@
-import * as React from 'react';
+'use client';
 
-import { Button } from '@/components/ui/button';
+import { useState } from 'react';
+
 import {
     Drawer,
+    DrawerTitle,
     DrawerClose,
-    DrawerContent,
-    DrawerDescription,
     DrawerFooter,
     DrawerHeader,
-    DrawerTitle,
     DrawerTrigger,
+    DrawerContent,
+    DrawerDescription,
 } from '@/components/ui/drawer';
-import { ProjectsForm } from '../form/projects-form';
-import { Separator } from '../ui/separator';
+import { Button } from '@/components/ui/button';
+import { Separator } from '@/components/ui/separator';
+
+import { ProjectsForm } from '@/components/form/projects-form';
 
 export function DrawerNewProjects() {
+    const [open, setOpen] = useState(false);
+
     return (
-        <Drawer>
+        <Drawer open={open} onOpenChange={setOpen}>
             <DrawerTrigger asChild>
                 <Button>Novo projeto</Button>
             </DrawerTrigger>
@@ -30,7 +35,7 @@ export function DrawerNewProjects() {
                     </DrawerHeader>
 
                     <section className='flex max-w-sm flex-col gap-4 p-4'>
-                        <ProjectsForm />
+                        <ProjectsForm setOpen={setOpen} />
                     </section>
 
                     <Separator />

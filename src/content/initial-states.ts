@@ -1,4 +1,4 @@
-export const authIS = {
+export const signinIS = {
     message: '',
     errors: {
         email: '',
@@ -103,6 +103,23 @@ export const changeProfileIS = {
         name: '',
         language: '',
         profilePic: '',
+        unknown: '',
+    },
+};
+
+export const helpIS = {
+    message: '',
+    errors: {
+        title: '',
+        message: '',
+        unknown: '',
+    },
+};
+
+export const organizationNameIS = {
+    message: '',
+    errors: {
+        name: '',
         unknown: '',
     },
 };

@@ -10,8 +10,8 @@ export default auth((req) => {
     const role = req.auth?.user?.role;
 
     const isAuthenticated = !!req.auth;
-    const isPublicRoute = PUBLIC_ROUTES.includes(nextUrl.pathname);
     const isAdminRoute = ADMIN_ROUTES.includes(nextUrl.pathname);
+    const isPublicRoute = PUBLIC_ROUTES.includes(nextUrl.pathname);
 
     if (isPublicRoute && isAuthenticated) {
         return Response.redirect(new URL(DEFAULT_REDIRECT, nextUrl));
@@ -21,7 +21,7 @@ export default auth((req) => {
         return Response.redirect(new URL('/', nextUrl));
     }
 
-    if (isAdminRoute && role !== 'admin') {
+    if (isAdminRoute && role !== 'ADMIN') {
         return Response.redirect(new URL(DEFAULT_REDIRECT, nextUrl));
     }
 });

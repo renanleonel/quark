@@ -2,17 +2,7 @@ import NextAuth from 'next-auth';
 import { authConfig } from './auth.config';
 import Credentials from 'next-auth/providers/credentials';
 import Google from 'next-auth/providers/google';
-
-async function getUser(email: string, password: string): Promise<any> {
-    return {
-        id: '1',
-        name: 'username',
-        email: email,
-        password: password,
-        role: 'admin',
-        organization: '#12345',
-    };
-}
+import { getUser } from '@/lib/actions';
 
 export const {
     auth,
