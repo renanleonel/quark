@@ -27,10 +27,6 @@ export const ticketDV = {
     link: '',
 };
 
-export const defaultCreateOrganizationValues = {
-    id: '',
-    name: '',
-};
 export const validateOrganizationDV = {
     id: '',
     code: '',
@@ -59,4 +55,13 @@ export const changeProfileDV = {
     name: '',
     language: '',
     profilePic: '',
+};
+
+export const helpDV = {
+    title: '',
+    message: '',
+};
+
+export const organizationDV = {
+    name: '',
 };

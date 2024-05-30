@@ -1,44 +1,57 @@
 'use server';
 
-import { Resend } from 'resend';
-import { AuthError } from 'next-auth';
-import { revalidatePath, revalidateTag } from 'next/cache';
 import { auth, signIn, signOut } from '@/auth';
+import { AuthError } from 'next-auth';
+import { revalidateTag } from 'next/cache';
+import { Resend } from 'resend';
 
 import {
     authSchema,
+    changePasswordSchema,
+    changeProfileSchema,
+    helpSchema,
+    organizationSchema,
+    projectSchema,
+    recoverSchema,
     signUpForm,
     ticketSchema,
-    recoverSchema,
-    projectSchema,
-    changeProfileSchema,
-    changePasswordSchema,
     validateOrganizationSchema,
 } from '@/types/schema';
 
 import {
     authDV,
-    signupDV,
-    ticketDV,
-    recoverDV,
-    projectDV,
-    changeProfileDV,
     changePasswordDV,
+    changeProfileDV,
     deactivateAccountDV,
     deleteOrganizationDV,
+    helpDV,
+    organizationDV,
+    projectDV,
+    recoverDV,
+    signupDV,
+    ticketDV,
     validateOrganizationDV,
 } from '@/content/default-values';
 
-import { Ticket } from '@/types';
 import {
+    fetchMembers,
     fetchOrganization,
     fetchProjects,
     fetchTicketByID,
     fetchTickets,
+    fetchUser,
+    patchMember,
+    patchOrganization,
+    patchProject,
     patchTicket,
+    postHelp,
+    postProject,
     postTicket,
+    removeMember,
+    removeProject,
     removeTicket,
 } from '@/lib/api';
+import { Member, Ticket } from '@/types';
 
 export async function signin(_: any, formData: FormData) {
     try {
@@ -139,6 +152,17 @@ export async function signout() {
     await signOut();
 }
 
+export async function sendConfirmationEmail(email: string) {
+    const resend = new Resend(process.env.RESEND_API_KEY);
+
+    await resend.emails.send({
+        from: 'onboarding@resend.dev',
+        to: email,
+        subject: 'oi',
+        html: '<h1>account created successfully!</h1>',
+    });
+}
+
 export async function recover(_: any, formData: FormData) {
     try {
         const form = Object.fromEntries(formData.entries());
@@ -197,17 +221,6 @@ export async function recover(_: any, formData: FormData) {
     }
 }
 
-export async function sendConfirmationEmail(email: string) {
-    const resend = new Resend(process.env.RESEND_API_KEY);
-
-    await resend.emails.send({
-        from: 'onboarding@resend.dev',
-        to: email,
-        subject: 'oi',
-        html: '<h1>account created successfully!</h1>',
-    });
-}
-
 export async function sendRecoverEmail(email: string) {
     const resend = new Resend(process.env.RESEND_API_KEY);
 
@@ -256,11 +269,9 @@ export async function createOrganization(name: string) {
 
 export async function validateOrganization(_: any, formData: FormData) {
     try {
-        const code = formData.get('code') as string;
+        const form = Object.fromEntries(formData.entries());
 
-        const validatedFields = validateOrganizationSchema.safeParse({
-            code: code,
-        });
+        const validatedFields = validateOrganizationSchema.safeParse(form);
 
         if (!validatedFields.success) {
             return {
@@ -281,6 +292,32 @@ export async function validateOrganization(_: any, formData: FormData) {
                 unknown: 'Erro desconhecido.',
             },
         };
+    }
+}
+
+export async function getUser(email: string, password: string): Promise<any> {
+    const request = await fetchUser(email, password);
+
+    return request;
+}
+
+export async function getTickets() {
+    try {
+        const tickets = await fetchTickets();
+
+        return tickets;
+    } catch (error) {
+        //sentry
+    }
+}
+
+export async function getTicketByID(id: string): Promise<Ticket> {
+    try {
+        const ticket = await fetchTicketByID(id);
+
+        return ticket;
+    } catch (error) {
+        throw new Error('Ticket not found');
     }
 }
 
@@ -389,33 +426,99 @@ export async function deleteTicket(id: string) {
     }
 }
 
-export async function getTickets() {
+export async function getProjects() {
     try {
-        const tickets = await fetchTickets();
+        const session = await auth();
 
-        return tickets;
+        const organizationID = session?.user.organization;
+
+        if (!organizationID) {
+            throw new Error('Organization not found');
+        }
+
+        const {
+            error,
+            statusCode,
+            message,
+            data: projects,
+        } = await fetchProjects(organizationID);
+
+        if (error) {
+            throw new Error(
+                `Projects not found! Status: ${statusCode}, Message: ${message}`
+            );
+        }
+
+        return projects;
     } catch (error) {
         //sentry
     }
 }
 
-export async function getTicketByID(id: string): Promise<Ticket> {
-    try {
-        const ticket = await fetchTicketByID(id);
+export async function getProjectByID(id: string) {}
 
-        return ticket;
+export async function createProject(_: any, formData: FormData) {
+    try {
+        const form = Object.fromEntries(formData.entries());
+
+        const validatedFields = projectSchema.safeParse(form);
+
+        if (!validatedFields.success) {
+            return {
+                message: 'validation error',
+                errors: validatedFields.error.flatten().fieldErrors,
+            };
+        }
+
+        const payload = {
+            ...validatedFields.data,
+        };
+
+        const { error, statusCode, message } = await postProject(payload);
+
+        if (error) {
+            switch (statusCode) {
+                case 409:
+                    return {
+                        message: 'unique constraint',
+                        errors: {
+                            ...projectDV,
+                            name: 'Já existe um projeto com este nome',
+                        },
+                    };
+                default:
+                    return {
+                        message: 'unknown error',
+                        errors: {
+                            ...projectDV,
+                            unknown: `statusCode: ${statusCode}, message: ${message}`,
+                        },
+                    };
+            }
+        }
+
+        revalidateTag('@projects');
+
+        return {
+            message: 'success',
+            errors: {},
+        };
     } catch (error) {
-        throw new Error('Ticket not found');
+        return {
+            message: 'unknown error',
+            errors: {
+                ...projectDV,
+                unknown: 'Erro desconhecido.',
+            },
+        };
     }
 }
 
 export async function editProject(id: string, _: any, formData: FormData) {
     try {
-        const name = formData.get('name');
+        const form = Object.fromEntries(formData.entries());
 
-        const validatedFields = projectSchema.safeParse({
-            name: name,
-        });
+        const validatedFields = projectSchema.safeParse(form);
 
         if (!validatedFields.success) {
             return {
@@ -423,6 +526,35 @@ export async function editProject(id: string, _: any, formData: FormData) {
                 errors: validatedFields.error.flatten().fieldErrors,
             };
         }
+
+        const payload = {
+            ...validatedFields.data,
+        };
+
+        const { error, statusCode, message } = await patchProject(id, payload);
+
+        if (error) {
+            switch (statusCode) {
+                case 409:
+                    return {
+                        message: 'unique constraint',
+                        errors: {
+                            ...projectDV,
+                            name: 'Já existe um projeto com este nome',
+                        },
+                    };
+                default:
+                    return {
+                        message: 'unknown error',
+                        errors: {
+                            ...projectDV,
+                            unknown: `statusCode: ${statusCode}, message: ${message}`,
+                        },
+                    };
+            }
+        }
+
+        revalidateTag('@projects');
 
         return {
             message: 'success',
@@ -439,40 +571,246 @@ export async function editProject(id: string, _: any, formData: FormData) {
     }
 }
 
-export async function createProject(_: any, formData: FormData) {
+export async function deleteProject(id: string) {
     try {
-        const name = formData.get('name');
+        // delete project
+        const { error } = await removeProject(id);
 
-        const validatedFields = projectSchema.safeParse({
-            name: name,
-        });
-
-        if (!validatedFields.success) {
+        if (error) {
             return {
-                message: 'validation error',
-                errors: validatedFields.error.flatten().fieldErrors,
+                error: true,
+                message: 'Erro ao deletar projeto',
             };
         }
 
+        revalidateTag('@tickets');
+        revalidateTag('@projects');
+
         return {
-            message: 'success',
-            errors: {},
+            error: false,
+            message: 'Projeto deletado com sucesso',
         };
     } catch (error) {
         return {
-            message: 'unknown error',
-            errors: {
-                ...projectDV,
-                unknown: 'Erro desconhecido.',
-            },
+            error: true,
+            message: 'Erro desconhecido',
         };
+        //sentry
+    }
+}
+
+export async function getMembers(organizationID: string) {
+    try {
+        const {
+            error,
+            message,
+            statusCode,
+            data: members,
+        } = await fetchMembers(organizationID);
+
+        if (error) {
+            throw new Error(
+                `Members not found! Status: ${statusCode}, Message: ${message}`
+            );
+        }
+
+        return members;
+    } catch (error) {
+        //sentry
+    }
+}
+
+export async function getMemberByID(memberID: string) {}
+
+export async function updateMember(memberID: string, body: Member) {
+    try {
+        const { statusCode, error } = await patchMember(memberID, body);
+
+        if (!error) {
+            revalidateTag('@members');
+        }
+        return statusCode;
+    } catch {
+        //sentry
     }
 }
 
 export async function deleteMember(memberID: string) {
-    revalidatePath('/organization/members');
+    try {
+        const { statusCode, error } = await removeMember(memberID);
 
-    return true;
+        if (!error) {
+            revalidateTag('@members');
+        }
+
+        return statusCode;
+    } catch {
+        //sentry
+    }
+}
+
+export async function changeProfile(_: any, formData: FormData) {
+    try {
+        const session = await auth();
+
+        const name = formData.get('name');
+        const language = formData.get('language');
+        const profilePic = formData.get('profilePic');
+
+        if (name === session?.user?.name) {
+            return {
+                message: 'validation error',
+                errors: {
+                    ...changeProfileDV,
+                    name: 'Nome não pode ser igual ao atual.',
+                },
+            };
+        }
+
+        const validatedFields = changeProfileSchema.safeParse({
+            name: name,
+            language: language,
+            profilePic: profilePic,
+        });
+
+        if (!validatedFields.success) {
+            return {
+                message: 'validation error',
+                errors: validatedFields.error.flatten().fieldErrors,
+            };
+        }
+
+        return {
+            message: 'success',
+            errors: {},
+        };
+    } catch (error) {
+        return {
+            message: 'unknown error',
+            errors: {
+                ...changeProfileDV,
+                unknown: 'Erro desconhecido.',
+            },
+        };
+    }
+}
+
+export async function getOrganization() {
+    try {
+        const organization = await fetchOrganization();
+        return organization;
+    } catch (error) {
+        //sentry
+    }
+}
+
+export async function updateUserName(name: string) {
+    try {
+    } catch (error) {}
+}
+
+export async function updateOrganizationName(
+    currentName: string,
+    _: any,
+    formData: FormData
+) {
+    try {
+        const session = await auth();
+
+        if (!session) {
+            return {
+                message: 'auth error',
+                errors: {
+                    ...organizationDV,
+                    unknown: 'Erro de autenticação.',
+                },
+            };
+        }
+
+        const organizationID = session.user.organization;
+
+        const form = Object.fromEntries(formData.entries());
+
+        if (form.name === currentName) {
+            return {
+                message: 'same name',
+                errors: {
+                    ...organizationDV,
+                    name: 'Nome não pode ser igual ao atual.',
+                },
+            };
+        }
+
+        const validatedFields = organizationSchema.safeParse(form);
+
+        if (!validatedFields.success) {
+            return {
+                message: 'validation error',
+                errors: validatedFields.error.flatten().fieldErrors,
+            };
+        }
+
+        const name = validatedFields.data.name;
+
+        const { error, message, statusCode } = await patchOrganization(
+            organizationID,
+            name
+        );
+
+        if (error) {
+            return {
+                message: 'unknown error',
+                errors: {
+                    ...organizationDV,
+                    unknown: `statusCode: ${statusCode}, message: ${message}`,
+                },
+            };
+        }
+
+        return {
+            message: 'success',
+            errors: {},
+        };
+    } catch (error) {
+        return {
+            message: 'unknown error',
+            errors: {
+                ...organizationDV,
+                unknown: 'Erro desconhecido.',
+            },
+        };
+    }
+}
+
+export async function deleteOrganization(_: any, formData: FormData) {
+    let success = false;
+
+    try {
+        // const name = formData.get('name');
+
+        //check if org name == name
+
+        success = true;
+
+        // delete org
+    } catch (error) {
+        return {
+            message: 'unknown error',
+            errors: {
+                ...deleteOrganizationDV,
+                unknown: 'Erro desconhecido.',
+            },
+        };
+    }
+
+    if (success) {
+        await signOut();
+
+        return {
+            message: 'success',
+            errors: {},
+        };
+    }
 }
 
 export async function changePassword(_: any, formData: FormData) {
@@ -547,60 +885,11 @@ export async function deactivateAccount(_: any, formData: FormData) {
     }
 }
 
-export async function deleteOrganization(_: any, formData: FormData) {
-    let success = false;
-
+export async function help(_: any, formData: FormData) {
     try {
-        // const name = formData.get('name');
+        const form = Object.fromEntries(formData.entries());
 
-        //check if org name == name
-
-        success = true;
-
-        // delete org
-    } catch (error) {
-        return {
-            message: 'unknown error',
-            errors: {
-                ...deleteOrganizationDV,
-                unknown: 'Erro desconhecido.',
-            },
-        };
-    }
-
-    if (success) {
-        await signOut();
-
-        return {
-            message: 'success',
-            errors: {},
-        };
-    }
-}
-
-export async function changeProfile(_: any, formData: FormData) {
-    try {
-        const session = await auth();
-
-        const name = formData.get('name');
-        const language = formData.get('language');
-        const profilePic = formData.get('profilePic');
-
-        if (name === session?.user?.name) {
-            return {
-                message: 'validation error',
-                errors: {
-                    ...changeProfileDV,
-                    name: 'Nome não pode ser igual ao atual.',
-                },
-            };
-        }
-
-        const validatedFields = changeProfileSchema.safeParse({
-            name: name,
-            language: language,
-            profilePic: profilePic,
-        });
+        const validatedFields = helpSchema.safeParse(form);
 
         if (!validatedFields.success) {
             return {
@@ -609,6 +898,22 @@ export async function changeProfile(_: any, formData: FormData) {
             };
         }
 
+        const payload = {
+            ...validatedFields.data,
+        };
+
+        const { error, message, statusCode } = await postHelp(payload);
+
+        if (error) {
+            return {
+                message: 'unknown error',
+                errors: {
+                    ...helpDV,
+                    unknown: `statusCode: ${statusCode}, message: ${message}`,
+                },
+            };
+        }
+
         return {
             message: 'success',
             errors: {},
@@ -617,48 +922,9 @@ export async function changeProfile(_: any, formData: FormData) {
         return {
             message: 'unknown error',
             errors: {
-                ...changeProfileDV,
+                ...helpDV,
                 unknown: 'Erro desconhecido.',
             },
         };
-    }
-}
-
-export async function getProjects() {
-    try {
-        const session = await auth();
-
-        const organizationID = session?.user.organization;
-
-        if (!organizationID) {
-            throw new Error('Organization not found');
-        }
-
-        const {
-            error,
-            statusCode,
-            message,
-            data: projects,
-        } = await fetchProjects(organizationID);
-
-        if (error) {
-            throw new Error(
-                `Projects not found! Status: ${statusCode}, Message: ${message}`
-            );
-        }
-
-        return projects;
-    } catch (error) {
-        //sentry
-    }
-}
-
-export async function getOrganization() {
-    try {
-        const organization = await fetchOrganization();
-
-        return organization;
-    } catch (error) {
-        //sentry
     }
 }

@@ -34,26 +34,32 @@ export const DeleteMember = () => {
     const isDesktop = useMediaQuery('(min-width: 768px)');
 
     async function handleDeleteMember() {
-        const req = await deleteMember('memberID');
+        const status = await deleteMember('memberID');
 
-        setOpen(false);
+        if (status === 200) {
+            toast.success('Membro deletado com sucesso!');
 
-        if (!req) {
-            return toast.error('Erro ao deletar membro');
+            setOpen(false);
         }
 
-        return toast.success('Membro deletado com sucesso!');
+        if (status === 404) {
+            toast.error('Membro não encontrado.');
+        }
+
+        if (status === 500) {
+            toast.error('Erro ao deletar membro.');
+        }
     }
 
     if (isDesktop) {
         return (
             <Dialog open={open} onOpenChange={setOpen}>
                 <DialogTrigger asChild>
-                    <Button
-                        variant='ghost'
-                        className='p- flex h-8 w-8 hover:bg-muted'
-                    >
-                        <TrashIcon className='h-4 w-4 text-muted-foreground' />
+                    <Button variant='ghost' className='flex p-2 hover:bg-muted'>
+                        <TrashIcon
+                            className='h-4 w-4 text-muted-foreground'
+                            color='#fff'
+                        />
                     </Button>
                 </DialogTrigger>
                 <DialogContent className='sm:max-w-[425px]'>

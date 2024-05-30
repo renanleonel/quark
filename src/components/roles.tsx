@@ -32,17 +32,34 @@ import {
 
 import { roles } from '@/content/constants';
 import { Button } from '@/components/ui/button';
+import { updateMember } from '@/lib/actions';
+import { toast } from 'sonner';
+import { Member, Role } from '@/types';
 
 interface RolesProps {
-    role: string;
+    member: Member;
 }
 
-export const Roles = ({ role }: RolesProps) => {
-    const [open, setOpen] = useState(false);
-    const [value, setValue] = useState(role);
+export const Roles = ({ member }: RolesProps) => {
+    const { role } = member;
 
-    function handleChangeRole(role: string) {
-        setValue(role);
+    const [open, setOpen] = useState(false);
+
+    async function handleChangeRole(role: Role) {
+        const payload = {
+            ...member,
+            role,
+        };
+
+        const status = await updateMember(member.id, payload);
+
+        if (status === 200) {
+            toast.success('Role updated successfully!');
+        }
+
+        if (status === 500) {
+            toast.error('Error updating role.');
+        }
     }
 
     return (
@@ -53,9 +70,8 @@ export const Roles = ({ role }: RolesProps) => {
                     aria-expanded={open}
                     className='w-full justify-between md:ml-auto md:w-fit'
                 >
-                    {value
-                        ? roles.find((role) => role.value === value)?.name
-                        : 'Select framework...'}
+                    {roles.find((r) => r.value === role)?.name || 'Select role'}
+
                     <ChevronDownIcon className='ml-2 h-4 w-4 text-muted-foreground' />
                 </Button>
             </PopoverTrigger>
@@ -96,7 +112,7 @@ export const Roles = ({ role }: RolesProps) => {
                                                 <AlertDialogAction
                                                     onClick={() => {
                                                         handleChangeRole(
-                                                            role.value
+                                                            role.value as Role
                                                         );
                                                         setOpen(false);
                                                     }}

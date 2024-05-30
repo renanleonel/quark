@@ -106,3 +106,20 @@ export const changeProfileIS = {
         unknown: '',
     },
 };
+
+export const helpIS = {
+    message: '',
+    errors: {
+        title: '',
+        message: '',
+        unknown: '',
+    },
+};
+
+export const organizationNameIS = {
+    message: '',
+    errors: {
+        name: '',
+        unknown: '',
+    },
+};

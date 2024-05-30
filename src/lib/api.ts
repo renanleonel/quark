@@ -2,7 +2,7 @@ import 'server-only';
 
 import { projects } from '@/content/constants';
 import { members, tickets } from '@/content/mock';
-import { Response, Ticket } from '@/types';
+import { Help, Response, Ticket } from '@/types';
 
 export async function fetchTickets(): Promise<Ticket[]> {
     await new Promise((resolve) => setTimeout(resolve, 500));
@@ -41,10 +41,6 @@ export async function fetchProjects(
         message: 'Projects found successfully',
         data: projects,
     };
-}
-
-export async function getMembers(organizationID: string) {
-    return members;
 }
 
 export async function postTicket(ticket: Ticket): Promise<Response> {
@@ -109,5 +105,102 @@ export async function fetchOrganization() {
         name: 'Organization Name',
         projects: projects,
         members: members,
+    };
+}
+
+export async function postProject(project: {
+    name: string;
+}): Promise<Response> {
+    return {
+        error: false,
+        statusCode: 201,
+        message: 'Project created successfully',
+    };
+}
+
+export async function patchProject(
+    id: string,
+    project: {
+        name: string;
+    }
+): Promise<Response> {
+    return {
+        error: false,
+        statusCode: 200,
+        message: 'Project updated successfully',
+    };
+}
+
+export async function removeProject(id: string): Promise<Response> {
+    return {
+        error: false,
+        statusCode: 200,
+        message: 'Project deleted successfully',
+    };
+}
+
+export async function fetchMembers(
+    organizationID: string
+): Promise<Response<typeof members>> {
+    await new Promise((resolve) => setTimeout(resolve, 500));
+
+    //tags @members
+
+    return {
+        error: false,
+        statusCode: 200,
+        message: 'Members found successfully',
+        data: members,
+    };
+}
+
+export async function postMember(): Promise<Response> {
+    return {
+        error: false,
+        statusCode: 201,
+        message: 'Member created successfully',
+    };
+}
+
+export async function patchMember(id: string, body: any): Promise<Response> {
+    return {
+        error: false,
+        statusCode: 200,
+        message: 'Member updated successfully',
+    };
+}
+
+export async function removeMember(id: string) {
+    return {
+        error: false,
+        statusCode: 200,
+        message: 'Member deleted successfully',
+    };
+}
+
+export async function fetchUser(email: string, password: string) {
+    return {
+        id: '1',
+        name: 'username',
+        email: email,
+        password: password,
+        role: 'ADMIN',
+        organization: '#12345',
+    };
+}
+
+export async function postHelp(body: Help) {
+    return {
+        error: false,
+        statusCode: 201,
+        message: 'Help created successfully',
+    };
+}
+
+export async function patchOrganization(id: string, name: string) {
+    return {
+        error: false,
+        statusCode: 200,
+        message: 'Organization updated successfully',
     };
 }

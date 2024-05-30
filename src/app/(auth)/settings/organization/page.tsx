@@ -6,6 +6,7 @@ import { Button } from '@/components/ui/button';
 import { DrawerDeleteOrganization } from '@/components/drawer/drawer-delete-organization';
 import { Suspense } from 'react';
 import Loading from './loading';
+import { UpdateOrganizationForm } from '@/components/form/update-organization-form';
 
 export const metadata: Metadata = {
     title: 'Configurações',
@@ -20,15 +21,7 @@ export default async function Settings() {
                     <h3 className='text-lg font-medium'>Nome</h3>
                     <section className='space-y-4'>
                         <div className='grid gap-2'>
-                            <div className='flex gap-2'>
-                                <Input
-                                    id='name'
-                                    value='Organization'
-                                    name='name'
-                                    placeholder='Organization'
-                                />
-                                <Button className='w-40'>Alterar</Button>
-                            </div>
+                            <UpdateOrganizationForm />
                         </div>
                     </section>
                 </section>

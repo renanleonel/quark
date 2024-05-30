@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { ticketSchema } from './schema';
+import { helpSchema, ticketSchema } from './schema';
 
 export type Ticket = z.infer<typeof ticketSchema> & {
     id?: string;
@@ -8,7 +8,7 @@ export type Ticket = z.infer<typeof ticketSchema> & {
     updatedAt?: string;
 };
 
-export type Role = 'ADMIN' | 'USER';
+export type Role = 'ADMIN' | 'MEMBER' | 'DEVELOPER';
 
 export type Response<T = void> = {
     error: boolean;
@@ -16,3 +16,13 @@ export type Response<T = void> = {
     message: string;
     data?: T;
 };
+
+export type Member = {
+    id: string;
+    name: string;
+    email: string;
+    role: Role;
+    icon: string;
+};
+
+export type Help = z.infer<typeof helpSchema>;

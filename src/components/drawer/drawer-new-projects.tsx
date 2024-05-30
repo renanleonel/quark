@@ -1,4 +1,4 @@
-import * as React from 'react';
+'use client';
 
 import { Button } from '@/components/ui/button';
 import {
@@ -13,10 +13,13 @@ import {
 } from '@/components/ui/drawer';
 import { ProjectsForm } from '../form/projects-form';
 import { Separator } from '@/components/ui/separator';
+import { useState } from 'react';
 
 export function DrawerNewProjects() {
+    const [open, setOpen] = useState(false);
+
     return (
-        <Drawer>
+        <Drawer open={open} onOpenChange={setOpen}>
             <DrawerTrigger asChild>
                 <Button>Novo projeto</Button>
             </DrawerTrigger>
@@ -30,7 +33,7 @@ export function DrawerNewProjects() {
                     </DrawerHeader>
 
                     <section className='flex max-w-sm flex-col gap-4 p-4'>
-                        <ProjectsForm />
+                        <ProjectsForm setOpen={setOpen} />
                     </section>
 
                     <Separator />

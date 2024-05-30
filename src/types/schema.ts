@@ -57,10 +57,6 @@ export const ticketSchema = z.object({
     link: z.string().trim().optional(),
 });
 
-export const createOrganizationSchema = z.object({
-    name: z.string().min(1, { message: 'Insira o nome!' }).trim(),
-});
-
 export const validateOrganizationSchema = z.object({
     code: z.string().min(1, { message: 'Insira o código!' }).trim(),
 });
@@ -93,4 +89,17 @@ export const changeProfileSchema = z.object({
             lastModified: z.number(),
         })
         .optional(),
+});
+
+export const helpSchema = z.object({
+    title: z.string().min(1, { message: 'Insira o título!' }).trim(),
+    message: z
+        .string()
+        .min(1, { message: 'Insira a mensagem!' })
+        .max(500, 'Mensagem muito longa!')
+        .trim(),
+});
+
+export const organizationSchema = z.object({
+    name: z.string().min(1, { message: 'Insira o nome!' }).trim(),
 });

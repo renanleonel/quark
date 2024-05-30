@@ -2,12 +2,17 @@ import { Roles } from '@/components/roles';
 import { Input } from '@/components/ui/input';
 import { DeleteMember } from '@/components/delete-member';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { getMembers } from '@/lib/api';
+import { getMembers } from '@/lib/actions';
 import { Suspense } from 'react';
 import Loading from './loading';
+import { redirect } from 'next/navigation';
 
 export default async function Members() {
     const members = await getMembers('orgID');
+
+    if (!members) {
+        redirect('/organization');
+    }
 
     return (
         <Suspense fallback={<Loading />}>
@@ -41,7 +46,7 @@ export default async function Members() {
                                     </div>
                                 </div>
                                 <div className='flex w-full items-center justify-center gap-2 md:justify-end'>
-                                    <Roles role={member.role} />
+                                    <Roles member={member} />
                                     <div className='hidden md:block'>
                                         <DeleteMember />
                                     </div>
