@@ -47,10 +47,6 @@ export const deactivateAccountDV = {
     email: '',
 };
 
-export const deleteOrganizationDV = {
-    name: '',
-};
-
 export const changeProfileDV = {
     name: '',
     language: '',

@@ -204,3 +204,11 @@ export async function patchOrganization(id: string, name: string) {
         message: 'Organization updated successfully',
     };
 }
+
+export async function removeOrganization(id: string) {
+    return {
+        error: false,
+        statusCode: 200,
+        message: 'Organization deleted successfully',
+    };
+}

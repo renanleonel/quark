@@ -23,7 +23,6 @@ import {
     changePasswordDV,
     changeProfileDV,
     deactivateAccountDV,
-    deleteOrganizationDV,
     helpDV,
     organizationDV,
     projectDV,
@@ -48,6 +47,7 @@ import {
     postProject,
     postTicket,
     removeMember,
+    removeOrganization,
     removeProject,
     removeTicket,
 } from '@/lib/api';
@@ -756,6 +756,12 @@ export async function getOrganization() {
     }
 }
 
+export async function getOrganizationByID(id: string) {
+    await verifyAuth();
+
+    return '';
+}
+
 export async function getOrganizationStatistics() {
     await verifyAuth();
 }
@@ -830,23 +836,57 @@ export async function updateOrganizationName(
 }
 
 export async function deleteOrganization(_: any, formData: FormData) {
-    await verifyAuth();
-
     let success = false;
 
     try {
-        // const name = formData.get('name');
+        const user = await verifyAuth();
 
-        //check if org name == name
+        const organizationID = user.organization;
+
+        const form = Object.fromEntries(formData.entries());
+
+        const validatedFields = organizationSchema.safeParse(form);
+
+        if (!validatedFields.success) {
+            return {
+                message: 'validation error',
+                errors: validatedFields.error.flatten().fieldErrors,
+            };
+        }
+
+        const { name } = validatedFields.data;
+
+        const organizationName = await getOrganizationByID(organizationID);
+
+        if (name !== organizationName) {
+            return {
+                message: 'wrong name',
+                errors: {
+                    ...organizationDV,
+                    name: 'Nome incorreto.',
+                },
+            };
+        }
+
+        const { error, message, statusCode } =
+            await removeOrganization(organizationID);
+
+        if (error) {
+            return {
+                message: 'unknown error',
+                errors: {
+                    ...organizationDV,
+                    unknown: `statusCode: ${statusCode}, message: ${message}`,
+                },
+            };
+        }
 
         success = true;
-
-        // delete org
     } catch (error) {
         return {
             message: 'unknown error',
             errors: {
-                ...deleteOrganizationDV,
+                ...organizationDV,
                 unknown: 'Erro desconhecido.',
             },
         };
@@ -860,6 +900,14 @@ export async function deleteOrganization(_: any, formData: FormData) {
             errors: {},
         };
     }
+
+    return {
+        message: 'unknown error',
+        errors: {
+            ...organizationDV,
+            unknown: 'Erro desconhecido.',
+        },
+    };
 }
 
 export async function changePassword(_: any, formData: FormData) {

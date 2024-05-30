@@ -9,8 +9,6 @@ import {
     DrawerTrigger,
 } from '@/components/ui/drawer';
 
-import * as React from 'react';
-
 import {
     Dialog,
     DialogContent,
@@ -28,15 +26,32 @@ import { DialogClose } from '@radix-ui/react-dialog';
 import { useFormState } from 'react-dom';
 import { SubmitButton } from '@/components/form/submit-button';
 import { Input } from '@/components/ui/input';
+import { useEffect, useRef, useState } from 'react';
+import { toast } from 'sonner';
 
 export function DrawerDeleteOrganization() {
-    const [open, setOpen] = React.useState(false);
+    const [open, setOpen] = useState(false);
+    const ref = useRef<HTMLFormElement>(null);
+
     const isDesktop = useMediaQuery('(min-width: 768px)');
 
     const [formState, formAction] = useFormState(
         deleteOrganization,
         deleteOrganizationIS
     );
+
+    const { errors, message } = formState;
+
+    useEffect(() => {
+        if (message === 'success') {
+            toast.success('Organization deleted successfully!');
+            ref.current?.reset();
+        }
+
+        if (message === 'unknown error') {
+            toast.error('An unknown error occurred. Please try again.');
+        }
+    }, [formState, message]);
 
     if (isDesktop) {
         return (
@@ -71,12 +86,11 @@ export function DrawerDeleteOrganization() {
                                         name='name'
                                         placeholder='Organização'
                                         className={cn(
-                                            formState?.errors.name &&
-                                                'border-red-400'
+                                            errors.name && 'border-red-400'
                                         )}
                                     />
                                     <p className='text-xs text-red-400'>
-                                        {formState?.errors.name}
+                                        {errors.name}
                                     </p>
                                 </div>
                                 <div className='flex w-full gap-4 pt-4'>
@@ -135,12 +149,11 @@ export function DrawerDeleteOrganization() {
                                     name='name'
                                     placeholder='Organização'
                                     className={cn(
-                                        formState?.errors.name &&
-                                            'border-red-400'
+                                        errors.name && 'border-red-400'
                                     )}
                                 />
                                 <p className='text-xs text-red-400'>
-                                    {formState?.errors.name}
+                                    {errors.name}
                                 </p>
                             </div>
                             <div className='flex w-full gap-4 pt-4'>
