@@ -1,13 +1,16 @@
+import Loading from './loading';
+import { Suspense } from 'react';
+import { redirect } from 'next/navigation';
+import { getMembers, verifyAuth } from '@/lib/actions';
+
 import { Roles } from '@/components/roles';
 import { Input } from '@/components/ui/input';
-import { DeleteMember } from '@/components/delete-member';
+import { DeleteMember } from './delete-member';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { getMembers } from '@/lib/actions';
-import { Suspense } from 'react';
-import Loading from './loading';
-import { redirect } from 'next/navigation';
 
 export default async function Members() {
+    await verifyAuth();
+
     const members = await getMembers('orgID');
 
     if (!members) {

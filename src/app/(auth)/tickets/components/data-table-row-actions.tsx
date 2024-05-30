@@ -1,22 +1,23 @@
 'use client';
 
-import { DotsHorizontalIcon } from '@radix-ui/react-icons';
+import { Ticket } from '@/types';
 import { Row } from '@tanstack/react-table';
+import { useSession } from 'next-auth/react';
+import { DotsHorizontalIcon } from '@radix-ui/react-icons';
 
-import { Button } from '@/components/ui/button';
 import {
     DropdownMenu,
-    DropdownMenuContent,
     DropdownMenuItem,
-    DropdownMenuSeparator,
     DropdownMenuTrigger,
+    DropdownMenuContent,
+    DropdownMenuSeparator,
 } from '@/components/ui/dropdown-menu';
 
+import { Button } from '@/components/ui/button';
 import { SuperLink } from '@/components/super-link';
-import { DeleteTicket } from '@/app/(auth)/tickets/components/delete-ticket';
-import { useSession } from 'next-auth/react';
+
+import { DeleteTicket } from './delete-ticket';
 import { ChangeTicketStatus } from './change-ticket-status';
-import { Ticket } from '@/types';
 
 interface DataTableRowActionsProps {
     row: Row<Ticket>;

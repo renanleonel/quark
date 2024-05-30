@@ -5,12 +5,12 @@ import { cn } from '@/lib/utils';
 import { recover } from '@/lib/actions';
 import { useEffect, useRef } from 'react';
 import { useFormState } from 'react-dom';
+import { useRouter } from 'next/navigation';
 import { recoverIS } from '@/content/initial-states';
 
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { SubmitButton } from '@/components/form/submit-button';
-import { useRouter } from 'next/navigation';
 
 export const RecoverForm = () => {
     const ref = useRef<HTMLFormElement>(null);

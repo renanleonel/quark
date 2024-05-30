@@ -1,15 +1,16 @@
 'use client';
 
+import { toast } from 'sonner';
+import { cn } from '@/lib/utils';
+import { help } from '@/lib/actions';
+import { useFormState } from 'react-dom';
+import { useEffect, useRef } from 'react';
+
+import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
+import { helpIS } from '@/content/initial-states';
 import { Textarea } from '@/components/ui/textarea';
 import { SubmitButton } from '@/components/form/submit-button';
-import { Label } from '../ui/label';
-import { cn } from '@/lib/utils';
-import { useEffect, useRef } from 'react';
-import { useFormState } from 'react-dom';
-import { help } from '@/lib/actions';
-import { toast } from 'sonner';
-import { helpIS } from '@/content/initial-states';
 
 export const HelpForm = () => {
     const ref = useRef<HTMLFormElement>(null);

@@ -9,9 +9,9 @@ import { useEffect, useRef } from 'react';
 
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import { signupIS } from '@/content/initial-states';
 import { Separator } from '@/components/ui/separator';
 import { SubmitButton } from '@/components/form/submit-button';
-import { signupIS } from '@/content/initial-states';
 
 export const SignUpForm = () => {
     const router = useRouter();

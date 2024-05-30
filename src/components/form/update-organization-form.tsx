@@ -1,8 +1,8 @@
 'use client';
 
 import { organizationNameIS } from '@/content/initial-states';
-import { Button } from '../ui/button';
-import { Input } from '../ui/input';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
 import { updateOrganizationName } from '@/lib/actions';
 import { useFormState } from 'react-dom';
 import { useEffect, useRef } from 'react';

@@ -1,38 +1,39 @@
+import Loading from './loading';
 import { Metadata } from 'next';
-import { cn } from '@/lib/utils';
+import { Suspense } from 'react';
 import { Expand, X } from 'lucide-react';
-import { SuperLink } from '@/components/super-link';
+
+import { cn } from '@/lib/utils';
+import { getTickets } from '@/lib/actions';
 
 import {
     Card,
-    CardDescription,
-    CardHeader,
     CardTitle,
+    CardHeader,
+    CardDescription,
 } from '@/components/ui/card';
 
 import {
     Drawer,
-    DrawerClose,
-    DrawerContent,
-    DrawerDescription,
-    DrawerFooter,
-    DrawerHeader,
     DrawerTitle,
+    DrawerClose,
+    DrawerHeader,
+    DrawerFooter,
+    DrawerContent,
     DrawerTrigger,
+    DrawerDescription,
 } from '@/components/ui/drawer';
 
 import { Badge } from '@/components/ui/badge';
 import { Input } from '@/components/ui/input';
-import { columns } from './components/columns';
 import { Button } from '@/components/ui/button';
-import { DataTable } from './components/data-table';
+import { SuperLink } from '@/components/super-link';
 import { Separator } from '@/components/ui/separator';
-import { DeleteTicket } from './components/delete-ticket';
-
 import { ScrollArea } from '@/components/ui/scroll-area';
-import { Suspense } from 'react';
-import Loading from './loading';
-import { getTickets } from '@/lib/actions';
+
+import { columns } from './components/columns';
+import { DataTable } from './components/data-table';
+import { DeleteTicket } from './components/delete-ticket';
 
 export const metadata: Metadata = {
     title: 'Tickets',

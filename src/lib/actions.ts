@@ -319,8 +319,6 @@ export async function validateOrganization(_: any, formData: FormData) {
 }
 
 export async function getUser(email: string, password: string): Promise<any> {
-    await verifyAuth();
-
     const request = await fetchUser(email, password);
 
     return request;

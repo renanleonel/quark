@@ -1,27 +1,26 @@
-import { auth } from '@/auth';
+import Link from 'next/link';
+import Loading from './loading';
 import { Metadata } from 'next';
+import { Suspense } from 'react';
 import { redirect } from 'next/navigation';
-import { SuperLink } from '@/components/super-link';
+import { getOrganization, getTickets, verifyAuth } from '@/lib/actions';
 
 import {
     Card,
+    CardTitle,
+    CardHeader,
     CardContent,
     CardDescription,
-    CardHeader,
-    CardTitle,
 } from '@/components/ui/card';
 
-import { Chart } from './components/chart';
 import { Button } from '@/components/ui/button';
-import { CardData } from './components/card-data';
+import { SuperLink } from '@/components/super-link';
 import { Separator } from '@/components/ui/separator';
-import { ProjectRanking } from './components/project-ranking';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 
-import { getOrganization, getTickets } from '@/lib/actions';
-import { Suspense } from 'react';
-import Loading from './loading';
-import Link from 'next/link';
+import { Chart } from './components/chart';
+import { CardData } from './components/card-data';
+import { ProjectRanking } from './components/project-ranking';
 
 export const metadata: Metadata = {
     title: 'Organização',
@@ -33,10 +32,7 @@ export default async function Organization({
 }: {
     searchParams: { tab: string };
 }) {
-    const session = await auth();
-    if (!session) redirect('/');
-
-    const { role } = session.user;
+    const { role } = await verifyAuth();
 
     const [tickets, organization] = await Promise.all([
         getTickets(),

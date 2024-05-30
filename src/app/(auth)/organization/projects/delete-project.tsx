@@ -1,34 +1,33 @@
 'use client';
 
+import { toast } from 'sonner';
 import { useState } from 'react';
 import { Trash } from 'lucide-react';
+import { deleteProject } from '@/lib/actions';
+import { useMediaQuery } from '@/hooks/use-media-query';
 
+import { Icons } from '@/components/ui/icons';
 import { Button } from '@/components/ui/button';
 import {
     Dialog,
+    DialogTitle,
     DialogClose,
+    DialogHeader,
+    DialogTrigger,
     DialogContent,
     DialogDescription,
-    DialogHeader,
-    DialogTitle,
-    DialogTrigger,
 } from '@/components/ui/dialog';
 
 import {
     Drawer,
     DrawerClose,
-    DrawerContent,
-    DrawerDescription,
+    DrawerTitle,
     DrawerFooter,
     DrawerHeader,
-    DrawerTitle,
     DrawerTrigger,
+    DrawerContent,
+    DrawerDescription,
 } from '@/components/ui/drawer';
-
-import { useMediaQuery } from '@/hooks/use-media-query';
-import { deleteProject } from '@/lib/actions';
-import { toast } from 'sonner';
-import { Icons } from '@/components/ui/icons';
 
 interface DeleteProjectProps {
     project: {

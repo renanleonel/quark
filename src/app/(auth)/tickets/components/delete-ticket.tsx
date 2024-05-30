@@ -1,33 +1,34 @@
 'use client';
 
-import * as React from 'react';
-
-import { Button } from '@/components/ui/button';
-import { useMediaQuery } from '@/hooks/use-media-query';
-import {
-    Dialog,
-    DialogContent,
-    DialogDescription,
-    DialogHeader,
-    DialogTitle,
-    DialogTrigger,
-    DialogClose,
-} from '@/components/ui/dialog';
-import {
-    Drawer,
-    DrawerClose,
-    DrawerContent,
-    DrawerDescription,
-    DrawerFooter,
-    DrawerHeader,
-    DrawerTitle,
-    DrawerTrigger,
-} from '@/components/ui/drawer';
-
 import { toast } from 'sonner';
+import { useState } from 'react';
 import { Ticket } from '@/types';
 import { deleteTicket } from '@/lib/actions';
+import { useMediaQuery } from '@/hooks/use-media-query';
+
+import {
+    Dialog,
+    DialogTitle,
+    DialogClose,
+    DialogHeader,
+    DialogTrigger,
+    DialogContent,
+    DialogDescription,
+} from '@/components/ui/dialog';
+
+import {
+    Drawer,
+    DrawerTitle,
+    DrawerClose,
+    DrawerFooter,
+    DrawerHeader,
+    DrawerContent,
+    DrawerTrigger,
+    DrawerDescription,
+} from '@/components/ui/drawer';
+
 import { Icons } from '@/components/ui/icons';
+import { Button } from '@/components/ui/button';
 
 interface DeleteTicketProps {
     ticket: Ticket;
@@ -35,8 +36,9 @@ interface DeleteTicketProps {
 }
 
 export function DeleteTicket({ ticket, children }: DeleteTicketProps) {
-    const [open, setOpen] = React.useState(false);
-    const [isLoading, setIsLoading] = React.useState(false);
+    const [open, setOpen] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
+
     const isDesktop = useMediaQuery('(min-width: 768px)');
 
     async function handleDeleteTicket() {

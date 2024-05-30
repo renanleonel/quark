@@ -4,16 +4,10 @@ import { toast } from 'sonner';
 import { cn } from '@/lib/utils';
 import { useFormState } from 'react-dom';
 import { useEffect, useRef } from 'react';
+import { useRouter } from 'next/navigation';
 import { createTicket } from '@/lib/actions';
 import { Link as LinkIcon } from 'lucide-react';
 import { priorities, statuses, types } from '@/content/constants';
-
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { Combobox } from '@/components/ui/combobox';
-import { Button } from '@/components/ui/button';
-import { Textarea } from '@/components/ui/textarea';
-import { CardContent, CardFooter } from '@/components/ui/card';
 
 import {
     Select,
@@ -23,10 +17,16 @@ import {
     SelectContent,
 } from '@/components/ui/select';
 
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { Button } from '@/components/ui/button';
+import { Combobox } from '@/components/ui/combobox';
+import { Textarea } from '@/components/ui/textarea';
+import { CardContent, CardFooter } from '@/components/ui/card';
+
 import { InputFile } from '@/components/input-file';
 import { ticketIS } from '@/content/initial-states';
 import { SubmitButton } from '@/components/form/submit-button';
-import { useRouter } from 'next/navigation';
 
 interface NewTicketFormProps {
     projects: {

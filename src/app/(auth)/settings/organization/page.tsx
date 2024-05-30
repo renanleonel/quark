@@ -1,12 +1,14 @@
+import Loading from './loading';
 import { Metadata } from 'next';
+import { Suspense } from 'react';
+import { verifyAuth } from '@/lib/actions';
 
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Button } from '@/components/ui/button';
-import { DrawerDeleteOrganization } from '@/components/drawer/drawer-delete-organization';
-import { Suspense } from 'react';
-import Loading from './loading';
+
 import { UpdateOrganizationForm } from '@/components/form/update-organization-form';
+import { DrawerDeleteOrganization } from '@/components/drawer/drawer-delete-organization';
 
 export const metadata: Metadata = {
     title: 'Configurações',
@@ -14,6 +16,8 @@ export const metadata: Metadata = {
 };
 
 export default async function Settings() {
+    await verifyAuth();
+
     return (
         <Suspense fallback={<Loading />}>
             <main className='space-y-4'>

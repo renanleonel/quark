@@ -1,8 +1,8 @@
-import { InputHTMLAttributes } from 'react';
-import { useFormContext } from 'react-hook-form';
 import { cn } from '@/lib/utils';
+import { useFormContext } from 'react-hook-form';
+import { InputProps } from '@/components/ui/input';
 
-interface InputFormProps extends InputHTMLAttributes<HTMLInputElement> {
+interface InputFormProps extends InputProps {
     name: string;
 }
 

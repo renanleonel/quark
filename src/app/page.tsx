@@ -2,9 +2,10 @@ import { Metadata } from 'next';
 
 import { Label } from '@/components/ui/label';
 import { Button } from '@/components/ui/button';
+import { Separator } from '@/components/ui/separator';
+
 import { SuperLink } from '@/components/super-link';
 import { AuthForm } from '@/components/form/auth-form';
-import { Separator } from '@/components/ui/separator';
 import { GoogleLogin } from '@/components/google-login';
 
 export const metadata: Metadata = {

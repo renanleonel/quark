@@ -1,18 +1,20 @@
 'use client';
 
-import { Button } from '@/components/ui/button';
+import { useState } from 'react';
+import { Pencil } from 'lucide-react';
+
 import {
     Drawer,
+    DrawerTitle,
     DrawerClose,
-    DrawerContent,
     DrawerFooter,
     DrawerHeader,
-    DrawerTitle,
     DrawerTrigger,
+    DrawerContent,
 } from '@/components/ui/drawer';
-import { Pencil } from 'lucide-react';
+
+import { Button } from '@/components/ui/button';
 import { EditProjectForm } from '@/components/form/edit-project-form';
-import { useState } from 'react';
 
 interface DrawerEditProjectProps {
     project: {

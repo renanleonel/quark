@@ -1,15 +1,14 @@
-import { auth } from '@/auth';
-import { redirect } from 'next/navigation';
-
 import { SidebarNav } from '@/components/sidebar-nav';
 import { Separator } from '@/components/ui/separator';
 import { TooltipProvider } from '@/components/ui/tooltip';
+
 import {
     Card,
-    CardDescription,
-    CardHeader,
     CardTitle,
+    CardHeader,
+    CardDescription,
 } from '@/components/ui/card';
+import { verifyAuth } from '@/lib/actions';
 
 const sidebarNavItems = [
     {
@@ -31,10 +30,7 @@ export default async function Layout({
 }: {
     children: React.ReactNode;
 }) {
-    const session = await auth();
-    if (!session) redirect('/');
-
-    const { role } = session.user;
+    const { role } = await verifyAuth();
 
     if (role === 'ADMIN' && sidebarNavItems.length === 3) {
         sidebarNavItems.splice(1, 0, {

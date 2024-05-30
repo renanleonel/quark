@@ -1,33 +1,35 @@
 'use client';
 
-import { Button } from '@/components/ui/button';
+import { toast } from 'sonner';
+import { cn } from '@/lib/utils';
+import { useFormState } from 'react-dom';
+import { deleteOrganization } from '@/lib/actions';
+import { useEffect, useRef, useState } from 'react';
+import { useMediaQuery } from '@/hooks/use-media-query';
+
 import {
     Drawer,
-    DrawerContent,
-    DrawerHeader,
     DrawerTitle,
+    DrawerHeader,
     DrawerTrigger,
+    DrawerContent,
 } from '@/components/ui/drawer';
 
 import {
     Dialog,
-    DialogContent,
-    DialogDescription,
-    DialogHeader,
     DialogTitle,
+    DialogClose,
+    DialogHeader,
+    DialogContent,
     DialogTrigger,
+    DialogDescription,
 } from '@/components/ui/dialog';
-import { DrawerDescription } from '@/components/ui/drawer';
-import { deleteOrganizationIS } from '@/content/initial-states';
-import { useMediaQuery } from '@/hooks/use-media-query';
-import { deleteOrganization } from '@/lib/actions';
-import { cn } from '@/lib/utils';
-import { DialogClose } from '@radix-ui/react-dialog';
-import { useFormState } from 'react-dom';
-import { SubmitButton } from '@/components/form/submit-button';
+
 import { Input } from '@/components/ui/input';
-import { useEffect, useRef, useState } from 'react';
-import { toast } from 'sonner';
+import { Button } from '@/components/ui/button';
+import { DrawerDescription } from '@/components/ui/drawer';
+import { SubmitButton } from '@/components/form/submit-button';
+import { deleteOrganizationIS } from '@/content/initial-states';
 
 export function DrawerDeleteOrganization() {
     const [open, setOpen] = useState(false);

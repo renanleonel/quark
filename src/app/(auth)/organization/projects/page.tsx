@@ -1,15 +1,18 @@
-import { DeleteProject } from './delete-project';
+import Loading from './loading';
+import { Suspense } from 'react';
+import { redirect } from 'next/navigation';
+import { getOrganization, verifyAuth } from '@/lib/actions';
+
 import { Card } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
-
 import { DrawerEditProject } from '@/components/drawer/drawer-edit-project';
 import { DrawerNewProjects } from '@/components/drawer/drawer-new-projects';
-import { getOrganization } from '@/lib/actions';
-import { Suspense } from 'react';
-import Loading from './loading';
-import { redirect } from 'next/navigation';
+
+import { DeleteProject } from './delete-project';
 
 export default async function Projects() {
+    await verifyAuth();
+
     const organization = await getOrganization();
 
     if (!organization) redirect('/');

@@ -26,3 +26,13 @@ export type Member = {
 };
 
 export type Help = z.infer<typeof helpSchema>;
+
+export type User = {
+    id: string;
+    name: string;
+    email: string;
+    image: string;
+    password: string;
+    role: Role;
+    organization: string;
+};

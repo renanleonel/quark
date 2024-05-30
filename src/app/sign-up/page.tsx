@@ -1,7 +1,7 @@
 import { Metadata } from 'next';
-import { SuperLink } from '@/components/super-link';
 
 import { Button } from '@/components/ui/button';
+import { SuperLink } from '@/components/super-link';
 import { SignUpForm } from '@/components/form/sign-up-form';
 
 export const metadata: Metadata = {

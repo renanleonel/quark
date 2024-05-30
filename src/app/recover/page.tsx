@@ -1,8 +1,7 @@
 import { Metadata } from 'next';
-import { SuperLink } from '@/components/super-link';
 
-import { Label } from '@/components/ui/label';
 import { Button } from '@/components/ui/button';
+import { SuperLink } from '@/components/super-link';
 import { RecoverForm } from '@/components/form/recover-form';
 
 export const metadata: Metadata = {
@@ -23,9 +22,6 @@ export default function Recover() {
 
                 <RecoverForm />
 
-                <Label className='sr-only' htmlFor='back'>
-                    Voltar
-                </Label>
                 <SuperLink href='/'>
                     <Button variant='outline' type='button' className='w-full'>
                         Voltar

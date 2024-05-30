@@ -1,6 +1,9 @@
 'use client';
 
+import { toast } from 'sonner';
 import { useState } from 'react';
+import { Member, Role } from '@/types';
+import { updateMember } from '@/lib/actions';
 import { ChevronDownIcon } from '@radix-ui/react-icons';
 
 import {
@@ -32,9 +35,6 @@ import {
 
 import { roles } from '@/content/constants';
 import { Button } from '@/components/ui/button';
-import { updateMember } from '@/lib/actions';
-import { toast } from 'sonner';
-import { Member, Role } from '@/types';
 
 interface RolesProps {
     member: Member;

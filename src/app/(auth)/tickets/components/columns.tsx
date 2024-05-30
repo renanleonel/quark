@@ -3,9 +3,10 @@
 import { Ticket } from '@/types';
 import { Badge } from '@/components/ui/badge';
 import { ColumnDef } from '@tanstack/react-table';
+import { types, priorities, projects, statuses } from '@/content/constants';
+
 import { DataTableRowActions } from './data-table-row-actions';
 import { DataTableColumnHeader } from './data-table-column-header';
-import { types, priorities, projects, statuses } from '@/content/constants';
 
 export const columns: ColumnDef<Ticket>[] = [
     {

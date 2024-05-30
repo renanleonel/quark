@@ -1,14 +1,14 @@
 'use client';
 
+import { toast } from 'sonner';
 import { cn } from '@/lib/utils';
 import { useFormState } from 'react-dom';
+import { useEffect, useRef } from 'react';
 import { createProject } from '@/lib/actions';
 import { projectIS } from '@/content/initial-states';
 
 import { Input } from '@/components/ui/input';
 import { SubmitButton } from '@/components/form/submit-button';
-import { useEffect, useRef } from 'react';
-import { toast } from 'sonner';
 
 interface ProjectsFormProps {
     setOpen: (open: boolean) => void;

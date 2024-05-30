@@ -1,17 +1,17 @@
 import { Metadata } from 'next';
+import Loading from './loading';
+import { Suspense } from 'react';
+import { getProjects, verifyAuth } from '@/lib/actions';
 
 import {
     Card,
-    CardDescription,
-    CardHeader,
     CardTitle,
+    CardHeader,
+    CardDescription,
 } from '@/components/ui/card';
+
 import { Separator } from '@/components/ui/separator';
 import { NewTicketForm } from '@/components/form/new-ticket-form';
-
-import Loading from './loading';
-import { Suspense } from 'react';
-import { getProjects } from '@/lib/actions';
 
 export const metadata: Metadata = {
     title: 'Novo ticket',
@@ -19,6 +19,8 @@ export const metadata: Metadata = {
 };
 
 export default async function NewTicket() {
+    await verifyAuth();
+
     const projects = await getProjects();
 
     if (!projects) {
