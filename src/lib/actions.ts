@@ -52,6 +52,7 @@ import {
     removeTicket,
 } from '@/lib/api';
 import { Member, Ticket } from '@/types';
+import { redirect } from 'next/navigation';
 
 export async function signin(_: any, formData: FormData) {
     try {
@@ -152,7 +153,19 @@ export async function signout() {
     await signOut();
 }
 
+export async function verifyAuth() {
+    const session = await auth();
+
+    if (!session) {
+        redirect('/');
+    }
+
+    return session.user;
+}
+
 export async function sendConfirmationEmail(email: string) {
+    await verifyAuth();
+
     const resend = new Resend(process.env.RESEND_API_KEY);
 
     await resend.emails.send({
@@ -164,6 +177,8 @@ export async function sendConfirmationEmail(email: string) {
 }
 
 export async function recover(_: any, formData: FormData) {
+    await verifyAuth();
+
     try {
         const form = Object.fromEntries(formData.entries());
 
@@ -222,6 +237,8 @@ export async function recover(_: any, formData: FormData) {
 }
 
 export async function sendRecoverEmail(email: string) {
+    await verifyAuth();
+
     const resend = new Resend(process.env.RESEND_API_KEY);
 
     const request = await resend.emails
@@ -255,12 +272,16 @@ export async function sendRecoverEmail(email: string) {
 }
 
 export async function getInvitationOrigin(id: string) {
+    await verifyAuth();
+
     return {
         email: 'test@quark.com',
     };
 }
 
 export async function createOrganization(name: string) {
+    await verifyAuth();
+
     return {
         id: '12345',
         name: name,
@@ -268,6 +289,8 @@ export async function createOrganization(name: string) {
 }
 
 export async function validateOrganization(_: any, formData: FormData) {
+    await verifyAuth();
+
     try {
         const form = Object.fromEntries(formData.entries());
 
@@ -296,12 +319,16 @@ export async function validateOrganization(_: any, formData: FormData) {
 }
 
 export async function getUser(email: string, password: string): Promise<any> {
+    await verifyAuth();
+
     const request = await fetchUser(email, password);
 
     return request;
 }
 
 export async function getTickets() {
+    await verifyAuth();
+
     try {
         const tickets = await fetchTickets();
 
@@ -312,6 +339,8 @@ export async function getTickets() {
 }
 
 export async function getTicketByID(id: string): Promise<Ticket> {
+    await verifyAuth();
+
     try {
         const ticket = await fetchTicketByID(id);
 
@@ -322,6 +351,8 @@ export async function getTicketByID(id: string): Promise<Ticket> {
 }
 
 export async function createTicket(_: any, formData: FormData) {
+    await verifyAuth();
+
     try {
         const form = Object.fromEntries(formData.entries());
         const validatedFields = ticketSchema.safeParse({
@@ -370,6 +401,8 @@ export async function createTicket(_: any, formData: FormData) {
 }
 
 export async function editTicket(id: string, _: any, formData: FormData) {
+    await verifyAuth();
+
     try {
         const form = Object.fromEntries(formData.entries());
 
@@ -417,6 +450,8 @@ export async function editTicket(id: string, _: any, formData: FormData) {
 }
 
 export async function deleteTicket(id: string) {
+    await verifyAuth();
+
     try {
         const { statusCode } = await removeTicket(id);
 
@@ -428,9 +463,8 @@ export async function deleteTicket(id: string) {
 
 export async function getProjects() {
     try {
-        const session = await auth();
-
-        const organizationID = session?.user.organization;
+        const user = await verifyAuth();
+        const organizationID = user.organization;
 
         if (!organizationID) {
             throw new Error('Organization not found');
@@ -455,9 +489,13 @@ export async function getProjects() {
     }
 }
 
-export async function getProjectByID(id: string) {}
+export async function getProjectByID(id: string) {
+    await verifyAuth();
+}
 
 export async function createProject(_: any, formData: FormData) {
+    await verifyAuth();
+
     try {
         const form = Object.fromEntries(formData.entries());
 
@@ -515,6 +553,8 @@ export async function createProject(_: any, formData: FormData) {
 }
 
 export async function editProject(id: string, _: any, formData: FormData) {
+    await verifyAuth();
+
     try {
         const form = Object.fromEntries(formData.entries());
 
@@ -572,6 +612,8 @@ export async function editProject(id: string, _: any, formData: FormData) {
 }
 
 export async function deleteProject(id: string) {
+    await verifyAuth();
+
     try {
         // delete project
         const { error } = await removeProject(id);
@@ -600,6 +642,8 @@ export async function deleteProject(id: string) {
 }
 
 export async function getMembers(organizationID: string) {
+    await verifyAuth();
+
     try {
         const {
             error,
@@ -620,9 +664,13 @@ export async function getMembers(organizationID: string) {
     }
 }
 
-export async function getMemberByID(memberID: string) {}
+export async function getMemberByID(memberID: string) {
+    await verifyAuth();
+}
 
 export async function updateMember(memberID: string, body: Member) {
+    await verifyAuth();
+
     try {
         const { statusCode, error } = await patchMember(memberID, body);
 
@@ -636,6 +684,8 @@ export async function updateMember(memberID: string, body: Member) {
 }
 
 export async function deleteMember(memberID: string) {
+    await verifyAuth();
+
     try {
         const { statusCode, error } = await removeMember(memberID);
 
@@ -651,13 +701,13 @@ export async function deleteMember(memberID: string) {
 
 export async function changeProfile(_: any, formData: FormData) {
     try {
-        const session = await auth();
+        const user = await verifyAuth();
 
         const name = formData.get('name');
         const language = formData.get('language');
         const profilePic = formData.get('profilePic');
 
-        if (name === session?.user?.name) {
+        if (name === user.name) {
             return {
                 message: 'validation error',
                 errors: {
@@ -696,6 +746,8 @@ export async function changeProfile(_: any, formData: FormData) {
 }
 
 export async function getOrganization() {
+    await verifyAuth();
+
     try {
         const organization = await fetchOrganization();
         return organization;
@@ -704,7 +756,13 @@ export async function getOrganization() {
     }
 }
 
+export async function getOrganizationStatistics() {
+    await verifyAuth();
+}
+
 export async function updateUserName(name: string) {
+    await verifyAuth();
+
     try {
     } catch (error) {}
 }
@@ -715,19 +773,8 @@ export async function updateOrganizationName(
     formData: FormData
 ) {
     try {
-        const session = await auth();
-
-        if (!session) {
-            return {
-                message: 'auth error',
-                errors: {
-                    ...organizationDV,
-                    unknown: 'Erro de autenticação.',
-                },
-            };
-        }
-
-        const organizationID = session.user.organization;
+        const user = await verifyAuth();
+        const organizationID = user.organization;
 
         const form = Object.fromEntries(formData.entries());
 
@@ -783,6 +830,8 @@ export async function updateOrganizationName(
 }
 
 export async function deleteOrganization(_: any, formData: FormData) {
+    await verifyAuth();
+
     let success = false;
 
     try {
@@ -814,16 +863,12 @@ export async function deleteOrganization(_: any, formData: FormData) {
 }
 
 export async function changePassword(_: any, formData: FormData) {
-    try {
-        const password = formData.get('password');
-        const newPassword = formData.get('newPassword');
-        const confirmNewPassword = formData.get('confirmNewPassword');
+    await verifyAuth();
 
-        const validatedFields = changePasswordSchema.safeParse({
-            password: password,
-            newPassword: newPassword,
-            confirmNewPassword: confirmNewPassword,
-        });
+    try {
+        const form = Object.fromEntries(formData.entries());
+
+        const validatedFields = changePasswordSchema.safeParse(form);
 
         if (!validatedFields.success) {
             return {
@@ -831,6 +876,10 @@ export async function changePassword(_: any, formData: FormData) {
                 errors: validatedFields.error.flatten().fieldErrors,
             };
         }
+
+        // const payload = {
+        // ...validatedFields.data,
+        // }
 
         return {
             message: 'success',
@@ -848,6 +897,8 @@ export async function changePassword(_: any, formData: FormData) {
 }
 
 export async function deactivateAccount(_: any, formData: FormData) {
+    await verifyAuth();
+
     let success = false;
 
     try {
@@ -886,6 +937,8 @@ export async function deactivateAccount(_: any, formData: FormData) {
 }
 
 export async function help(_: any, formData: FormData) {
+    await verifyAuth();
+
     try {
         const form = Object.fromEntries(formData.entries());
 
