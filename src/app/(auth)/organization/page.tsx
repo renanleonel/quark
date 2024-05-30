@@ -18,25 +18,37 @@ import { Separator } from '@/components/ui/separator';
 import { ProjectRanking } from './components/project-ranking';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 
-import { getOrganization, getTickets } from '@/lib/api';
+import { getOrganization, getTickets } from '@/lib/actions';
 import { Suspense } from 'react';
 import Loading from './loading';
+import Link from 'next/link';
 
 export const metadata: Metadata = {
     title: 'Organização',
     description: 'Organização',
 };
 
-export default async function Organization() {
+export default async function Organization({
+    searchParams,
+}: {
+    searchParams: { tab: string };
+}) {
     const session = await auth();
     if (!session) redirect('/');
 
     const { role } = session.user;
-    const tickets = await getTickets();
-    const organization = await getOrganization();
 
-    const features = tickets.filter((ticket) => ticket.type === 'feature');
+    const [tickets, organization] = await Promise.all([
+        getTickets(),
+        getOrganization(),
+    ]);
+
+    if (!tickets || !organization) redirect('/');
+
     const { members, projects } = organization;
+    const features = tickets.filter((ticket) => ticket.type === 'feature');
+
+    const tab = searchParams.tab || 'overview';
 
     return (
         <Suspense fallback={<Loading />}>
@@ -49,21 +61,25 @@ export default async function Organization() {
 
                 <main className='flex flex-col'>
                     <div className='flex-1 space-y-4 px-8 pb-8'>
-                        <Tabs defaultValue='overview' className='space-y-4'>
+                        <Tabs defaultValue={tab} className='space-y-4'>
                             <div className='flex flex-col-reverse justify-between gap-4 md:flex-row'>
                                 <TabsList className='w-full md:w-fit'>
-                                    <TabsTrigger
-                                        value='overview'
-                                        className='w-full'
-                                    >
-                                        Overview
-                                    </TabsTrigger>
-                                    <TabsTrigger
-                                        value='analytics'
-                                        className='w-full'
-                                    >
-                                        Analytics
-                                    </TabsTrigger>
+                                    <Link href='?tab=overview'>
+                                        <TabsTrigger
+                                            value='overview'
+                                            className='w-full'
+                                        >
+                                            Overview
+                                        </TabsTrigger>
+                                    </Link>
+                                    <Link href='?tab=analytics'>
+                                        <TabsTrigger
+                                            value='analytics'
+                                            className='w-full'
+                                        >
+                                            Analytics
+                                        </TabsTrigger>
+                                    </Link>
                                 </TabsList>
                                 {role === 'ADMIN' && (
                                     <div className='flex flex-col gap-4 sm:flex-row md:gap-2'>

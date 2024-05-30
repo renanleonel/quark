@@ -4,16 +4,7 @@ import { projects } from '@/content/constants';
 import { members, tickets } from '@/content/mock';
 import { Response, Ticket } from '@/types';
 
-export async function getOrganization() {
-    return {
-        id: '1',
-        name: 'Organization Name',
-        projects: projects,
-        members: members,
-    };
-}
-
-export async function getTickets(): Promise<Ticket[]> {
+export async function fetchTickets(): Promise<Ticket[]> {
     await new Promise((resolve) => setTimeout(resolve, 500));
 
     // const request = await fetch(``, {
@@ -38,14 +29,16 @@ export async function getTickets(): Promise<Ticket[]> {
     return data;
 }
 
-export async function getProjects(): Promise<Response<any>> {
+export async function fetchProjects(
+    organizationID: string
+): Promise<Response<typeof projects>> {
     await new Promise((resolve) => setTimeout(resolve, 500));
 
     //tag @projects
     return {
         error: false,
         statusCode: 200,
-        message: 'Tickets found successfully',
+        message: 'Projects found successfully',
         data: projects,
     };
 }
@@ -59,5 +52,62 @@ export async function postTicket(ticket: Ticket): Promise<Response> {
         error: false,
         statusCode: 201,
         message: 'Ticket created successfully',
+    };
+}
+
+export async function patchTicket(ticket: Ticket): Promise<Response> {
+    const { id } = ticket;
+
+    if (!id) {
+        return {
+            error: true,
+            statusCode: 400,
+            message: 'Ticket ID not found',
+        };
+    }
+
+    return {
+        error: false,
+        statusCode: 200,
+        message: 'Ticket updated successfully',
+    };
+}
+
+export async function fetchTicketByID(ticketID: string): Promise<Ticket> {
+    return {
+        id: ticketID,
+        title: 'Título do ticket',
+        description: 'Descrição do ticket.',
+        type: 'bug',
+        priority: 'alta',
+        status: 'concluído',
+        project: 'projeto 1',
+        link: 'https://www.google.com',
+        file: {
+            size: 123,
+            type: 'Tipo',
+            name: 'Nome do arquivo',
+            lastModified: 123,
+        },
+        createdBy: 'eYuuioaeoujiarei987kolpçasdpo',
+        createdAt: '2021-09-22',
+        updatedAt: '2021-09-22',
+    };
+}
+
+export async function removeTicket(ticketID: string): Promise<Response> {
+    return {
+        error: false,
+        statusCode: 200,
+        message: 'Ticket deleted successfully',
+    };
+}
+
+export async function fetchOrganization() {
+    return {
+        id: '1',
+        name: 'Organization Name',
+        projects: projects,
+        members: members,
     };
 }

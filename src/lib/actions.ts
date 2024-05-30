@@ -30,21 +30,21 @@ import {
 } from '@/content/default-values';
 
 import { Ticket } from '@/types';
-import { getTickets, postTicket } from '@/lib/api';
+import {
+    fetchOrganization,
+    fetchProjects,
+    fetchTicketByID,
+    fetchTickets,
+    patchTicket,
+    postTicket,
+    removeTicket,
+} from '@/lib/api';
 
-export async function signout() {
-    await signOut();
-}
-
-export async function authenticate(_: any, formData: FormData) {
+export async function signin(_: any, formData: FormData) {
     try {
-        const email = formData.get('email');
-        const password = formData.get('password');
+        const form = Object.fromEntries(formData.entries());
 
-        const validatedFields = authSchema.safeParse({
-            email: email,
-            password: password,
-        });
+        const validatedFields = authSchema.safeParse(form);
 
         if (!validatedFields.success) {
             return {
@@ -53,7 +53,11 @@ export async function authenticate(_: any, formData: FormData) {
             };
         }
 
-        await signIn('credentials', formData);
+        const payload = {
+            ...validatedFields.data,
+        };
+
+        await signIn('credentials', payload);
 
         return {
             message: 'success',
@@ -86,12 +90,8 @@ export async function authenticate(_: any, formData: FormData) {
 
 export async function signup(_: any, formData: FormData) {
     try {
-        const name = formData.get('name') as string;
-        const email = formData.get('email') as string;
-        const password = formData.get('password') as string;
-        const confirmPassword = formData.get('confirmPassword') as string;
-        const organizationName = formData.get('organizationName') as string;
-        const organizationCode = formData.get('organizationCode') as string;
+        const form = Object.fromEntries(formData.entries());
+        const { organizationName, organizationCode } = form;
 
         if (!organizationName && !organizationCode) {
             return {
@@ -102,12 +102,7 @@ export async function signup(_: any, formData: FormData) {
             };
         }
 
-        const validatedFields = signUpForm.safeParse({
-            name: name,
-            email: email,
-            password: password,
-            confirmPassword: confirmPassword,
-        });
+        const validatedFields = signUpForm.safeParse(form);
 
         if (!validatedFields.success) {
             return {
@@ -118,19 +113,12 @@ export async function signup(_: any, formData: FormData) {
 
         if (organizationCode) {
             // link organization to user
-        }
-
-        if (organizationName) {
+        } else {
             // const organization = await createOrganization(organizationName);
             // link organization to user
         }
 
-        // const body = {
-        //     name,
-        //     email,
-        //     password,
-        // };
-        await sendConfirmationEmail(email);
+        // await sendConfirmationEmail(email);
 
         return {
             message: 'success',
@@ -147,13 +135,15 @@ export async function signup(_: any, formData: FormData) {
     }
 }
 
+export async function signout() {
+    await signOut();
+}
+
 export async function recover(_: any, formData: FormData) {
     try {
-        const email = formData.get('email') as string;
+        const form = Object.fromEntries(formData.entries());
 
-        const validatedFields = recoverSchema.safeParse({
-            email: email,
-        });
+        const validatedFields = recoverSchema.safeParse(form);
 
         if (!validatedFields.success) {
             return {
@@ -162,7 +152,35 @@ export async function recover(_: any, formData: FormData) {
             };
         }
 
-        await sendRecoverEmail(email);
+        const { email } = validatedFields.data;
+
+        // verify if email exists in database
+
+        const emailExists = false;
+
+        if (!emailExists) {
+            return {
+                message: 'email not found',
+                errors: {
+                    ...recoverDV,
+                    email: 'Email não encontrado.',
+                },
+            };
+        }
+
+        const request = await sendRecoverEmail(email);
+
+        const { error, message } = request;
+
+        if (error) {
+            return {
+                message: 'email error',
+                errors: {
+                    ...recoverDV,
+                    unknown: message,
+                },
+            };
+        }
 
         return {
             message: 'success',
@@ -193,7 +211,7 @@ export async function sendConfirmationEmail(email: string) {
 export async function sendRecoverEmail(email: string) {
     const resend = new Resend(process.env.RESEND_API_KEY);
 
-    await resend.emails
+    const request = await resend.emails
         .send({
             from: 'onboarding@resend.dev',
             to: email,
@@ -203,19 +221,24 @@ export async function sendRecoverEmail(email: string) {
         .then((res) => {
             if (res.error) {
                 return {
-                    message: 'unknown error',
-                    errors: {
-                        ...recoverDV,
-                        unknown: 'Erro desconhecido.',
-                    },
+                    error: true,
+                    message: res.error.message,
                 };
             }
 
             return {
+                error: false,
                 message: 'success',
-                errors: {},
+            };
+        })
+        .catch((error) => {
+            return {
+                error: true,
+                message: error.message,
             };
         });
+
+    return request;
 }
 
 export async function getInvitationOrigin(id: string) {
@@ -261,7 +284,7 @@ export async function validateOrganization(_: any, formData: FormData) {
     }
 }
 
-export async function newTicket(_: any, formData: FormData) {
+export async function createTicket(_: any, formData: FormData) {
     try {
         const form = Object.fromEntries(formData.entries());
         const validatedFields = ticketSchema.safeParse({
@@ -309,27 +332,11 @@ export async function newTicket(_: any, formData: FormData) {
     }
 }
 
-export async function editTicket(_: any, formData: FormData) {
+export async function editTicket(id: string, _: any, formData: FormData) {
     try {
-        const title = formData.get('title');
-        const description = formData.get('description');
-        const project = formData.get('project');
-        const status = formData.get('status');
-        const type = formData.get('type');
-        const priority = formData.get('priority');
-        const file = formData.get('file');
-        const link = formData.get('link');
+        const form = Object.fromEntries(formData.entries());
 
-        const validatedFields = ticketSchema.safeParse({
-            title: title,
-            description: description,
-            project: project,
-            type: type,
-            status: status,
-            priority: priority,
-            file: file,
-            link: link,
-        });
+        const validatedFields = ticketSchema.safeParse(form);
 
         if (!validatedFields.success) {
             return {
@@ -338,9 +345,14 @@ export async function editTicket(_: any, formData: FormData) {
             };
         }
 
-        const request = false;
+        const payload = {
+            id: id,
+            ...validatedFields.data,
+        };
 
-        if (!request) {
+        const { error } = await patchTicket(payload);
+
+        if (error) {
             return {
                 message: 'unknown error',
                 errors: {
@@ -349,6 +361,8 @@ export async function editTicket(_: any, formData: FormData) {
                 },
             };
         }
+
+        revalidateTag('@tickets');
 
         return {
             message: 'success',
@@ -365,26 +379,34 @@ export async function editTicket(_: any, formData: FormData) {
     }
 }
 
-export async function getTicket(id: string): Promise<Ticket> {
-    return {
-        id: id,
-        title: 'Título do ticket',
-        description: 'Descrição do ticket.',
-        type: 'bug',
-        priority: 'alta',
-        status: 'concluído',
-        project: 'projeto 1',
-        link: 'https://www.google.com',
-        file: {
-            size: 123,
-            type: 'Tipo',
-            name: 'Nome do arquivo',
-            lastModified: 123,
-        },
-        createdBy: 'eYuuioaeoujiarei987kolpçasdpo',
-        createdAt: '2021-09-22',
-        updatedAt: '2021-09-22',
-    };
+export async function deleteTicket(id: string) {
+    try {
+        const { statusCode } = await removeTicket(id);
+
+        return statusCode;
+    } catch {
+        //sentry
+    }
+}
+
+export async function getTickets() {
+    try {
+        const tickets = await fetchTickets();
+
+        return tickets;
+    } catch (error) {
+        //sentry
+    }
+}
+
+export async function getTicketByID(id: string): Promise<Ticket> {
+    try {
+        const ticket = await fetchTicketByID(id);
+
+        return ticket;
+    } catch (error) {
+        throw new Error('Ticket not found');
+    }
 }
 
 export async function editProject(id: string, _: any, formData: FormData) {
@@ -602,11 +624,40 @@ export async function changeProfile(_: any, formData: FormData) {
     }
 }
 
-export async function fetchTickets() {
+export async function getProjects() {
     try {
-        const tickets = await getTickets();
+        const session = await auth();
 
-        return tickets;
+        const organizationID = session?.user.organization;
+
+        if (!organizationID) {
+            throw new Error('Organization not found');
+        }
+
+        const {
+            error,
+            statusCode,
+            message,
+            data: projects,
+        } = await fetchProjects(organizationID);
+
+        if (error) {
+            throw new Error(
+                `Projects not found! Status: ${statusCode}, Message: ${message}`
+            );
+        }
+
+        return projects;
+    } catch (error) {
+        //sentry
+    }
+}
+
+export async function getOrganization() {
+    try {
+        const organization = await fetchOrganization();
+
+        return organization;
     } catch (error) {
         //sentry
     }

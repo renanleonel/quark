@@ -1,4 +1,4 @@
-export const authIS = {
+export const signinIS = {
     message: '',
     errors: {
         email: '',

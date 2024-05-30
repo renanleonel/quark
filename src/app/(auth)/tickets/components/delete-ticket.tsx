@@ -25,19 +25,36 @@ import {
 } from '@/components/ui/drawer';
 
 import { toast } from 'sonner';
+import { Ticket } from '@/types';
+import { deleteTicket } from '@/lib/actions';
+import { Icons } from '@/components/ui/icons';
 
 interface DeleteTicketProps {
+    ticket: Ticket;
     children: React.ReactNode;
 }
 
-export function DeleteTicket({ children }: DeleteTicketProps) {
+export function DeleteTicket({ ticket, children }: DeleteTicketProps) {
     const [open, setOpen] = React.useState(false);
+    const [isLoading, setIsLoading] = React.useState(false);
     const isDesktop = useMediaQuery('(min-width: 768px)');
 
-    const handleDeleteTicket = () => {
-        setOpen(false);
+    async function handleDeleteTicket() {
+        if (!ticket.id) return;
+
+        setIsLoading(true);
+        const status = await deleteTicket(ticket.id);
+
+        if (status !== 200) {
+            toast.error('Erro ao deletar ticket!');
+            setIsLoading(false);
+            return;
+        }
+
         toast.success('Ticket deletado com sucesso!');
-    };
+        setOpen(false);
+        setIsLoading(false);
+    }
 
     if (isDesktop) {
         return (
@@ -54,7 +71,14 @@ export function DeleteTicket({ children }: DeleteTicketProps) {
                     <DialogClose asChild>
                         <Button variant='outline'>Cancel</Button>
                     </DialogClose>
-                    <Button onClick={handleDeleteTicket} variant='destructive'>
+                    <Button
+                        disabled={isLoading}
+                        variant='destructive'
+                        onClick={handleDeleteTicket}
+                    >
+                        {isLoading && (
+                            <Icons.spinner className='mr-2 h-4 w-4 animate-spin' />
+                        )}
                         Delete
                     </Button>
                 </DialogContent>
@@ -77,7 +101,14 @@ export function DeleteTicket({ children }: DeleteTicketProps) {
                     <DrawerClose asChild>
                         <Button variant='outline'>Cancel</Button>
                     </DrawerClose>
-                    <Button onClick={handleDeleteTicket} variant='destructive'>
+                    <Button
+                        disabled={isLoading}
+                        variant='destructive'
+                        onClick={handleDeleteTicket}
+                    >
+                        {isLoading && (
+                            <Icons.spinner className='mr-2 h-4 w-4 animate-spin' />
+                        )}
                         Delete
                     </Button>
                 </DrawerFooter>

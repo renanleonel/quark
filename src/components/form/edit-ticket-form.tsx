@@ -9,7 +9,7 @@ import { editTicket } from '@/lib/actions';
 import { useRouter } from 'next/navigation';
 import { Link as LinkIcon } from 'lucide-react';
 import { ticketIS } from '@/content/initial-states';
-import { priorities, projects, statuses, types } from '@/content/constants';
+import { priorities, statuses, types } from '@/content/constants';
 
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -32,25 +32,30 @@ import { SubmitButton } from '@/components/form/submit-button';
 
 interface EditFormProps {
     ticket: Ticket;
+    projects: {
+        value: string;
+        label: string;
+    }[];
 }
 
-export const EditTicketForm = ({ ticket }: EditFormProps) => {
+export const EditTicketForm = ({ ticket, projects }: EditFormProps) => {
     const router = useRouter();
     const ref = useRef<HTMLFormElement>(null);
-    const [formState, formAction] = useFormState(editTicket, ticketIS);
+
+    const action = editTicket.bind(null, ticket.id as string);
+    const [formState, formAction] = useFormState(action, ticketIS);
 
     const { errors, message } = formState;
 
     useEffect(() => {
         if (message === 'success') {
-            toast.success('Successfully updated');
-
+            toast.success('Ticket updated successfully!');
             ref.current?.reset();
             router.replace('/tickets');
         }
 
         if (message === 'unknown error') {
-            toast.error('Error!');
+            toast.error('Error updating ticket, please try again.');
         }
     }, [message, formState, router]);
 
@@ -91,7 +96,7 @@ export const EditTicketForm = ({ ticket }: EditFormProps) => {
                                 <SelectTrigger
                                     id='type'
                                     className={cn(
-                                        'line-clamp-1 truncate lg:w-full',
+                                        'truncate lg:w-full',
                                         errors.type && 'border-red-400'
                                     )}
                                 >
@@ -121,7 +126,7 @@ export const EditTicketForm = ({ ticket }: EditFormProps) => {
                                 <SelectTrigger
                                     id='priority'
                                     className={cn(
-                                        'line-clamp-1 truncate lg:w-full',
+                                        'truncate lg:w-full',
                                         errors.priority && 'border-red-400'
                                     )}
                                 >
@@ -158,15 +163,24 @@ export const EditTicketForm = ({ ticket }: EditFormProps) => {
                         </div>
                         <div className='grid gap-2'>
                             <Label htmlFor='status'>Status</Label>
-                            <Select name='status' defaultValue={ticket.status}>
+                            <Select
+                                name='status'
+                                value={ticket.status}
+                                disabled
+                            >
                                 <SelectTrigger
                                     id='status'
                                     className={cn(
-                                        'line-clamp-1 truncate lg:w-full',
+                                        'truncate lg:w-full',
                                         errors.status && 'border-red-400'
                                     )}
                                 >
                                     <SelectValue placeholder='Prioridade' />
+                                    <input
+                                        type='hidden'
+                                        name='status'
+                                        value={ticket.status}
+                                    />
                                 </SelectTrigger>
                                 <SelectContent>
                                     {statuses.map((status, key) => {

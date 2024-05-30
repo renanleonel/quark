@@ -1,6 +1,6 @@
 import { auth } from '@/auth';
 import { Metadata } from 'next';
-import { getTicket } from '@/lib/actions';
+import { getProjects, getTicketByID } from '@/lib/actions';
 import { redirect } from 'next/navigation';
 
 import {
@@ -20,12 +20,22 @@ export const metadata: Metadata = {
 };
 export default async function Edit({ params }: { params: { id: string } }) {
     const session = await auth();
+
     if (!session) redirect('/');
-    const { id, role } = session.user;
 
-    const ticket = await getTicket(params.id);
+    const { id: ticketID } = params;
+    const { id: userID, role } = session.user;
 
-    if (role !== 'ADMIN' && ticket.createdBy !== id) redirect('/tickets');
+    const [ticket, projects] = await Promise.all([
+        getTicketByID(ticketID),
+        getProjects(),
+    ]);
+
+    const isAllowedToEdit = ticket.createdBy === userID || role === 'ADMIN';
+
+    if (!projects || !isAllowedToEdit) {
+        redirect('/tickets');
+    }
 
     return (
         <Suspense fallback={<Loading />}>
@@ -35,7 +45,7 @@ export default async function Edit({ params }: { params: { id: string } }) {
                     <CardDescription>Edit an existing ticket</CardDescription>
                 </CardHeader>
                 <Separator className='mb-6' />
-                <EditTicketForm ticket={ticket} />
+                <EditTicketForm ticket={ticket} projects={projects} />
             </Card>
         </Suspense>
     );

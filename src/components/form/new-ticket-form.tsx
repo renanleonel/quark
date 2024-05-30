@@ -4,9 +4,9 @@ import { toast } from 'sonner';
 import { cn } from '@/lib/utils';
 import { useFormState } from 'react-dom';
 import { useEffect, useRef } from 'react';
-import { newTicket } from '@/lib/actions';
+import { createTicket } from '@/lib/actions';
 import { Link as LinkIcon } from 'lucide-react';
-import { priorities, projects, statuses, types } from '@/content/constants';
+import { priorities, statuses, types } from '@/content/constants';
 
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -28,10 +28,17 @@ import { ticketIS } from '@/content/initial-states';
 import { SubmitButton } from '@/components/form/submit-button';
 import { useRouter } from 'next/navigation';
 
-export const NewTicketForm = () => {
+interface NewTicketFormProps {
+    projects: {
+        value: string;
+        label: string;
+    }[];
+}
+
+export const NewTicketForm = ({ projects }: NewTicketFormProps) => {
     const router = useRouter();
     const ref = useRef<HTMLFormElement>(null);
-    const [formState, formAction] = useFormState(newTicket, ticketIS);
+    const [formState, formAction] = useFormState(createTicket, ticketIS);
 
     const { errors, message } = formState;
 

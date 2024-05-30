@@ -2,15 +2,15 @@
 
 import { cn } from '@/lib/utils';
 import { useFormState } from 'react-dom';
-import { authenticate } from '@/lib/actions';
-import { authIS } from '@/content/initial-states';
+import { signin } from '@/lib/actions';
+import { signinIS } from '@/content/initial-states';
 
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { SubmitButton } from '@/components/form/submit-button';
 
 export const AuthForm = () => {
-    const [formState, formAction] = useFormState(authenticate, authIS);
+    const [formState, formAction] = useFormState(signin, signinIS);
 
     const { errors } = formState;
 

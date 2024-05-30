@@ -11,7 +11,7 @@ import { NewTicketForm } from '@/components/form/new-ticket-form';
 
 import Loading from './loading';
 import { Suspense } from 'react';
-import { getProjects } from '@/lib/api';
+import { getProjects } from '@/lib/actions';
 
 export const metadata: Metadata = {
     title: 'Novo ticket',
@@ -19,12 +19,10 @@ export const metadata: Metadata = {
 };
 
 export default async function NewTicket() {
-    const { message, statusCode, data: tickets } = await getProjects();
+    const projects = await getProjects();
 
-    if (!tickets) {
-        throw new Error(
-            `Tickets not found! Status: ${statusCode}, Message: ${message}`
-        );
+    if (!projects) {
+        return;
     }
 
     return (
@@ -38,7 +36,7 @@ export default async function NewTicket() {
                 </CardHeader>
                 <Separator className='mb-6' />
 
-                <NewTicketForm />
+                <NewTicketForm projects={projects} />
             </Card>
         </Suspense>
     );

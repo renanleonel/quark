@@ -32,7 +32,7 @@ import { DeleteTicket } from './components/delete-ticket';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Suspense } from 'react';
 import Loading from './loading';
-import { fetchTickets } from '@/lib/actions';
+import { getTickets } from '@/lib/actions';
 
 export const metadata: Metadata = {
     title: 'Tickets',
@@ -40,7 +40,7 @@ export const metadata: Metadata = {
 };
 
 export default async function Tickets() {
-    const tickets = await fetchTickets();
+    const tickets = await getTickets();
 
     return (
         <Suspense fallback={<Loading />}>
@@ -163,7 +163,11 @@ export default async function Tickets() {
                                                                     </Button>
                                                                 </SuperLink>
 
-                                                                <DeleteTicket>
+                                                                <DeleteTicket
+                                                                    ticket={
+                                                                        ticket
+                                                                    }
+                                                                >
                                                                     <Button
                                                                         variant='destructive'
                                                                         className='w-full'

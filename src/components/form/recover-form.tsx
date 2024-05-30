@@ -10,19 +10,37 @@ import { recoverIS } from '@/content/initial-states';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { SubmitButton } from '@/components/form/submit-button';
+import { useRouter } from 'next/navigation';
 
 export const RecoverForm = () => {
     const ref = useRef<HTMLFormElement>(null);
+    const router = useRouter();
     const [formState, formAction] = useFormState(recover, recoverIS);
 
     const { errors, message } = formState;
 
     useEffect(() => {
         if (message === 'success') {
-            toast.success('Verifique seu e-mail.');
+            toast.success('E-mail enviado com sucesso!', {
+                description: 'Verifique sua caixa de entrada.',
+            });
             ref.current?.reset();
+
+            router.replace('/');
         }
-    }, [formState, message]);
+
+        if (message === 'email not found') {
+            toast.error('E-mail não encontrado!');
+        }
+
+        if (message === 'email error') {
+            toast.error('Erro ao enviar o e-mail de recuperação!');
+        }
+
+        if (message === 'unknown error') {
+            toast.error('Erro desconhecido!');
+        }
+    }, [formState, message, router]);
 
     return (
         <main className='grid gap-6'>
