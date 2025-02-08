@@ -1,34 +1,33 @@
 'use client';
 
-import { toast } from 'sonner';
-import { Ticket } from '@/types';
-import { cn } from '@/lib/utils';
-import { useFormState } from 'react-dom';
-import { useEffect, useRef } from 'react';
-import { editTicket } from '@/lib/actions';
-import { useRouter } from 'next/navigation';
-import { Link as LinkIcon } from 'lucide-react';
-import { ticketIS } from '@/content/initial-states';
 import { priorities, statuses, types } from '@/content/constants';
+import { ticketIS } from '@/content/initial-states';
+import { editTicket } from '@/lib/actions';
+import { cn } from '@/lib/utils';
+import { Ticket } from '@/types';
+import { Link as LinkIcon } from 'lucide-react';
+import { useRouter } from 'next/navigation';
+import { useActionState, useEffect, useRef } from 'react';
+import { toast } from 'sonner';
 
+import { InputFile } from '@/components/input-file';
+import { SuperLink } from '@/components/super-link';
+import { Button } from '@/components/ui/button';
+import { CardContent, CardFooter } from '@/components/ui/card';
+import { Combobox } from '@/components/ui/combobox';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Button } from '@/components/ui/button';
-import { Combobox } from '@/components/ui/combobox';
-import { SuperLink } from '@/components/super-link';
-import { InputFile } from '@/components/input-file';
 import { Textarea } from '@/components/ui/textarea';
-import { CardContent, CardFooter } from '@/components/ui/card';
 
 import {
     Select,
-    SelectItem,
-    SelectValue,
-    SelectTrigger,
     SelectContent,
+    SelectItem,
+    SelectTrigger,
+    SelectValue,
 } from '@/components/ui/select';
 
-import { SubmitButton } from '@/components/form/submit-button';
+import { Icons } from '../ui/icons';
 
 interface EditFormProps {
     ticket: Ticket;
@@ -43,7 +42,7 @@ export const EditTicketForm = ({ ticket, projects }: EditFormProps) => {
     const ref = useRef<HTMLFormElement>(null);
 
     const action = editTicket.bind(null, ticket.id as string);
-    const [formState, formAction] = useFormState(action, ticketIS);
+    const [formState, formAction, isPending] = useActionState(action, ticketIS);
 
     const { errors, message } = formState;
 
@@ -221,7 +220,13 @@ export const EditTicketForm = ({ ticket, projects }: EditFormProps) => {
                 <SuperLink href='/tickets'>
                     <Button variant='ghost'>Cancelar</Button>
                 </SuperLink>
-                <SubmitButton text='Enviar' className='w-24' />
+
+                <Button type='submit' className='w-24'>
+                    {isPending && (
+                        <Icons.spinner className='mr-2 h-4 w-4 animate-spin' />
+                    )}
+                    Enviar
+                </Button>
             </CardFooter>
         </form>
     );

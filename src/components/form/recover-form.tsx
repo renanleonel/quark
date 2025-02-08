@@ -1,21 +1,24 @@
 'use client';
 
-import { toast } from 'sonner';
-import { cn } from '@/lib/utils';
-import { recover } from '@/lib/actions';
-import { useEffect, useRef } from 'react';
-import { useFormState } from 'react-dom';
-import { useRouter } from 'next/navigation';
 import { recoverIS } from '@/content/initial-states';
+import { recover } from '@/lib/actions';
+import { cn } from '@/lib/utils';
+import { useRouter } from 'next/navigation';
+import { useActionState, useEffect, useRef } from 'react';
+import { toast } from 'sonner';
 
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { SubmitButton } from '@/components/form/submit-button';
+import { Button } from '../ui/button';
+import { Icons } from '../ui/icons';
 
 export const RecoverForm = () => {
     const ref = useRef<HTMLFormElement>(null);
     const router = useRouter();
-    const [formState, formAction] = useFormState(recover, recoverIS);
+    const [formState, formAction, isPending] = useActionState(
+        recover,
+        recoverIS
+    );
 
     const { errors, message } = formState;
 
@@ -61,7 +64,12 @@ export const RecoverForm = () => {
                         <p className='text-xs text-red-400'>{errors?.email}</p>
                     </div>
 
-                    <SubmitButton text='Recuperar' />
+                    <Button type='submit'>
+                        {isPending && (
+                            <Icons.spinner className='mr-2 h-4 w-4 animate-spin' />
+                        )}
+                        Recuperar
+                    </Button>
                 </section>
             </form>
         </main>

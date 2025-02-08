@@ -2,8 +2,7 @@
 
 import { deactivateAccount } from '@/lib/actions';
 import { cn } from '@/lib/utils';
-import { useState } from 'react';
-import { useFormState } from 'react-dom';
+import { useActionState, useState } from 'react';
 
 import {
     Drawer,
@@ -28,15 +27,15 @@ import { Button } from '@/components/ui/button';
 import { DrawerDescription } from '@/components/ui/drawer';
 import { Input } from '@/components/ui/input';
 
-import { SubmitButton } from '@/components/form/submit-button';
 import { deactivateAccountIS } from '@/content/initial-states';
 import { useMediaQuery } from '@/hooks/use-media-query';
+import { Icons } from '../ui/icons';
 
 export function DrawerDeactivateAccount() {
     const [open, setOpen] = useState(false);
     const isDesktop = useMediaQuery('(min-width: 768px)');
 
-    const [formState, formAction] = useFormState(
+    const [formState, formAction, isPending] = useActionState(
         deactivateAccount,
         deactivateAccountIS
     );
@@ -91,11 +90,16 @@ export function DrawerDeactivateAccount() {
                                             Cancel
                                         </Button>
                                     </DialogClose>
-                                    <SubmitButton
-                                        text='Confirm'
+                                    <Button
+                                        type='submit'
                                         variant='destructive'
                                         className='w-full'
-                                    />
+                                    >
+                                        {isPending && (
+                                            <Icons.spinner className='mr-2 h-4 w-4 animate-spin' />
+                                        )}
+                                        Confirm
+                                    </Button>
                                 </div>
                             </form>
                         </DialogDescription>
@@ -153,11 +157,16 @@ export function DrawerDeactivateAccount() {
                                         Cancel
                                     </Button>
                                 </DrawerClose>
-                                <SubmitButton
-                                    text='Confirm'
+                                <Button
+                                    type='submit'
                                     variant='destructive'
                                     className='w-full'
-                                />
+                                >
+                                    {isPending && (
+                                        <Icons.spinner className='mr-2 h-4 w-4 animate-spin' />
+                                    )}
+                                    Confirm
+                                </Button>
                             </div>
                         </form>
                     </DrawerDescription>

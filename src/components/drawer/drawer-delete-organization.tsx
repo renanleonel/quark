@@ -1,35 +1,34 @@
 'use client';
 
-import { toast } from 'sonner';
-import { cn } from '@/lib/utils';
-import { useFormState } from 'react-dom';
-import { deleteOrganization } from '@/lib/actions';
-import { useEffect, useRef, useState } from 'react';
 import { useMediaQuery } from '@/hooks/use-media-query';
+import { deleteOrganization } from '@/lib/actions';
+import { cn } from '@/lib/utils';
+import { useActionState, useEffect, useRef, useState } from 'react';
+import { toast } from 'sonner';
 
 import {
     Drawer,
-    DrawerTitle,
-    DrawerHeader,
-    DrawerTrigger,
     DrawerContent,
+    DrawerHeader,
+    DrawerTitle,
+    DrawerTrigger,
 } from '@/components/ui/drawer';
 
 import {
     Dialog,
-    DialogTitle,
     DialogClose,
-    DialogHeader,
     DialogContent,
-    DialogTrigger,
     DialogDescription,
+    DialogHeader,
+    DialogTitle,
+    DialogTrigger,
 } from '@/components/ui/dialog';
 
-import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { DrawerDescription } from '@/components/ui/drawer';
-import { SubmitButton } from '@/components/form/submit-button';
+import { Input } from '@/components/ui/input';
 import { deleteOrganizationIS } from '@/content/initial-states';
+import { Icons } from '../ui/icons';
 
 export function DrawerDeleteOrganization() {
     const [open, setOpen] = useState(false);
@@ -37,7 +36,7 @@ export function DrawerDeleteOrganization() {
 
     const isDesktop = useMediaQuery('(min-width: 768px)');
 
-    const [formState, formAction] = useFormState(
+    const [formState, formAction, isPending] = useActionState(
         deleteOrganization,
         deleteOrganizationIS
     );
@@ -105,11 +104,17 @@ export function DrawerDeleteOrganization() {
                                             Cancel
                                         </Button>
                                     </DialogClose>
-                                    <SubmitButton
-                                        text='Confirm'
+
+                                    <Button
+                                        type='submit'
                                         variant='destructive'
                                         className='w-full'
-                                    />
+                                    >
+                                        {isPending && (
+                                            <Icons.spinner className='mr-2 h-4 w-4 animate-spin' />
+                                        )}
+                                        Confirm
+                                    </Button>
                                 </div>
                             </form>
                         </DialogDescription>
@@ -168,11 +173,16 @@ export function DrawerDeleteOrganization() {
                                         Cancel
                                     </Button>
                                 </DialogClose>
-                                <SubmitButton
-                                    text='Confirm'
+                                <Button
+                                    type='submit'
                                     variant='destructive'
                                     className='w-full'
-                                />
+                                >
+                                    {isPending && (
+                                        <Icons.spinner className='mr-2 h-4 w-4 animate-spin' />
+                                    )}
+                                    Confirm
+                                </Button>
                             </div>
                         </form>
                     </DrawerDescription>

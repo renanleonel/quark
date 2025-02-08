@@ -1,22 +1,22 @@
 'use client';
 
-import { toast } from 'sonner';
-import { cn } from '@/lib/utils';
 import { signup } from '@/lib/actions';
-import { useFormState } from 'react-dom';
+import { cn } from '@/lib/utils';
 import { useRouter } from 'next/navigation';
-import { useEffect, useRef } from 'react';
+import { useActionState, useEffect, useRef } from 'react';
+import { toast } from 'sonner';
 
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { signupIS } from '@/content/initial-states';
 import { Separator } from '@/components/ui/separator';
-import { SubmitButton } from '@/components/form/submit-button';
+import { signupIS } from '@/content/initial-states';
+import { Button } from '../ui/button';
+import { Icons } from '../ui/icons';
 
 export const SignUpForm = () => {
     const router = useRouter();
     const ref = useRef<HTMLFormElement>(null);
-    const [formState, formAction] = useFormState(signup, signupIS);
+    const [formState, formAction, isPending] = useActionState(signup, signupIS);
 
     const { errors, message } = formState;
 
@@ -122,7 +122,12 @@ export const SignUpForm = () => {
                         </div>
                     </div>
 
-                    <SubmitButton text='Cadastrar' />
+                    <Button type='submit'>
+                        {isPending && (
+                            <Icons.spinner className='mr-2 h-4 w-4 animate-spin' />
+                        )}
+                        Cadastrar
+                    </Button>
                 </section>
             </form>
         </main>

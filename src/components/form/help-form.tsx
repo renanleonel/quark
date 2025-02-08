@@ -1,20 +1,20 @@
 'use client';
 
-import { toast } from 'sonner';
-import { cn } from '@/lib/utils';
 import { help } from '@/lib/actions';
-import { useFormState } from 'react-dom';
-import { useEffect, useRef } from 'react';
+import { cn } from '@/lib/utils';
+import { useActionState, useEffect, useRef } from 'react';
+import { toast } from 'sonner';
 
-import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
-import { helpIS } from '@/content/initial-states';
+import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
-import { SubmitButton } from '@/components/form/submit-button';
+import { helpIS } from '@/content/initial-states';
+import { Button } from '../ui/button';
+import { Icons } from '../ui/icons';
 
 export const HelpForm = () => {
     const ref = useRef<HTMLFormElement>(null);
-    const [formState, formAction] = useFormState(help, helpIS);
+    const [formState, formAction, isPending] = useActionState(help, helpIS);
 
     const { errors, message } = formState;
 
@@ -68,7 +68,12 @@ export const HelpForm = () => {
             </div>
 
             <div className='mt-4 flex w-full justify-end'>
-                <SubmitButton text='Enviar' className='w-28' />
+                <Button type='submit' className='w-28'>
+                    {isPending && (
+                        <Icons.spinner className='mr-2 h-4 w-4 animate-spin' />
+                    )}
+                    Enviar
+                </Button>
             </div>
         </form>
     );

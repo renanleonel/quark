@@ -1,15 +1,15 @@
 'use client';
 
-import { toast } from 'sonner';
-import { cn } from '@/lib/utils';
-import { useEffect } from 'react';
-import { useFormState } from 'react-dom';
-import { editProject } from '@/lib/actions';
 import { projectIS } from '@/content/initial-states';
+import { editProject } from '@/lib/actions';
+import { cn } from '@/lib/utils';
+import { useActionState, useEffect } from 'react';
+import { toast } from 'sonner';
 
+import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Button } from '@/components/ui/button';
+import { Icons } from '../ui/icons';
 
 interface EditProjectFormProps {
     id: string;
@@ -18,7 +18,10 @@ interface EditProjectFormProps {
 
 export const EditProjectForm = ({ id, setOpen }: EditProjectFormProps) => {
     const action = editProject.bind(null, id);
-    const [formState, formAction] = useFormState(action, projectIS);
+    const [formState, formAction, isPending] = useActionState(
+        action,
+        projectIS
+    );
 
     const { message, errors } = formState;
 
@@ -40,6 +43,9 @@ export const EditProjectForm = ({ id, setOpen }: EditProjectFormProps) => {
                 />
             </div>
             <Button type='submit' className='w-full'>
+                {isPending && (
+                    <Icons.spinner className='mr-2 h-4 w-4 animate-spin' />
+                )}
                 Editar
             </Button>
         </form>

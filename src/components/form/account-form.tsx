@@ -1,19 +1,19 @@
 'use client';
 
-import { toast } from 'sonner';
-import { cn } from '@/lib/utils';
-import { useFormState } from 'react-dom';
-import { useEffect, useRef } from 'react';
-import { changePassword } from '@/lib/actions';
 import { changePasswordIS } from '@/content/initial-states';
+import { changePassword } from '@/lib/actions';
+import { cn } from '@/lib/utils';
+import { useActionState, useEffect, useRef } from 'react';
+import { toast } from 'sonner';
 
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { SubmitButton } from '@/components/form/submit-button';
+import { Button } from '../ui/button';
+import { Icons } from '../ui/icons';
 
 export const AccountForm = () => {
     const ref = useRef<HTMLFormElement>(null);
-    const [formState, formAction] = useFormState(
+    const [formState, formAction, isPending] = useActionState(
         changePassword,
         changePasswordIS
     );
@@ -64,7 +64,12 @@ export const AccountForm = () => {
                 </div>
             </div>
             <div className='flex justify-end'>
-                <SubmitButton text='Save' className='px-8' />
+                <Button type='submit' className='px-8'>
+                    {isPending && (
+                        <Icons.spinner className='mr-2 h-4 w-4 animate-spin' />
+                    )}
+                    Save
+                </Button>
             </div>
         </form>
     );

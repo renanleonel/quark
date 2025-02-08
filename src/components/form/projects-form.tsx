@@ -1,14 +1,14 @@
 'use client';
 
-import { toast } from 'sonner';
-import { cn } from '@/lib/utils';
-import { useFormState } from 'react-dom';
-import { useEffect, useRef } from 'react';
-import { createProject } from '@/lib/actions';
 import { projectIS } from '@/content/initial-states';
+import { createProject } from '@/lib/actions';
+import { cn } from '@/lib/utils';
+import { useActionState, useEffect, useRef } from 'react';
+import { toast } from 'sonner';
 
 import { Input } from '@/components/ui/input';
-import { SubmitButton } from '@/components/form/submit-button';
+import { Button } from '../ui/button';
+import { Icons } from '../ui/icons';
 
 interface ProjectsFormProps {
     setOpen: (open: boolean) => void;
@@ -16,7 +16,10 @@ interface ProjectsFormProps {
 
 export const ProjectsForm = ({ setOpen }: ProjectsFormProps) => {
     const ref = useRef<HTMLFormElement>(null);
-    const [formState, formAction] = useFormState(createProject, projectIS);
+    const [formState, formAction, isPending] = useActionState(
+        createProject,
+        projectIS
+    );
 
     const { errors, message } = formState;
 
@@ -51,7 +54,12 @@ export const ProjectsForm = ({ setOpen }: ProjectsFormProps) => {
                 <p className='text-xs text-red-400'>{errors.name}</p>
             </div>
 
-            <SubmitButton className='w-full' text='Criar' />
+            <Button type='submit' className='w-full'>
+                {isPending && (
+                    <Icons.spinner className='mr-2 h-4 w-4 animate-spin' />
+                )}
+                Criar
+            </Button>
         </form>
     );
 };

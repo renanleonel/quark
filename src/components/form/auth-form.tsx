@@ -3,16 +3,19 @@
 import { signinIS } from '@/content/initial-states';
 import { signin } from '@/lib/actions';
 import { cn } from '@/lib/utils';
-import { useFormState } from 'react-dom';
 
-import { SubmitButton } from '@/components/form/submit-button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import { useActionState } from 'react';
+import { Button } from '../ui/button';
+import { Icons } from '../ui/icons';
 
 export const AuthForm = () => {
-    const [formState, formAction] = useFormState(signin, signinIS);
+    const [formState, formAction, isPending] = useActionState(signin, signinIS);
 
     const { errors } = formState;
+
+    console.log(isPending);
 
     return (
         <main className='grid gap-6'>
@@ -50,7 +53,12 @@ export const AuthForm = () => {
                         </p>
                     </div>
 
-                    <SubmitButton text='Entrar' />
+                    <Button type='submit'>
+                        {isPending && (
+                            <Icons.spinner className='mr-2 h-4 w-4 animate-spin' />
+                        )}
+                        Entrar
+                    </Button>
                 </section>
             </form>
         </main>

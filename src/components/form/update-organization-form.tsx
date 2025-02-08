@@ -1,12 +1,12 @@
 'use client';
 
-import { organizationNameIS } from '@/content/initial-states';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import { organizationNameIS } from '@/content/initial-states';
 import { updateOrganizationName } from '@/lib/actions';
-import { useFormState } from 'react-dom';
-import { useEffect, useRef } from 'react';
+import { useActionState, useEffect, useRef } from 'react';
 import { toast } from 'sonner';
+import { Icons } from '../ui/icons';
 
 export const UpdateOrganizationForm = () => {
     const ref = useRef<HTMLFormElement>(null);
@@ -14,7 +14,10 @@ export const UpdateOrganizationForm = () => {
     const currentName = 'Organization';
 
     const action = updateOrganizationName.bind(null, currentName);
-    const [formState, formAction] = useFormState(action, organizationNameIS);
+    const [formState, formAction, isPending] = useActionState(
+        action,
+        organizationNameIS
+    );
 
     const { errors, message } = formState;
 
@@ -41,7 +44,12 @@ export const UpdateOrganizationForm = () => {
                 <p className='text-xs text-red-400'>{errors.name}</p>
             </div>
 
-            <Button className='w-40'>Alterar</Button>
+            <Button className='w-40'>
+                {isPending && (
+                    <Icons.spinner className='mr-2 h-4 w-4 animate-spin' />
+                )}
+                Alterar
+            </Button>
         </form>
     );
 };

@@ -1,15 +1,16 @@
 'use client';
 
-import { cn } from '@/lib/utils';
-import { useFormState } from 'react-dom';
-import { changeProfile } from '@/lib/actions';
 import { changeProfileIS } from '@/content/initial-states';
+import { changeProfile } from '@/lib/actions';
+import { cn } from '@/lib/utils';
 
-import { Theme } from '@/components/ui/theme';
-import { Label } from '@/components/ui/label';
-import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Combobox } from '@/components/ui/combobox';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { Theme } from '@/components/ui/theme';
+import { useActionState } from 'react';
+import { Icons } from '../ui/icons';
 
 const languages = [
     { label: 'Português', value: 'ptbr' },
@@ -21,7 +22,7 @@ interface ProfileFormProps {
 }
 
 export function ProfileForm({ name }: ProfileFormProps) {
-    const [formState, formAction] = useFormState(
+    const [formState, formAction, isPending] = useActionState(
         changeProfile,
         changeProfileIS
     );
@@ -64,15 +65,12 @@ export function ProfileForm({ name }: ProfileFormProps) {
                 </p>
             </div>
 
-            {/* <InputFile
-                name='file'
-                label='Profile Pic'
-                className={cn(errors.profilePic && 'border-red-400')}
-            /> */}
-
             <p className='text-xs text-red-400'>{errors.profilePic}</p>
 
             <div className='flex justify-between'>
+                {isPending && (
+                    <Icons.spinner className='mr-2 h-4 w-4 animate-spin' />
+                )}
                 <Button type='submit'>Update</Button>
                 <Theme />
             </div>
