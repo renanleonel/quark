@@ -55,7 +55,7 @@ export function DataTableRowActions({ row }: DataTableRowActionsProps) {
                         </ChangeTicketStatus>
                         <DropdownMenuSeparator />
                         <DeleteTicket ticket={ticket}>
-                            <h1 className='hover:bg-accent focus:bg-accent focus:text-accent-foreground relative flex cursor-pointer items-center rounded-sm px-2 py-1.5 text-sm transition-colors outline-none select-none data-[disabled]:pointer-events-none data-[disabled]:opacity-50'>
+                            <h1 className='hover:bg-accent focus:bg-accent focus:text-accent-foreground relative flex cursor-pointer items-center rounded-xs px-2 py-1.5 text-sm outline-hidden transition-colors select-none data-disabled:pointer-events-none data-disabled:opacity-50'>
                                 Delete
                             </h1>
                         </DeleteTicket>

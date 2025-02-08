@@ -58,7 +58,7 @@ export function DataTableFacetedFilter<TData, TValue>({
                             />
                             <Badge
                                 variant='secondary'
-                                className='rounded-sm px-1 font-normal lg:hidden'
+                                className='rounded-xs px-1 font-normal lg:hidden'
                             >
                                 {selectedValues.size}
                             </Badge>
@@ -66,7 +66,7 @@ export function DataTableFacetedFilter<TData, TValue>({
                                 {selectedValues.size > 1 ? (
                                     <Badge
                                         variant='secondary'
-                                        className='rounded-sm px-1 font-normal'
+                                        className='rounded-xs px-1 font-normal'
                                     >
                                         {selectedValues.size} selected
                                     </Badge>
@@ -79,7 +79,7 @@ export function DataTableFacetedFilter<TData, TValue>({
                                             <Badge
                                                 variant='secondary'
                                                 key={option.value}
-                                                className='rounded-sm px-1 font-normal'
+                                                className='rounded-xs px-1 font-normal'
                                             >
                                                 {option.label}
                                             </Badge>
@@ -124,7 +124,7 @@ export function DataTableFacetedFilter<TData, TValue>({
                                     >
                                         <div
                                             className={cn(
-                                                'border-primary mr-2 flex h-4 w-4 items-center justify-center rounded-sm border',
+                                                'border-primary mr-2 flex h-4 w-4 items-center justify-center rounded-xs border',
                                                 isSelected
                                                     ? 'bg-primary text-primary-foreground'
                                                     : 'opacity-50 [&_svg]:invisible'
