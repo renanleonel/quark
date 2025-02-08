@@ -60,7 +60,7 @@ export const DeleteProject = ({ project }: DeleteProjectProps) => {
         return (
             <Dialog open={open} onOpenChange={setOpen}>
                 <DialogTrigger asChild>
-                    <button className='cursor-pointer rounded-md p-2 hover:bg-muted'>
+                    <button className='hover:bg-muted cursor-pointer rounded-md p-2'>
                         <Trash size={16} />
                     </button>
                 </DialogTrigger>
@@ -93,7 +93,7 @@ export const DeleteProject = ({ project }: DeleteProjectProps) => {
     return (
         <Drawer open={open} onOpenChange={setOpen}>
             <DrawerTrigger asChild>
-                <button className='cursor-pointer rounded-md p-2 hover:bg-muted'>
+                <button className='hover:bg-muted cursor-pointer rounded-md p-2'>
                     <Trash size={16} />
                 </button>
             </DrawerTrigger>

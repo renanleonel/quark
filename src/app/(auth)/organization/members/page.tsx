@@ -22,7 +22,7 @@ export default async function Members() {
             <main className='space-y-8'>
                 <div>
                     <h3 className='text-lg font-medium'>Membros</h3>
-                    <p className='text-sm text-muted-foreground'>
+                    <p className='text-muted-foreground text-sm'>
                         Gerencie os membros da sua organização
                     </p>
                 </div>
@@ -37,10 +37,10 @@ export default async function Members() {
                                         <AvatarFallback />
                                     </Avatar>
                                     <div>
-                                        <p className='text-sm font-medium leading-none'>
+                                        <p className='text-sm leading-none font-medium'>
                                             {member.name}
                                         </p>
-                                        <p className='text-sm text-muted-foreground'>
+                                        <p className='text-muted-foreground text-sm'>
                                             {member.email}
                                         </p>
                                     </div>

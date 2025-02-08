@@ -23,7 +23,7 @@ export default async function Account() {
                 <section className='space-y-4'>
                     <div>
                         <h3 className='text-lg font-medium'>Account</h3>
-                        <p className='text-sm text-muted-foreground'>
+                        <p className='text-muted-foreground text-sm'>
                             Update your password or deactivate your account.
                         </p>
                     </div>
@@ -34,7 +34,7 @@ export default async function Account() {
                 <div className='space-y-4'>
                     <div>
                         <Label>Deactivate account</Label>
-                        <p className='text-sm text-muted-foreground'>
+                        <p className='text-muted-foreground text-sm'>
                             Click the button to deactivate your account.
                         </p>
                     </div>

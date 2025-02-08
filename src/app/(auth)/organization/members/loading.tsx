@@ -7,7 +7,7 @@ export default function Loading() {
         <main className='space-y-8'>
             <div>
                 <h3 className='text-lg font-medium'>Membros</h3>
-                <p className='text-sm text-muted-foreground'>
+                <p className='text-muted-foreground text-sm'>
                     Gerencie os membros da sua organização
                 </p>
             </div>
@@ -23,7 +23,7 @@ export default function Loading() {
                             </div>
                             <div className='flex items-center gap-4'>
                                 <Skeleton className='h-10 w-32' />
-                                <TrashIcon className='h-4 w-4 text-muted-foreground' />
+                                <TrashIcon className='text-muted-foreground h-4 w-4' />
                             </div>
                         </div>
                     );
@@ -39,7 +39,7 @@ export default function Loading() {
                                     <Skeleton className='h-10 w-32' />
                                 </div>
                                 <div className='flex items-center gap-4'>
-                                    <TrashIcon className='h-4 w-4 text-muted-foreground' />
+                                    <TrashIcon className='text-muted-foreground h-4 w-4' />
                                 </div>
                             </div>
                             <Skeleton className='h-10' />

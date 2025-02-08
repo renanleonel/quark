@@ -1,36 +1,36 @@
 'use client';
 
+import { deactivateAccount } from '@/lib/actions';
 import { cn } from '@/lib/utils';
 import { useState } from 'react';
 import { useFormState } from 'react-dom';
-import { deactivateAccount } from '@/lib/actions';
 
 import {
     Drawer,
-    DrawerTitle,
     DrawerClose,
-    DrawerHeader,
     DrawerContent,
+    DrawerHeader,
+    DrawerTitle,
     DrawerTrigger,
 } from '@/components/ui/drawer';
 
 import {
     Dialog,
-    DialogTitle,
     DialogClose,
-    DialogHeader,
     DialogContent,
-    DialogTrigger,
     DialogDescription,
+    DialogHeader,
+    DialogTitle,
+    DialogTrigger,
 } from '@/components/ui/dialog';
 
-import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { DrawerDescription } from '@/components/ui/drawer';
+import { Input } from '@/components/ui/input';
 
-import { useMediaQuery } from '@/hooks/use-media-query';
 import { SubmitButton } from '@/components/form/submit-button';
 import { deactivateAccountIS } from '@/content/initial-states';
+import { useMediaQuery } from '@/hooks/use-media-query';
 
 export function DrawerDeactivateAccount() {
     const [open, setOpen] = useState(false);

@@ -1,17 +1,17 @@
-import { Metadata } from 'next';
-import Loading from './loading';
-import { Suspense } from 'react';
 import { getProjects, verifyAuth } from '@/lib/actions';
+import { Metadata } from 'next';
+import { Suspense } from 'react';
+import Loading from './loading';
 
 import {
     Card,
-    CardTitle,
-    CardHeader,
     CardDescription,
+    CardHeader,
+    CardTitle,
 } from '@/components/ui/card';
 
-import { Separator } from '@/components/ui/separator';
 import { NewTicketForm } from '@/components/form/new-ticket-form';
+import { Separator } from '@/components/ui/separator';
 
 export const metadata: Metadata = {
     title: 'Novo ticket',

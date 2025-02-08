@@ -1,35 +1,35 @@
-import Loading from './loading';
+import { Expand, X } from 'lucide-react';
 import { Metadata } from 'next';
 import { Suspense } from 'react';
-import { Expand, X } from 'lucide-react';
+import Loading from './loading';
 
-import { cn } from '@/lib/utils';
 import { getTickets } from '@/lib/actions';
+import { cn } from '@/lib/utils';
 
 import {
     Card,
-    CardTitle,
-    CardHeader,
     CardDescription,
+    CardHeader,
+    CardTitle,
 } from '@/components/ui/card';
 
 import {
     Drawer,
-    DrawerTitle,
     DrawerClose,
-    DrawerHeader,
-    DrawerFooter,
     DrawerContent,
-    DrawerTrigger,
     DrawerDescription,
+    DrawerFooter,
+    DrawerHeader,
+    DrawerTitle,
+    DrawerTrigger,
 } from '@/components/ui/drawer';
 
-import { Badge } from '@/components/ui/badge';
-import { Input } from '@/components/ui/input';
-import { Button } from '@/components/ui/button';
 import { SuperLink } from '@/components/super-link';
-import { Separator } from '@/components/ui/separator';
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
 import { ScrollArea } from '@/components/ui/scroll-area';
+import { Separator } from '@/components/ui/separator';
 
 import { columns } from './components/columns';
 import { DataTable } from './components/data-table';
@@ -83,7 +83,7 @@ export default async function Tickets() {
                                                     <Card
                                                         key={key}
                                                         className={cn(
-                                                            'flex cursor-pointer items-center justify-between gap-8 p-4 hover:bg-muted/20',
+                                                            'hover:bg-muted/20 flex cursor-pointer items-center justify-between gap-8 p-4',
                                                             ticket.status ===
                                                                 'concluído' &&
                                                                 'opacity-40'
@@ -104,7 +104,7 @@ export default async function Tickets() {
                                                     <div className='mx-auto w-full max-w-sm'>
                                                         <DrawerHeader>
                                                             <header className='flex w-full justify-end'>
-                                                                <div className='cursor-pointer rounded-lg p-2 hover:bg-muted/20'>
+                                                                <div className='hover:bg-muted/20 cursor-pointer rounded-lg p-2'>
                                                                     <DrawerClose
                                                                         asChild
                                                                     >

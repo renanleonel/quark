@@ -55,9 +55,9 @@ export const DeleteMember = () => {
         return (
             <Dialog open={open} onOpenChange={setOpen}>
                 <DialogTrigger asChild>
-                    <Button variant='ghost' className='flex p-2 hover:bg-muted'>
+                    <Button variant='ghost' className='hover:bg-muted flex p-2'>
                         <TrashIcon
-                            className='h-4 w-4 text-muted-foreground'
+                            className='text-muted-foreground h-4 w-4'
                             color='#fff'
                         />
                     </Button>
@@ -86,9 +86,9 @@ export const DeleteMember = () => {
             <DrawerTrigger asChild>
                 <Button
                     variant='ghost'
-                    className='p- flex h-8 w-8 hover:bg-muted'
+                    className='p- hover:bg-muted flex h-8 w-8'
                 >
-                    <TrashIcon className='h-4 w-4 text-muted-foreground' />
+                    <TrashIcon className='text-muted-foreground h-4 w-4' />
                 </Button>
             </DrawerTrigger>
             <DrawerContent>

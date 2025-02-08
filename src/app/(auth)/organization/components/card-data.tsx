@@ -20,14 +20,14 @@ export const CardData = ({ title, icon, value, description }: CardProps) => {
                     strokeLinecap='round'
                     strokeLinejoin='round'
                     strokeWidth='2'
-                    className='h-4 w-4 text-muted-foreground'
+                    className='text-muted-foreground h-4 w-4'
                 >
                     <path d='M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6' />
                 </svg>
             </CardHeader>
             <CardContent>
                 <div className='text-2xl font-bold'>{value}</div>
-                <p className='text-xs text-muted-foreground'>{description}</p>
+                <p className='text-muted-foreground text-xs'>{description}</p>
             </CardContent>
         </Card>
     );

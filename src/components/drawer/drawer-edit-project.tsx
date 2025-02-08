@@ -29,7 +29,7 @@ export function DrawerEditProject({ project }: DrawerEditProjectProps) {
     return (
         <Drawer open={open} onOpenChange={setOpen}>
             <DrawerTrigger asChild>
-                <button className='cursor-pointer rounded-md p-2 hover:bg-muted'>
+                <button className='hover:bg-muted cursor-pointer rounded-md p-2'>
                     <Pencil size={16} />
                 </button>
             </DrawerTrigger>

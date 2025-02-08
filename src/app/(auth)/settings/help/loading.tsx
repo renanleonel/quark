@@ -4,7 +4,7 @@ export default function Loading() {
     return (
         <main>
             <h2 className='text-lg font-medium'>Ajuda</h2>
-            <p className='text-sm text-muted-foreground'>
+            <p className='text-muted-foreground text-sm'>
                 Encontrou algum problema durante a utilização? Entre em contato
                 conosco.
             </p>

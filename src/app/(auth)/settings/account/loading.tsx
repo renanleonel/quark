@@ -4,7 +4,7 @@ export default function Loading() {
     return (
         <main>
             <h3 className='text-lg font-medium'>Account</h3>
-            <p className='text-sm text-muted-foreground'>
+            <p className='text-muted-foreground text-sm'>
                 Update your password or deactivate your account.
             </p>
             <div className='space-y-8 pt-4'>

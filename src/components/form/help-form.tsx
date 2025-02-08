@@ -61,7 +61,7 @@ export const HelpForm = () => {
                 />
                 <div className='flex justify-between'>
                     <p className='text-xs text-red-400'>{errors.message}</p>
-                    <p className='text-xs text-muted-foreground'>
+                    <p className='text-muted-foreground text-xs'>
                         max 500 caracteres
                     </p>
                 </div>

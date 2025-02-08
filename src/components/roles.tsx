@@ -72,7 +72,7 @@ export const Roles = ({ member }: RolesProps) => {
                 >
                     {roles.find((r) => r.value === role)?.name || 'Select role'}
 
-                    <ChevronDownIcon className='ml-2 h-4 w-4 text-muted-foreground' />
+                    <ChevronDownIcon className='text-muted-foreground ml-2 h-4 w-4' />
                 </Button>
             </PopoverTrigger>
             <PopoverContent className='p-0' align='end'>
@@ -87,7 +87,7 @@ export const Roles = ({ member }: RolesProps) => {
                                         <AlertDialogTrigger className='w-full'>
                                             <CommandItem className='teamaspace-y-1 flex cursor-pointer flex-col items-start px-4 py-2'>
                                                 <p>{role.name}</p>
-                                                <p className='text-sm text-muted-foreground'>
+                                                <p className='text-muted-foreground text-sm'>
                                                     {role.description}
                                                 </p>
                                             </CommandItem>

@@ -37,7 +37,7 @@ export function DataTableRowActions({ row }: DataTableRowActionsProps) {
             <DropdownMenuTrigger asChild>
                 <Button
                     variant='ghost'
-                    className='flex h-8 w-8 p-0 data-[state=open]:bg-muted'
+                    className='data-[state=open]:bg-muted flex h-8 w-8 p-0'
                 >
                     <DotsHorizontalIcon className='h-4 w-4' />
                     <span className='sr-only'>Open menu</span>
@@ -55,7 +55,7 @@ export function DataTableRowActions({ row }: DataTableRowActionsProps) {
                         </ChangeTicketStatus>
                         <DropdownMenuSeparator />
                         <DeleteTicket ticket={ticket}>
-                            <h1 className='relative flex cursor-pointer select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none transition-colors hover:bg-accent focus:bg-accent focus:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50'>
+                            <h1 className='hover:bg-accent focus:bg-accent focus:text-accent-foreground relative flex cursor-pointer items-center rounded-sm px-2 py-1.5 text-sm transition-colors outline-none select-none data-[disabled]:pointer-events-none data-[disabled]:opacity-50'>
                                 Delete
                             </h1>
                         </DeleteTicket>

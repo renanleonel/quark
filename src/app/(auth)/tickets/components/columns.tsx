@@ -89,7 +89,7 @@ export const columns: ColumnDef<Ticket>[] = [
             return (
                 <div className='flex items-center'>
                     {priority.icon && (
-                        <priority.icon className='mr-2 h-4 w-4 text-muted-foreground' />
+                        <priority.icon className='text-muted-foreground mr-2 h-4 w-4' />
                     )}
                     <span>{priority.label}</span>
                 </div>
@@ -114,9 +114,9 @@ export const columns: ColumnDef<Ticket>[] = [
             }
 
             return (
-                <div className='flex  items-center'>
+                <div className='flex items-center'>
                     {status.icon && (
-                        <status.icon className='mr-2 h-4 w-4 text-muted-foreground' />
+                        <status.icon className='text-muted-foreground mr-2 h-4 w-4' />
                     )}
                     <span>{status.label}</span>
                 </div>

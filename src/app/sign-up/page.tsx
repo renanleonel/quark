@@ -15,7 +15,7 @@ export default function SignUp() {
             <div className='flex w-[450px] flex-col gap-4 text-white'>
                 <div className='flex flex-col gap-2 text-center'>
                     <h1 className='text-2xl font-semibold'>Cadastro</h1>
-                    <p className='text-sm text-muted-foreground'>
+                    <p className='text-muted-foreground text-sm'>
                         Insira seus dados
                     </p>
                 </div>

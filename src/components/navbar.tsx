@@ -18,7 +18,7 @@ export const Navbar = ({ className, user, ...props }: NavbarProps) => {
     return (
         <div
             className={cn(
-                'fixed left-0 top-0 z-10 flex h-16 w-full items-center bg-background px-4 py-4 lg:static lg:px-0',
+                'bg-background fixed top-0 left-0 z-10 flex h-16 w-full items-center px-4 py-4 lg:static lg:px-0',
                 pathname === '/create-organization' && 'hidden'
             )}
         >
@@ -33,7 +33,7 @@ export const Navbar = ({ className, user, ...props }: NavbarProps) => {
                     <SuperLink
                         href='/tickets'
                         className={cn(
-                            'text-sm font-medium text-muted-foreground transition-colors hover:text-primary hover:underline',
+                            'text-muted-foreground hover:text-primary text-sm font-medium transition-colors hover:underline',
                             pathname === '/tickets' && 'text-primary'
                         )}
                     >
@@ -42,7 +42,7 @@ export const Navbar = ({ className, user, ...props }: NavbarProps) => {
                     <SuperLink
                         href='/new-ticket'
                         className={cn(
-                            'text-sm font-medium text-muted-foreground transition-colors hover:text-primary hover:underline',
+                            'text-muted-foreground hover:text-primary text-sm font-medium transition-colors hover:underline',
                             pathname === '/support' && 'text-primary'
                         )}
                     >
@@ -51,7 +51,7 @@ export const Navbar = ({ className, user, ...props }: NavbarProps) => {
                     <SuperLink
                         href='/organization'
                         className={cn(
-                            'text-sm font-medium text-muted-foreground transition-colors hover:text-primary hover:underline',
+                            'text-muted-foreground hover:text-primary text-sm font-medium transition-colors hover:underline',
                             pathname === '/organization' && 'text-primary'
                         )}
                     >

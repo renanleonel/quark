@@ -1,7 +1,7 @@
-import '@/styles/globals.css';
+import '@/app/globals.css';
 import type { Metadata } from 'next';
-import { GeistSans } from 'geist/font/sans';
 
+import { ReactNode } from 'react';
 import { Providers } from './providers';
 
 export const metadata: Metadata = {
@@ -9,13 +9,14 @@ export const metadata: Metadata = {
     description: 'Quark',
 };
 
-export default function RootLayout({
-    children,
-}: {
-    children: React.ReactNode;
-}) {
+type RootLayoutProps = {
+    children: ReactNode;
+};
+
+export default function RootLayout({ children }: RootLayoutProps) {
     return (
-        <html lang='en' className={GeistSans.className}>
+        // <html lang='en' className={GeistSans.className}>
+        <html lang='en'>
             <head>
                 <link rel='icon' href='/favicon.ico' sizes='any' />
                 <link rel='manifest' href='/manifest.json' />
@@ -32,7 +33,7 @@ export default function RootLayout({
                 <meta property='og:image:width' content='<generated>' />
                 <meta property='og:image:height' content='<generated>' />
             </head>
-            <body className='h-full min-h-screen bg-background'>
+            <body className='bg-background h-full min-h-screen'>
                 <Providers>{children}</Providers>
             </body>
         </html>

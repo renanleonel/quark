@@ -39,7 +39,7 @@ export function ProfileForm({ name }: ProfileFormProps) {
                     className={cn(errors.name && 'border-red-400')}
                 />
                 <p className='text-xs text-red-400'>{errors.name}</p>
-                <p className='text-sm text-muted-foreground'>
+                <p className='text-muted-foreground text-sm'>
                     This is the name that will be displayed on your profile and
                     in emails.
                 </p>
@@ -58,7 +58,7 @@ export function ProfileForm({ name }: ProfileFormProps) {
                         errors.language && 'border-red-400'
                     )}
                 />
-                <p className='text-sm text-muted-foreground'>
+                <p className='text-muted-foreground text-sm'>
                     This is the name that will be displayed on your profile and
                     in emails.
                 </p>

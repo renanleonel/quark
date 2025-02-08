@@ -12,10 +12,10 @@ export const ProjectRanking = ({ projects }: ProjectRankingProps) => {
                 return (
                     <div key={index} className='flex items-center'>
                         <div className='space-y-1'>
-                            <p className='text-sm font-medium leading-none'>
+                            <p className='text-sm leading-none font-medium'>
                                 {project.label}
                             </p>
-                            <p className='text-sm text-muted-foreground'>
+                            <p className='text-muted-foreground text-sm'>
                                 www.com.br
                             </p>
                         </div>

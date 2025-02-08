@@ -32,7 +32,7 @@ export default async function Settings() {
                 <section className='space-y-4'>
                     <div>
                         <h3 className='text-lg font-medium'>Convites</h3>
-                        <p className='text-sm text-muted-foreground'>
+                        <p className='text-muted-foreground text-sm'>
                             Anyone with the link can view this document.
                         </p>
                     </div>
@@ -54,7 +54,7 @@ export default async function Settings() {
                                 <span className='w-full border-t' />
                             </div>
                             <div className='relative flex justify-center text-xs uppercase'>
-                                <span className='bg-background px-2 text-muted-foreground'>
+                                <span className='bg-background text-muted-foreground px-2'>
                                     Ou
                                 </span>
                             </div>
@@ -77,7 +77,7 @@ export default async function Settings() {
                 <div className='space-y-4 pt-10'>
                     <div>
                         <Label>Delete organization</Label>
-                        <p className='text-sm text-muted-foreground'>
+                        <p className='text-muted-foreground text-sm'>
                             Click the button to delete this organization
                         </p>
                     </div>
