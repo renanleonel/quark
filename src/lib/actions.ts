@@ -54,7 +54,7 @@ import {
 import { Member, Ticket } from '@/types';
 import { redirect } from 'next/navigation';
 
-export async function signin(_: any, formData: FormData) {
+export async function signin(_: unknown, formData: FormData) {
     try {
         const form = Object.fromEntries(formData.entries());
 
@@ -102,7 +102,7 @@ export async function signin(_: any, formData: FormData) {
     }
 }
 
-export async function signup(_: any, formData: FormData) {
+export async function signup(_: unknown, formData: FormData) {
     try {
         const form = Object.fromEntries(formData.entries());
         const { organizationName, organizationCode } = form;
@@ -139,6 +139,8 @@ export async function signup(_: any, formData: FormData) {
             errors: {},
         };
     } catch (error) {
+        console.error(error);
+
         return {
             message: 'unknown error',
             errors: {
@@ -176,7 +178,7 @@ export async function sendConfirmationEmail(email: string) {
     });
 }
 
-export async function recover(_: any, formData: FormData) {
+export async function recover(_: unknown, formData: FormData) {
     await verifyAuth();
 
     try {
@@ -226,6 +228,8 @@ export async function recover(_: any, formData: FormData) {
             errors: {},
         };
     } catch (error) {
+        console.error(error);
+
         return {
             message: 'unknown error',
             errors: {
@@ -271,14 +275,6 @@ export async function sendRecoverEmail(email: string) {
     return request;
 }
 
-export async function getInvitationOrigin(id: string) {
-    await verifyAuth();
-
-    return {
-        email: 'test@quark.com',
-    };
-}
-
 export async function createOrganization(name: string) {
     await verifyAuth();
 
@@ -288,7 +284,7 @@ export async function createOrganization(name: string) {
     };
 }
 
-export async function validateOrganization(_: any, formData: FormData) {
+export async function validateOrganization(_: unknown, formData: FormData) {
     await verifyAuth();
 
     try {
@@ -308,6 +304,8 @@ export async function validateOrganization(_: any, formData: FormData) {
             errors: {},
         };
     } catch (error) {
+        console.error(error);
+
         return {
             message: 'unknown error',
             errors: {
@@ -318,7 +316,7 @@ export async function validateOrganization(_: any, formData: FormData) {
     }
 }
 
-export async function getUser(email: string, password: string): Promise<any> {
+export async function getUser(email: string, password: string) {
     const request = await fetchUser(email, password);
 
     return request;
@@ -332,6 +330,8 @@ export async function getTickets() {
 
         return tickets;
     } catch (error) {
+        console.error(error);
+
         //sentry
     }
 }
@@ -344,11 +344,13 @@ export async function getTicketByID(id: string): Promise<Ticket> {
 
         return ticket;
     } catch (error) {
+        console.error(error);
+
         throw new Error('Ticket not found');
     }
 }
 
-export async function createTicket(_: any, formData: FormData) {
+export async function createTicket(_: unknown, formData: FormData) {
     await verifyAuth();
 
     try {
@@ -398,7 +400,7 @@ export async function createTicket(_: any, formData: FormData) {
     }
 }
 
-export async function editTicket(id: string, _: any, formData: FormData) {
+export async function editTicket(id: string, _: unknown, formData: FormData) {
     await verifyAuth();
 
     try {
@@ -437,6 +439,8 @@ export async function editTicket(id: string, _: any, formData: FormData) {
             errors: {},
         };
     } catch (error) {
+        console.error(error);
+
         return {
             message: 'unknown error',
             errors: {
@@ -483,15 +487,13 @@ export async function getProjects() {
 
         return projects;
     } catch (error) {
+        console.error(error);
+
         //sentry
     }
 }
 
-export async function getProjectByID(id: string) {
-    await verifyAuth();
-}
-
-export async function createProject(_: any, formData: FormData) {
+export async function createProject(_: unknown, formData: FormData) {
     await verifyAuth();
 
     try {
@@ -540,6 +542,8 @@ export async function createProject(_: any, formData: FormData) {
             errors: {},
         };
     } catch (error) {
+        console.error(error);
+
         return {
             message: 'unknown error',
             errors: {
@@ -550,7 +554,7 @@ export async function createProject(_: any, formData: FormData) {
     }
 }
 
-export async function editProject(id: string, _: any, formData: FormData) {
+export async function editProject(id: string, _: unknown, formData: FormData) {
     await verifyAuth();
 
     try {
@@ -599,6 +603,8 @@ export async function editProject(id: string, _: any, formData: FormData) {
             errors: {},
         };
     } catch (error) {
+        console.error(error);
+
         return {
             message: 'unknown error',
             errors: {
@@ -631,6 +637,8 @@ export async function deleteProject(id: string) {
             message: 'Projeto deletado com sucesso',
         };
     } catch (error) {
+        console.error(error);
+
         return {
             error: true,
             message: 'Erro desconhecido',
@@ -658,12 +666,10 @@ export async function getMembers(organizationID: string) {
 
         return members;
     } catch (error) {
+        console.error(error);
+
         //sentry
     }
-}
-
-export async function getMemberByID(memberID: string) {
-    await verifyAuth();
 }
 
 export async function updateMember(memberID: string, body: Member) {
@@ -697,7 +703,7 @@ export async function deleteMember(memberID: string) {
     }
 }
 
-export async function changeProfile(_: any, formData: FormData) {
+export async function changeProfile(_: unknown, formData: FormData) {
     try {
         const user = await verifyAuth();
 
@@ -733,6 +739,8 @@ export async function changeProfile(_: any, formData: FormData) {
             errors: {},
         };
     } catch (error) {
+        console.error(error);
+
         return {
             message: 'unknown error',
             errors: {
@@ -750,6 +758,8 @@ export async function getOrganization() {
         const organization = await fetchOrganization();
         return organization;
     } catch (error) {
+        console.error(error);
+
         //sentry
     }
 }
@@ -757,23 +767,16 @@ export async function getOrganization() {
 export async function getOrganizationByID(id: string) {
     await verifyAuth();
 
-    return '';
+    return id;
 }
 
 export async function getOrganizationStatistics() {
     await verifyAuth();
 }
 
-export async function updateUserName(name: string) {
-    await verifyAuth();
-
-    try {
-    } catch (error) {}
-}
-
 export async function updateOrganizationName(
     currentName: string,
-    _: any,
+    _: unknown,
     formData: FormData
 ) {
     try {
@@ -823,6 +826,8 @@ export async function updateOrganizationName(
             errors: {},
         };
     } catch (error) {
+        console.error(error);
+
         return {
             message: 'unknown error',
             errors: {
@@ -833,7 +838,7 @@ export async function updateOrganizationName(
     }
 }
 
-export async function deleteOrganization(_: any, formData: FormData) {
+export async function deleteOrganization(_: unknown, formData: FormData) {
     let success = false;
 
     try {
@@ -881,6 +886,8 @@ export async function deleteOrganization(_: any, formData: FormData) {
 
         success = true;
     } catch (error) {
+        console.error(error);
+
         return {
             message: 'unknown error',
             errors: {
@@ -908,7 +915,7 @@ export async function deleteOrganization(_: any, formData: FormData) {
     };
 }
 
-export async function changePassword(_: any, formData: FormData) {
+export async function changePassword(_: unknown, formData: FormData) {
     await verifyAuth();
 
     try {
@@ -932,6 +939,8 @@ export async function changePassword(_: any, formData: FormData) {
             errors: {},
         };
     } catch (error) {
+        console.error(error);
+
         return {
             message: 'unknown error',
             errors: {
@@ -942,7 +951,7 @@ export async function changePassword(_: any, formData: FormData) {
     }
 }
 
-export async function deactivateAccount(_: any, formData: FormData) {
+export async function deactivateAccount(_: unknown, formData: FormData) {
     await verifyAuth();
 
     let success = false;
@@ -963,6 +972,8 @@ export async function deactivateAccount(_: any, formData: FormData) {
 
         // delete user
     } catch (error) {
+        console.error(error);
+
         return {
             message: 'unknown error',
             errors: {
@@ -982,7 +993,7 @@ export async function deactivateAccount(_: any, formData: FormData) {
     }
 }
 
-export async function help(_: any, formData: FormData) {
+export async function help(_: unknown, formData: FormData) {
     await verifyAuth();
 
     try {
@@ -1018,6 +1029,8 @@ export async function help(_: any, formData: FormData) {
             errors: {},
         };
     } catch (error) {
+        console.error(error);
+
         return {
             message: 'unknown error',
             errors: {

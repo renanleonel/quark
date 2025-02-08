@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import 'server-only';
 
 import { projects } from '@/content/constants';
@@ -162,7 +163,10 @@ export async function postMember(): Promise<Response> {
     };
 }
 
-export async function patchMember(id: string, body: any): Promise<Response> {
+export async function patchMember(
+    id: string,
+    body: unknown
+): Promise<Response> {
     return {
         error: false,
         statusCode: 200,

@@ -1,42 +1,35 @@
 'use client';
 
-import { toast } from 'sonner';
-import { useState } from 'react';
-import { Trash } from 'lucide-react';
-import { deleteProject } from '@/lib/actions';
 import { useMediaQuery } from '@/hooks/use-media-query';
+import { deleteProject } from '@/lib/actions';
+import { Trash } from 'lucide-react';
+import { useState } from 'react';
+import { toast } from 'sonner';
 
-import { Icons } from '@/components/ui/icons';
 import { Button } from '@/components/ui/button';
 import {
     Dialog,
-    DialogTitle,
     DialogClose,
-    DialogHeader,
-    DialogTrigger,
     DialogContent,
     DialogDescription,
+    DialogHeader,
+    DialogTitle,
+    DialogTrigger,
 } from '@/components/ui/dialog';
+import { Icons } from '@/components/ui/icons';
 
 import {
     Drawer,
     DrawerClose,
-    DrawerTitle,
-    DrawerFooter,
-    DrawerHeader,
-    DrawerTrigger,
     DrawerContent,
     DrawerDescription,
+    DrawerFooter,
+    DrawerHeader,
+    DrawerTitle,
+    DrawerTrigger,
 } from '@/components/ui/drawer';
 
-interface DeleteProjectProps {
-    project: {
-        label: string;
-        value: string;
-    };
-}
-
-export const DeleteProject = ({ project }: DeleteProjectProps) => {
+export const DeleteProject = () => {
     const [open, setOpen] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
     const isDesktop = useMediaQuery('(min-width: 768px)');

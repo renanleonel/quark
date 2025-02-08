@@ -2,12 +2,11 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 
 interface CardProps {
     title: string;
-    icon?: string;
     description: string;
     value: string | number;
 }
 
-export const CardData = ({ title, icon, value, description }: CardProps) => {
+export const CardData = ({ title, value, description }: CardProps) => {
     return (
         <Card>
             <CardHeader className='flex flex-row items-center justify-between space-y-0 pb-2'>

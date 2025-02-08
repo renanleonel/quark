@@ -15,8 +15,6 @@ export const AuthForm = () => {
 
     const { errors } = formState;
 
-    console.log(isPending);
-
     return (
         <main className='grid gap-6'>
             <form action={formAction}>

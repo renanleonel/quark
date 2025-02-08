@@ -20,8 +20,7 @@ const config = [
     ),
     {
         rules: {
-            'no-console': 'error',
-
+            'no-console': ['error', { allow: ['warn', 'error'] }],
             'no-unused-vars': [
                 'error',
                 {
@@ -29,7 +28,6 @@ const config = [
                     args: 'none',
                 },
             ],
-
             'import/no-unused-modules': 'error',
         },
     },
