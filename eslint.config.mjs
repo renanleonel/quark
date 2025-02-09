@@ -1,5 +1,6 @@
 import { FlatCompat } from '@eslint/eslintrc';
 import js from '@eslint/js';
+import reactCompiler from 'eslint-plugin-react-compiler';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -19,6 +20,9 @@ const config = [
         'plugin:testing-library/react'
     ),
     {
+        plugins: {
+            'react-compiler': reactCompiler,
+        },
         rules: {
             'no-console': ['error', { allow: ['warn', 'error'] }],
             'no-unused-vars': [
@@ -29,6 +33,7 @@ const config = [
                 },
             ],
             'import/no-unused-modules': 'error',
+            'react-compiler/react-compiler': 'error',
         },
     },
 ];
